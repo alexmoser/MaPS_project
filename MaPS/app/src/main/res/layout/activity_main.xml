@@ -8,10 +8,83 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.maps.unipi.maps.MainActivity">
+    tools:context="com.maps.unipi.maps.MainActivity"
+    android:id="@+id/sign_in">
 
     <TextView
-        android:text="Hello World!"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/sign_in"
+        android:id="@+id/main_tv_signin"
+        android:layout_marginTop="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/card_number"
+        android:id="@+id/main_tv_card"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/main_tv_signin"
+        android:layout_toStartOf="@+id/main_tv_signin" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/main_et_card"
+        android:layout_below="@+id/main_tv_card"
+        android:layout_alignStart="@+id/main_tv_card" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:id="@+id/main_tv_pass"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/main_tv_card" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/main_et_pass"
+        android:layout_below="@+id/main_tv_pass"
+        android:layout_alignStart="@+id/main_tv_pass" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:id="@+id/main_b_login"
+        android:layout_below="@+id/main_et_pass"
+        android:layout_toEndOf="@+id/main_tv_card"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/or"
+        android:id="@+id/main_tv_or"
+        android:layout_below="@+id/main_b_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
+        android:id="@+id/main_b_join"
+        android:layout_below="@+id/main_tv_or"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
