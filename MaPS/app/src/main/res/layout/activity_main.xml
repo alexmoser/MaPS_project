@@ -64,7 +64,8 @@
         android:id="@+id/main_b_login"
         android:layout_below="@+id/main_et_pass"
         android:layout_toEndOf="@+id/main_tv_card"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:onClick="onClickLogin"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,6 +86,7 @@
         android:layout_marginTop="15dp"
         android:layout_alignParentEnd="false"
         android:layout_alignParentStart="false"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickJoin"/>
 
 </RelativeLayout>

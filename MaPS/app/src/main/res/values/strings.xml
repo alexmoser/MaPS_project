@@ -10,4 +10,8 @@
     <string name="surname">Surname</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="done">Done</string>
+    <string name="passmiss">Password missmatch!</string>
+    <string name="success">Success!</string>
+    <string name="unsuccess">Data not valid!</string>
+    <string name="exnotava">External storage not available!</string>
 </resources>
