@@ -14,4 +14,15 @@
     <string name="success">Success!</string>
     <string name="unsuccess">Data not valid!</string>
     <string name="exnotava">External storage not available!</string>
+    <string name="filter">Filters</string>
+    <string name="favourite_itmes">Favourite Itmes</string>
+    <string name="last_purchase">Last purchase</string>
+    <string name="shopping_cart">Shopping cart</string>
+    <string name="registration_name">Registration</string>
+    <string name="action_name">Action Selection</string>
+    <string name="filters_name">Filters</string>
+    <string name="purchase_name">New Purchase</string>
+    <string name="favitems_name">Your Favourite Items</string>
+    <string name="lastpurch_name">Your Last Purchase</string>
+    <string name="shopcart_name">Your Shopping Cart</string>
 </resources>

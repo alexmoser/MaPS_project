@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.maps.unipi.maps">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -16,6 +17,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Registration"></activity>
+        <activity android:name=".Registration"
+                  android:label="@string/registration_name"/>
+        <activity android:name=".ActionSelection"
+                  android:label="@string/action_name"/>
+        <activity android:name=".Filters"
+                  android:label="@string/filters_name"/>
+        <activity android:name=".NewPurchase"
+                  android:label="@string/purchase_name"/>
+        <activity android:name=".FavouriteItems"
+                  android:label="@string/favitems_name"/>
+        <activity android:name=".LastPurchase"
+                  android:label="@string/lastpurch_name"/>
+        <activity android:name=".ShoppingCart"
+                  android:label="@string/shopcart_name"></activity>
     </application>
+
 </manifest>

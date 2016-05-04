@@ -1,6 +1,7 @@
 package com.maps.unipi.maps;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -97,8 +98,8 @@ public class Registration extends AppCompatActivity{
         toast = Toast.makeText(context, msg, duration);
         toast.show();
 
-
-
+        Intent action_selection = new Intent(this, ActionSelection.class);
+        startActivity(action_selection);
     }
 
 

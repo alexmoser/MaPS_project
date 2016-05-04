@@ -84,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
                     toast.show();
                     br.close();
                     f.close();
-                    return; //TODO gestione nuova activity
+                    Intent action_selection = new Intent(this, ActionSelection.class);
+                    startActivity(action_selection);
                 }
             }
             Log.d("debug", "1");
