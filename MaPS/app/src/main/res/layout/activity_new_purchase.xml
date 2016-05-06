@@ -9,4 +9,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.maps.unipi.maps.NewPurchase">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_product"
+        android:id="@+id/newpurch_b_addprod"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/newpurch_b_remprod"
+        android:onClick="onClickScanProduct" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_product"
+        android:id="@+id/newpurch_b_remprod"
+        android:layout_marginBottom="62dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickRemoveProduct" />
 </RelativeLayout>

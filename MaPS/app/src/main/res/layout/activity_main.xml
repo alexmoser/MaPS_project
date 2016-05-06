@@ -89,4 +89,14 @@
         android:layout_centerHorizontal="true"
         android:onClick="onClickJoin"/>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BC"
+        android:id="@+id/main_b_barcode"
+        android:layout_alignTop="@+id/main_tv_card"
+        android:layout_toEndOf="@+id/main_et_card"
+        android:onClick="onClickScanCard" />
+
 </RelativeLayout>

@@ -2,11 +2,11 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/filters_menu_1"
-          android:titleCondensed="Add filters"
-          android:title="Add filters">
+          android:titleCondensed="@string/add_filter"
+          android:title="@string/add_filter">
     </item>
     <item android:id="@+id/filters_menu_2"
-          android:titleCondensed="Delete filters"
-          android:title="Delete filters">
+          android:titleCondensed="@string/del_filter"
+          android:title="@string/del_filter">
     </item>
 </menu>

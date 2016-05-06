@@ -14,38 +14,18 @@
         android:layout_height="wrap_content"
         android:text="@string/filter"
         android:id="@+id/selection_b_filter"
-        android:layout_marginTop="73dp"
+        android:onClick="onClickFilters"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/selection_b_newPurch"
-        android:onClick="onClickFilters" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/favourite_itmes"
-        android:id="@+id/selection_b_favItems"
-        android:layout_alignTop="@+id/selection_b_filter"
-        android:layout_alignParentEnd="true"
-        android:onClick="onClickFavouriteItems" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/last_purchase"
         android:id="@+id/selection_b_lastPurch"
-        android:layout_below="@+id/selection_b_filter"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="89dp"
-        android:onClick="onClickLastPurchase" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/shopping_cart"
-        android:id="@+id/selection_b_shopCart"
-        android:layout_alignTop="@+id/selection_b_lastPurch"
-        android:layout_alignStart="@+id/selection_b_favItems"
-        android:onClick="onClickShoppingCart" />
+        android:onClick="onClickLastPurchase"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"

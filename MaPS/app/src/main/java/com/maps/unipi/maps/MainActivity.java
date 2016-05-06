@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickLogin(View v) {
-        CharSequence buff, tmp;
+        CharSequence buff;
         String buffPass, buffCard;
 
         int i;
@@ -44,9 +47,8 @@ public class MainActivity extends AppCompatActivity {
         EditText logCard = (EditText) findViewById(R.id.main_et_card);
         EditText logPass = (EditText) findViewById(R.id.main_et_pass);
 
-
         File directory = Environment.getExternalStorageDirectory(); //not necessarily the SD card path (!)
-        File regFile = new File(directory.getAbsolutePath() + "/MaPS/prova.txt");
+        File regFile = new File(directory.getAbsolutePath() + "/MaPS/users.txt");
 
         try {
             CharSequence card = logCard.getText();
@@ -104,5 +106,65 @@ public class MainActivity extends AppCompatActivity {
     public void onClickJoin(View v){
         Intent registration_form = new Intent(this, Registration.class);
         startActivity(registration_form);
+    }
+
+    public void onClickScanCard(View v){
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult != null) {
+            String re = scanResult.getContents();
+            EditText logCard = (EditText) findViewById(R.id.main_et_card);
+            logCard.setText(re);
+
+            File directory = Environment.getExternalStorageDirectory(); //not necessarily the SD card path (!)
+            File regFile = new File(directory.getAbsolutePath() + "/MaPS/users.txt");
+
+            try {
+                FileReader f = new FileReader(regFile);
+                BufferedReader br = new BufferedReader(f);
+
+                while (true) {
+                    CharSequence buff = br.readLine();
+                    if (buff == null)
+                        break;
+
+                    int i = buff.length();
+
+                    String buffCard = "";
+
+                    //salto la password
+                    while (!Character.isWhitespace(buff.charAt(--i)));
+
+                    while (!Character.isWhitespace(buff.charAt(--i)))
+                        buffCard = buff.charAt(i) + buffCard;
+
+                    if (buffCard.contentEquals(re)) {
+                        br.close();
+                        f.close();
+                        Intent action_selection = new Intent(this, ActionSelection.class);
+                        startActivity(action_selection);
+                    }
+                }
+
+                Resources myRes = getResources();
+                Context context = getApplicationContext();
+                CharSequence msg = myRes.getText(R.string.noregcard);
+                Toast toast = Toast.makeText(context, msg, duration);
+                toast.show();
+                logCard.setText(null);
+                br.close();
+                f.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // else continue with any other code you need in the method
+
     }
 }

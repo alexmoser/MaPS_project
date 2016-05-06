@@ -83,7 +83,7 @@ public class Registration extends AppCompatActivity{
         logDirectory.mkdirs();
 
         try{
-            File regFile = new File (logDirectory, "prova.txt");
+            File regFile = new File (logDirectory, "users.txt");
             FileOutputStream f = new FileOutputStream(regFile, true);
             OutputStreamWriter sw = new OutputStreamWriter(f);
             sw.append(toSubmit);

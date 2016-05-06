@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+
 public class ActionSelection extends AppCompatActivity {
 
     @Override
@@ -18,23 +20,13 @@ public class ActionSelection extends AppCompatActivity {
         startActivity(filters);
     }
 
-    public void onClickFavouriteItems(View v){
-        Intent favourite_items = new Intent(this, FavouriteItems.class);
-        startActivity(favourite_items);
-    }
-
     public void onClickLastPurchase(View v) {
         Intent last_purchase = new Intent(this, LastPurchase.class);
         startActivity(last_purchase);
     }
 
-    public void onClickShoppingCart(View v){
-        Intent shopping_cart = new Intent(this, ShoppingCart.class);
-        startActivity(shopping_cart);
-    }
-
     public void onClickNewPurchase(View v){
-        Intent purchase = new Intent(this, NewPurchase.class);
-        startActivity(purchase);
+        Intent new_purchase = new Intent(this, NewPurchase.class);
+        startActivity(new_purchase);
     }
 }
