@@ -25,8 +25,6 @@ import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int duration = Toast.LENGTH_SHORT;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +35,8 @@ public class MainActivity extends AppCompatActivity {
     public void onClickLogin(View v) {
         CharSequence buff;
         String buffPass, buffCard;
-
-        int i;
-        CharSequence msg;
-        Toast toast;
         Resources myRes = getResources();
-        Context context = getApplicationContext();
+        Context ctx = getApplicationContext();
 
         EditText logCard = (EditText) findViewById(R.id.main_et_card);
         EditText logPass = (EditText) findViewById(R.id.main_et_pass);
@@ -54,9 +48,7 @@ public class MainActivity extends AppCompatActivity {
             CharSequence card = logCard.getText();
             CharSequence pass = logPass.getText();
             if(pass.toString().equals("") || card.toString().equals("")){
-                msg = myRes.getText(R.string.unsuccess);
-                toast = Toast.makeText(context, msg, duration);
-                toast.show();
+                Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
                 return;
             }
 
@@ -68,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 if (buff == null)
                     break;
 
-                i = buff.length();
+                int i = buff.length();
 
                 buffPass = buffCard = "";
                 while (!Character.isWhitespace(buff.charAt(--i)))
@@ -80,10 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("debug", buffCard);
 
                 if (buffCard.contentEquals(card.toString()) && buffPass.contentEquals(pass.toString())) {
-
-                    msg = myRes.getText(R.string.success);
-                    toast = Toast.makeText(context, msg, duration);
-                    toast.show();
+                    Utilities.showMessage(myRes.getText(R.string.success), ctx);
                     br.close();
                     f.close();
                     Intent action_selection = new Intent(this, ActionSelection.class);
@@ -91,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             Log.d("debug", "1");
-            msg = myRes.getText(R.string.unsuccess);
-            toast = Toast.makeText(context, msg, duration);
-            toast.show();
+            Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
             logCard.setText(null);
             logPass.setText(null);
             br.close();
@@ -110,12 +97,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickScanCard(View v){
         IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setPrompt("Scan your card");
+        integrator.setBeepEnabled(true);
+        integrator.setCaptureActivity(CaptureActivityPortrait.class);
+        integrator.setOrientationLocked(false);
         integrator.initiateScan();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        Resources myRes = getResources();
+        Context ctx = getApplicationContext();
+
         if (scanResult != null) {
             String re = scanResult.getContents();
             EditText logCard = (EditText) findViewById(R.id.main_et_card);
@@ -151,11 +145,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                Resources myRes = getResources();
-                Context context = getApplicationContext();
-                CharSequence msg = myRes.getText(R.string.noregcard);
-                Toast toast = Toast.makeText(context, msg, duration);
-                toast.show();
+                Utilities.showMessage(myRes.getText(R.string.noregcard), ctx);
                 logCard.setText(null);
                 br.close();
                 f.close();

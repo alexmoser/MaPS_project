@@ -35,9 +35,7 @@ public class Registration extends AppCompatActivity{
     }
 
     public void onClickDone(View v) {
-        Context context = getApplicationContext();
-        CharSequence msg;
-        Toast toast;
+        Context ctx = getApplicationContext();
         Resources myRes = getResources();
 
         EditText regName = (EditText) findViewById(R.id.reg_et_name);
@@ -53,26 +51,20 @@ public class Registration extends AppCompatActivity{
         CharSequence confpass = regConfpass.getText();
 
         if(name.toString().equals("") || surname.toString().equals("") || card.toString().equals("") || pass.toString().equals("") || confpass.toString().equals("")){
-            msg = myRes.getText(R.string.unsuccess);
-            toast = Toast.makeText(context, msg, duration);
-            toast.show();
+            Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
             return;
         }
 
         CharSequence toSubmit = name + " " + surname + " " + card + " " + pass +"\n";
 
         if(!pass.toString().contentEquals(confpass.toString())){
-
-            msg = myRes.getText(R.string.passmiss);
-            toast = Toast.makeText(context, msg, duration);
-            toast.show();
+            Utilities.showMessage(myRes.getText(R.string.passmiss), ctx);
             regPass.setText(null);
             regConfpass.setText(null);
             return;
         }
 
         if(!this.isExternalStorageWritable()){
-
             Log.d("Registration", myRes.getText(R.string.exnotava).toString());
             return;
         }
@@ -94,9 +86,7 @@ public class Registration extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        msg = myRes.getText(R.string.success);
-        toast = Toast.makeText(context, msg, duration);
-        toast.show();
+        Utilities.showMessage(myRes.getText(R.string.success), ctx);
 
         Intent action_selection = new Intent(this, ActionSelection.class);
         startActivity(action_selection);
