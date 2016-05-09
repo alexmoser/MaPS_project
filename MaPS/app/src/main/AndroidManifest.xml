@@ -24,15 +24,6 @@
             android:name=".ActionSelection"
             android:label="@string/action_name" />
         <activity
-            android:name=".Filters"
-            android:label="@string/filters_name" />
-        <activity
-            android:name=".NewPurchase"
-            android:label="@string/purchase_name" />
-        <activity
-            android:name=".LastPurchase"
-            android:label="@string/lastpurch_name" />
-        <activity
             android:name=".ScanProduct"
             android:label="Products Scan"/>
         <activity

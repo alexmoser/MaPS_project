@@ -65,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
                 buffPass = buffCard = "";
                 while (!Character.isWhitespace(buff.charAt(--i)))
                     buffPass = buff.charAt(i) + buffPass;
-                Log.d("debug", buffPass);
+                Log.d("debug", "Pass : " + buffPass);
 
                 while (!Character.isWhitespace(buff.charAt(--i)))
                     buffCard = buff.charAt(i) + buffCard;
-                Log.d("debug", buffCard);
+                Log.d("debug", "Card : " + buffCard);
 
                 if (buffCard.contentEquals(card.toString()) && buffPass.contentEquals(pass.toString())) {
                     Utilities.showMessage(myRes.getText(R.string.success), ctx);
@@ -112,45 +112,47 @@ public class MainActivity extends AppCompatActivity {
 
         if (scanResult != null) {
             String re = scanResult.getContents();
-            EditText logCard = (EditText) findViewById(R.id.main_et_card);
-            logCard.setText(re);
+            if(re != null){
+                EditText logCard = (EditText) findViewById(R.id.main_et_card);
+                logCard.setText(re);
 
-            File directory = Environment.getExternalStorageDirectory(); //not necessarily the SD card path (!)
-            File regFile = new File(directory.getAbsolutePath() + "/MaPS/users.txt");
+                File directory = Environment.getExternalStorageDirectory(); //not necessarily the SD card path (!)
+                File regFile = new File(directory.getAbsolutePath() + "/MaPS/users.txt");
 
-            try {
-                FileReader f = new FileReader(regFile);
-                BufferedReader br = new BufferedReader(f);
+                try {
+                    FileReader f = new FileReader(regFile);
+                    BufferedReader br = new BufferedReader(f);
 
-                while (true) {
-                    CharSequence buff = br.readLine();
-                    if (buff == null)
-                        break;
+                    while (true) {
+                        CharSequence buff = br.readLine();
+                        if (buff == null)
+                            break;
 
-                    int i = buff.length();
+                        int i = buff.length();
 
-                    String buffCard = "";
+                        String buffCard = "";
 
-                    //salto la password
-                    while (!Character.isWhitespace(buff.charAt(--i)));
+                        //salto la password
+                        while (!Character.isWhitespace(buff.charAt(--i)));
 
-                    while (!Character.isWhitespace(buff.charAt(--i)))
-                        buffCard = buff.charAt(i) + buffCard;
+                        while (!Character.isWhitespace(buff.charAt(--i)))
+                            buffCard = buff.charAt(i) + buffCard;
 
-                    if (buffCard.contentEquals(re)) {
-                        br.close();
-                        f.close();
-                        Intent action_selection = new Intent(this, ActionSelection.class);
-                        startActivity(action_selection);
+                        if (buffCard.contentEquals(re)) {
+                            br.close();
+                            f.close();
+                            Intent action_selection = new Intent(this, ActionSelection.class);
+                            startActivity(action_selection);
+                        }
                     }
-                }
 
-                Utilities.showMessage(myRes.getText(R.string.noregcard), ctx);
-                logCard.setText(null);
-                br.close();
-                f.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    Utilities.showMessage(myRes.getText(R.string.noregcard), ctx);
+                    logCard.setText(null);
+                    br.close();
+                    f.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
