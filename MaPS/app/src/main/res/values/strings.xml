@@ -29,4 +29,5 @@
     <string name="product_name">Product Name</string>
     <string name="ingredients">Ingredients</string>
     <string name="next">Next</string>
+    <string name="prodnotfound">Sorry, the product has not been found!</string>
 </resources>

@@ -18,39 +18,25 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/prodinfo_et_name"
-        android:layout_below="@+id/prodinfo_tv_name"
-        android:layout_alignParentStart="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/ingredients"
         android:id="@+id/prodinfo_tv_ingr"
-        android:layout_below="@+id/prodinfo_et_name"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="56dp" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/prodinfo_et_ingr"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="56dp"
+        android:layout_below="@+id/prodinfo_tv_name" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_product"
         android:id="@+id/prodinfo_b_addprod"
-        android:layout_below="@+id/prodinfo_et_ingr"
         android:layout_toEndOf="@+id/prodinfo_tv_ingr"
         android:layout_marginTop="67dp"
-        android:onClick="onClickAddProduct" />
+        android:onClick="onClickAddProduct"
+        android:layout_centerVertical="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -61,4 +47,20 @@
         android:layout_below="@+id/prodinfo_b_addprod"
         android:layout_centerHorizontal="true"
         android:onClick="onClickNextScan" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/prodinfo_tv_prodname"
+        android:layout_below="@+id/prodinfo_tv_name"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/prodinfo_tv_listingr"
+        android:layout_above="@+id/prodinfo_b_addprod"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

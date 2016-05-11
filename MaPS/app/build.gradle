@@ -38,3 +38,7 @@ dependencies {
 android {
     buildToolsVersion '23.0.2' // Older versions may give compile errors
 }
+
+dependencies {
+    compile 'com.firebase:firebase-client-android:2.5.2+'
+}

@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
+import java.util.ArrayList;
 
 public class ProductInformation extends AppCompatActivity {
 
@@ -15,13 +16,15 @@ public class ProductInformation extends AppCompatActivity {
 
         Intent intent = getIntent();
         String name = intent.getExtras().getString("name");
-        String ingredients = intent.getExtras().getString("ingr");
+        ArrayList<String> ingredients = intent.getStringArrayListExtra("name");
 
-        EditText prod_name = (EditText) findViewById(R.id.prodinfo_et_name);
-        EditText ingr = (EditText) findViewById(R.id.prodinfo_et_ingr);
+        TextView prod_name = (TextView) findViewById(R.id.prodinfo_tv_prodname);
+        TextView list_ingr = (TextView) findViewById(R.id.prodinfo_tv_listingr);
 
         prod_name.setText(name);
-        ingr.setText(ingredients);
+        for (String ingredient : ingredients){
+            list_ingr.append(ingredient + "\n");
+        }
     }
 
     public void onClickNextScan(View v){

@@ -3,40 +3,43 @@ package com.maps.unipi.maps;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import com.firebase.client.Firebase;
 
-import java.io.*;
 
 public class Registration extends AppCompatActivity{
 
-    private final int duration = Toast.LENGTH_SHORT;
+    static Firebase rootRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
+        //Get a reference to the DB
+        rootRef = new Firebase("https://vivid-inferno-9901.firebaseio.com");
     }
 
-    /* Checks if external storage is available for read and write */
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+    @Override
+    protected void onResume(){
+        super.onResume();
+        EditText regName = (EditText) findViewById(R.id.reg_et_name);
+        EditText regSurname = (EditText) findViewById(R.id.reg_et_surname);
+        EditText regCard = (EditText) findViewById(R.id.reg_et_card);
+        EditText regPass = (EditText) findViewById(R.id.reg_et_pass);
+        EditText regConfpass = (EditText) findViewById(R.id.reg_et_confpass);
+        regName.setText(null);
+        regSurname.setText(null);
+        regCard.setText(null);
+        regPass.setText(null);
+        regConfpass.setText(null);
     }
 
     public void onClickDone(View v) {
-        Context ctx = getApplicationContext();
-        Resources myRes = getResources();
+        final Context ctx = getApplicationContext();
+        final Resources myRes = getResources();
 
         EditText regName = (EditText) findViewById(R.id.reg_et_name);
         EditText regSurname = (EditText) findViewById(R.id.reg_et_surname);
@@ -55,8 +58,6 @@ public class Registration extends AppCompatActivity{
             return;
         }
 
-        CharSequence toSubmit = name + " " + surname + " " + card + " " + pass +"\n";
-
         if(!pass.toString().contentEquals(confpass.toString())){
             Utilities.showMessage(myRes.getText(R.string.passmiss), ctx);
             regPass.setText(null);
@@ -64,27 +65,10 @@ public class Registration extends AppCompatActivity{
             return;
         }
 
-        if(!this.isExternalStorageWritable()){
-            Log.d("Registration", myRes.getText(R.string.exnotava).toString());
-            return;
-        }
+        Firebase ref = rootRef.child("users");
 
-        // Setup the folder for the log file
-        File directory = Environment.getExternalStorageDirectory(); //not necessarily the SD card path (!)
-        File logDirectory = new File(directory.getAbsolutePath() + "/MaPS");
-        logDirectory.mkdirs();
-
-        try{
-            File regFile = new File (logDirectory, "users.txt");
-            FileOutputStream f = new FileOutputStream(regFile, true);
-            OutputStreamWriter sw = new OutputStreamWriter(f);
-            sw.append(toSubmit);
-            sw.close();
-            f.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+        User user = new User (name.toString(), surname.toString(), card.toString(), pass.toString());
+        ref.push().setValue(user);
 
         Utilities.showMessage(myRes.getText(R.string.success), ctx);
 
