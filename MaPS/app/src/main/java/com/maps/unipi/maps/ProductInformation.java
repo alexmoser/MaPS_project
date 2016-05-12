@@ -16,7 +16,7 @@ public class ProductInformation extends AppCompatActivity {
 
         Intent intent = getIntent();
         String name = intent.getExtras().getString("name");
-        ArrayList<String> ingredients = intent.getStringArrayListExtra("name");
+        ArrayList<String> ingredients = intent.getStringArrayListExtra("ingredients");
 
         TextView prod_name = (TextView) findViewById(R.id.prodinfo_tv_prodname);
         TextView list_ingr = (TextView) findViewById(R.id.prodinfo_tv_listingr);

@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 // Get a reference to our users
                 Firebase ref = rootRef.child("users");
                 // Attach an listener to read the data at our users reference
-                ref.addValueEventListener(new ValueEventListener() {
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         //Log.d("debug", "There are " + snapshot.getChildrenCount() + " users");

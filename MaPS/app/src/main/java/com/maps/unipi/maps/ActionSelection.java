@@ -1,7 +1,9 @@
 package com.maps.unipi.maps;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 
 public class ActionSelection extends FragmentActivity {
@@ -114,7 +123,7 @@ public class ActionSelection extends FragmentActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            Bundle args = getArguments();
+            Bundle args = getArguments();//TODO vedere se si puo eliminare
             View rootView;
             rootView = inflater.inflate(R.layout.filters, container, false);
             final Button button1 = (Button) rootView.findViewById(R.id.filters_b_addfilter);
@@ -160,7 +169,6 @@ public class ActionSelection extends FragmentActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            Bundle args = getArguments();
             View rootView;
             rootView = inflater.inflate(R.layout.new_purchase, container, false);
             final Button button1 = (Button) rootView.findViewById(R.id.newpurch_b_addprod);
@@ -178,13 +186,11 @@ public class ActionSelection extends FragmentActivity {
             }
         };
 
-
         View.OnClickListener delProduct = new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO gestire rimozione prodotti
                 mViewPager.setCurrentItem(2);
             }
         };
-
     }
 }
