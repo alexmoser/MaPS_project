@@ -9,22 +9,36 @@ import java.util.ArrayList;
 
 public class ProductInformation extends AppCompatActivity {
 
+    Product product;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_information);
 
-        Intent intent = getIntent();
-        String name = intent.getExtras().getString("name");
-        ArrayList<String> ingredients = intent.getStringArrayListExtra("ingredients");
+        product = ScanProduct.productScanned;
 
         TextView prod_name = (TextView) findViewById(R.id.prodinfo_tv_prodname);
         TextView list_ingr = (TextView) findViewById(R.id.prodinfo_tv_listingr);
+        TextView prod_price = (TextView) findViewById(R.id.prodinfo_tv_prodprice);
 
-        prod_name.setText(name);
-        for (String ingredient : ingredients){
+        prod_name.setText(product.getName());
+        prod_price.setText(Float.toString(product.getPrice()) + "€");
+        for (String ingredient : product.getIngredients())
             list_ingr.append(ingredient + "\n");
-        }
+
+        boolean canBuy = true;
+        for(String filter : ActionSelection.filters)
+            for(String ingredient : product.getIngredients())
+                if(filter.equalsIgnoreCase(ingredient))
+                    canBuy = false;
+
+        //TODO invece che questo fare in modo di avere una X rossa in caso non si possa comprare oppure una spunta verde(magari due immagini)
+        if(canBuy)
+            list_ingr.append("You can buy this product!");
+        else
+            list_ingr.append("You cannot buy this product!");
+
     }
 
     public void onClickNextScan(View v){
@@ -33,6 +47,8 @@ public class ProductInformation extends AppCompatActivity {
     }
 
     public void onClickAddProduct(View v){
-        //TODO inserire prodotto in lista e tornare alla activity NewPurchase
+        Intent action_selection = new Intent(this, ActionSelection.class);
+        ActionSelection.shoppingCart.add(product);
+        startActivity(action_selection);
     }
 }

@@ -13,7 +13,7 @@ public class Product {
     private ArrayList<String> ingredients;
 
     public Product(){
-
+        // empty default constructor, necessary for Firebase to be able to deserialize blog posts
     }
 
     public Product(String barcode, String name, float price, ArrayList<String> ingredients){

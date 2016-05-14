@@ -12,9 +12,13 @@ import com.firebase.client.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
 
 
 public class ScanProduct extends AppCompatActivity {
+
+    //dichiarato static per lo stesso motivo dei filtri e il carrello ci accedo nella activity ProductInformation
+    static Product productScanned;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,7 @@ public class ScanProduct extends AppCompatActivity {
         integrator.setCaptureActivity(CaptureActivityPortrait.class);
         integrator.setOrientationLocked(false);
         integrator.initiateScan();
+        //TODO trovare il modo dopo che parte lo scanner di tornare alla activity ActionSelection
     }
 
     /*
@@ -47,6 +52,7 @@ public class ScanProduct extends AppCompatActivity {
         final Resources myRes = getResources();
         final Context ctx = getApplicationContext();
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
         if (scanResult != null) {
             final String re = scanResult.getContents();
             if(re != null) {
@@ -57,16 +63,13 @@ public class ScanProduct extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         for (DataSnapshot prodSnapshot : snapshot.getChildren()){
-                            Product prod = prodSnapshot.getValue(Product.class);
-                            if(prod.getBarcode().equals(re)){
+                            productScanned = prodSnapshot.getValue(Product.class);
+                            if(productScanned.getBarcode().equals(re)){
                                 Intent product_info = new Intent(ScanProduct.this, ProductInformation.class);
-                                product_info.putExtra("name", prod.getName());
-                                product_info.putStringArrayListExtra("ingredients", prod.getIngredients());
                                 startActivity(product_info);
                                 return;
                             }
                         }
-
                         Utilities.showMessage(myRes.getText(R.string.prodnotfound), ctx);
                     }
                     public void onCancelled(FirebaseError e){

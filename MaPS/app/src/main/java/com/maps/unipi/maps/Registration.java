@@ -12,14 +12,10 @@ import com.firebase.client.Firebase;
 
 public class Registration extends AppCompatActivity{
 
-    static Firebase rootRef;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        //Get a reference to the DB
-        rootRef = new Firebase("https://vivid-inferno-9901.firebaseio.com");
     }
 
     @Override
@@ -65,13 +61,14 @@ public class Registration extends AppCompatActivity{
             return;
         }
 
-        Firebase ref = rootRef.child("users");
-
+        //Get a reference to our users
+        Firebase ref = MainActivity.rootRef.child("users");
+        //Insert user in the DB
         User user = new User (name.toString(), surname.toString(), card.toString(), pass.toString());
         ref.push().setValue(user);
 
         Utilities.showMessage(myRes.getText(R.string.success), ctx);
-
+        //User is automatically logged
         Intent action_selection = new Intent(this, ActionSelection.class);
         startActivity(action_selection);
     }

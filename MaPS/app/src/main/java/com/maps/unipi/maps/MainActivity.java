@@ -40,16 +40,15 @@ public class MainActivity extends AppCompatActivity {
     public void onClickLogin(View v) {
         final Resources myRes = getResources();
         final Context ctx = getApplicationContext();
-
         final EditText logCard = (EditText) findViewById(R.id.main_et_card);
         final EditText logPass = (EditText) findViewById(R.id.main_et_pass);
         final CharSequence card = logCard.getText();
         final CharSequence pass = logPass.getText();
+
         if(pass.toString().equals("") || card.toString().equals("")){
             Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
             return;
         }
-
         // Get a reference to our users
         Firebase ref = rootRef.child("users");
         // Attach an listener to read the data at our users reference
@@ -66,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                 }
-
                 Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
                 logCard.setText(null);
                 logPass.setText(null);
             }
+            @Override
             public void onCancelled(FirebaseError e){
                 System.out.println("The read failed: " + e.getMessage());
             }
@@ -106,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        //Log.d("debug", "There are " + snapshot.getChildrenCount() + " users");
                         for (DataSnapshot userSnapshot : snapshot.getChildren()){
                             User user = userSnapshot.getValue(User.class);
                             if(user.getCard().contentEquals(re)){
@@ -116,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
                                 return;
                             }
                         }
-
                         Utilities.showMessage(myRes.getText(R.string.noregcard), ctx);
                     }
+                    @Override
                     public void onCancelled(FirebaseError e){
                         System.out.println("The read failed: " + e.getMessage());
                     }
@@ -126,5 +124,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
- }
+}
 

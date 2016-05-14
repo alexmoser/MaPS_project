@@ -2,7 +2,7 @@ package com.maps.unipi.maps;
 
 import com.journeyapps.barcodescanner.CaptureActivity;
 
-//Questa classe serve soltanto per impostare lo scanner in modalità portrait
+//Needed in order to have the bar code scanner in portrait mode
 public class CaptureActivityPortrait extends CaptureActivity {
 
 }

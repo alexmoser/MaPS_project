@@ -65,6 +65,8 @@
         android:layout_below="@+id/main_et_pass"
         android:layout_toEndOf="@+id/main_tv_card"
         android:layout_marginTop="15dp"
+        android:layout_alignParentStart="false"
+        android:layout_centerHorizontal="true"
         android:onClick="onClickLogin"/>
 
     <TextView
@@ -96,7 +98,7 @@
         android:text="BC"
         android:id="@+id/main_b_barcode"
         android:layout_alignTop="@+id/main_tv_card"
-        android:layout_toEndOf="@+id/main_et_card"
+        android:layout_alignRight="@+id/main_et_card"
         android:onClick="onClickScanCard" />
 
 </RelativeLayout>

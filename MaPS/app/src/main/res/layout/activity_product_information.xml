@@ -24,43 +24,63 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/ingredients"
         android:id="@+id/prodinfo_tv_ingr"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="56dp"
-        android:layout_below="@+id/prodinfo_tv_name" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_product"
         android:id="@+id/prodinfo_b_addprod"
-        android:layout_toEndOf="@+id/prodinfo_tv_ingr"
-        android:layout_marginTop="67dp"
         android:onClick="onClickAddProduct"
-        android:layout_centerVertical="true" />
+        android:layout_alignTop="@+id/prodinfo_b_next"
+        android:layout_alignRight="@+id/prodinfo_tv_name"
+        android:layout_alignEnd="@+id/prodinfo_tv_name" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next"
         android:id="@+id/prodinfo_b_next"
-        android:layout_below="@+id/prodinfo_b_addprod"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClickNextScan" />
+        android:onClick="onClickNextScan"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/prodinfo_tv_listingr"
+        android:layout_alignEnd="@+id/prodinfo_tv_listingr" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/prodinfo_tv_prodname"
         android:layout_below="@+id/prodinfo_tv_name"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/prodinfo_tv_listingr"
-        android:layout_above="@+id/prodinfo_b_addprod"
+        android:layout_below="@+id/prodinfo_tv_ingr"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/price"
+        android:id="@+id/prodinfo_tv_price"
+        android:layout_below="@+id/prodinfo_tv_prodname"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="59dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/prodinfo_tv_prodprice"
+        android:layout_below="@+id/prodinfo_tv_price"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>
