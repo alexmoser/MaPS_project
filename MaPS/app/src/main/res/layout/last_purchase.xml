@@ -4,6 +4,40 @@
     android:layout_height="fill_parent"
     android:weightSum="1">
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
+        android:id="@+id/lastpurch_lv_products"
+        android:layout_gravity="center_horizontal|top" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/total"
+            android:id="@+id/lastpurch_tv_total"
+            android:layout_gravity="center"
+            android:textColor="#181717"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/lastpurch_tv_totalprice"
+            android:layout_alignTop="@+id/lastpurch_tv_total"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp" />
+
+    </RelativeLayout>
 
 
 </FrameLayout>

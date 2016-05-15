@@ -3,6 +3,7 @@ package com.maps.unipi.maps;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,11 +21,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.firebase.client.utilities.*;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import java.util.LinkedList;
@@ -132,6 +135,7 @@ public class ActionSelection extends FragmentActivity {
     public static class FiltersFragment extends Fragment {
 
         public static final String ARG_OBJECT = "object";
+        static boolean firstCreationView = true;//serve perche altrimenti ogni volta che viene creato il frammento vengono aggiunti i filtri della shared preferece e quindi anche quelli che magari l'utente ha eliminato
         View rootView;
         ListView filtersList;
         ArrayAdapter<String> adapter;//serve per collegare la lista all'array string filters
@@ -142,6 +146,13 @@ public class ActionSelection extends FragmentActivity {
             //imposto un listener sul bottone add filter
             final Button add = (Button) rootView.findViewById(R.id.filters_b_addfilter);
             add.setOnClickListener(addFilter);
+            if(firstCreationView) {
+                //carico i filtri salvati nelle shared preference
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                int numFilters = sharedPref.getInt("#filters", 0);
+                for (int key = 0; key < numFilters; key++)
+                    filters.add(sharedPref.getString("f" + Integer.toString(key), "filter"));
+            }
             //collego la lista di filtri all'adaptor
             filtersList = (ListView) rootView.findViewById(R.id.filters_lv_fillist);
             adapter = new ArrayAdapter<> (getActivity(), android.R.layout.simple_list_item_1, filters);
@@ -158,6 +169,7 @@ public class ActionSelection extends FragmentActivity {
                     filtersList.setAdapter(adapter);
                 }
             });
+            firstCreationView = false;
             return rootView;
         }
 
@@ -166,7 +178,7 @@ public class ActionSelection extends FragmentActivity {
 
                 final EditText filter = (EditText) rootView.findViewById(R.id.filters_et_filter);
                 final CharSequence  filter_name = filter.getText();
-                if(!filters.contains(filter_name.toString())) {
+                if(!filters.contains(filter_name.toString()) && filter_name.toString() != "") {//TODO controllare la seconda parte dell AND percche aggiunge il filtro anche se è vuoto (getText cosa restituisce se è vuota?)
                     filters.add(filter_name.toString());
                     filtersList.setAdapter(adapter);
                 }
@@ -184,6 +196,24 @@ public class ActionSelection extends FragmentActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView;
             rootView = inflater.inflate(R.layout.last_purchase, container, false);
+            ArrayList<Product> lastPurchase = new ArrayList<>();
+            Product product = new Product();
+            //carico i prodotti salvati nelle shared preference
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            int numProducts = sharedPref.getInt("#products", 0);
+            for(int key = 0; key < numProducts; key++){
+                product.setName(sharedPref.getString("n" + Integer.toString(key), "product"));//TODO aggiungere come ID anche il numero della carta cosi da poter salvare spese diverse in base alla carta usata
+                product.setPrice(sharedPref.getFloat("p" + Integer.toString(key), 0));
+                lastPurchase.add(product);
+            }
+            final TextView total = (TextView) rootView.findViewById(R.id.lastpurch_tv_totalprice);
+            //Calcolo il prezzo totale e lo mostro in una text view
+            float totalPrice = Utilities.computeTotal(lastPurchase);
+            total.setText(Float.toString(totalPrice) + "€");
+            //collego la lista di prodotti all'adaptor
+            ListView productsList = (ListView) rootView.findViewById(R.id.lastpurch_lv_products);
+            final CustomAdapter adapter = new CustomAdapter(getActivity(), R.layout.rowcustom, lastPurchase);
+            productsList.setAdapter(adapter);
             return rootView;
         }
     }
@@ -193,15 +223,23 @@ public class ActionSelection extends FragmentActivity {
         public static final String ARG_OBJECT = "object";
         View rootView;
         ListView productsList;
+        TextView total;
+        CustomAdapter adapter;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             rootView = inflater.inflate(R.layout.new_purchase, container, false);
             final Button button1 = (Button) rootView.findViewById(R.id.newpurch_b_addprod);
             button1.setOnClickListener(addProduct);
+            final Button button2 = (Button) rootView.findViewById(R.id.newpurch_b_endspending);
+            button2.setOnClickListener(endSpending);
+            total = (TextView) rootView.findViewById(R.id.newpurch_tv_totalprice);
+            //Calcolo il prezzo totale e lo mostro in una text view
+            float totalPrice = Utilities.computeTotal(shoppingCart);
+            total.setText(Float.toString(totalPrice) + "€");
             //collego la lista di prodotti all'adaptor
             productsList = (ListView) rootView.findViewById(R.id.newpurch_lv_products);
-            final CustomAdapter adapter = new CustomAdapter(getActivity(), R.layout.rowcustom, shoppingCart);
+            adapter = new CustomAdapter(getActivity(), R.layout.rowcustom, shoppingCart);
             productsList.setAdapter(adapter);
             //imposto un listener sul click di un elemento della lista
             productsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -212,6 +250,9 @@ public class ActionSelection extends FragmentActivity {
                     //TODO trovare il modo di far comparire un messaggio di conferma cancellazione
                     shoppingCart.remove(product);
                     productsList.setAdapter(adapter);
+                    //Aggiorno il prezo totale
+                    float updateTotalPrice = Utilities.computeTotal(shoppingCart);
+                    total.setText(Float.toString(updateTotalPrice) + "€");
                 }
             });
             return rootView;
@@ -221,6 +262,36 @@ public class ActionSelection extends FragmentActivity {
             public void onClick(View v) {
                 Intent scan_product = new Intent(getActivity(), ScanProduct.class);
                 startActivity(scan_product);
+                mViewPager.setCurrentItem(0);
+            }
+        };
+
+        View.OnClickListener endSpending = new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO gestire la fine della spesa (se si deve fare altro)
+                //salvo i dati dell'ultima spesa nelle shared preference
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                //rimuovo la vecchia spesa e vecchi filtri
+                editor.clear();
+                editor.commit();//TODO capire se serve oppure basta quello dopo
+                //aggiungo nuova spesa e nuovi filtri
+                int key = 0;
+                for(Product product : shoppingCart){
+                    editor.putString("n" + Integer.toString(key), product.getName());
+                    editor.putFloat("p" + Integer.toString(key++), product.getPrice());
+                }
+                editor.putInt("#products", key);
+                key = 0;
+                for(String filter : filters)
+                    editor.putString("f" + Integer.toString(key++), filter);
+                editor.putInt("#filters", key);
+                editor.commit();
+                //elimino il carrello e aggiorno la lista
+                shoppingCart.clear();
+                productsList.setAdapter(adapter);
+                //Aggiorno il prezzo totale
+                total.setText(Float.toString(0) + "€");
                 mViewPager.setCurrentItem(0);
             }
         };

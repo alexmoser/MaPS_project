@@ -31,4 +31,6 @@
     <string name="next">Next</string>
     <string name="prodnotfound">Sorry, the product has not been found!</string>
     <string name="price">Price</string>
+    <string name="end_spending">End Spending</string>
+    <string name="total">Total</string>
 </resources>

@@ -11,11 +11,11 @@
         android:text="" />
 
     <TextView
-        android:id="@+id/textViewNumber"
+        android:id="@+id/textViewPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textColor="#00AA00"
+        android:textColor="#C0C0C0"
         />
 
 </LinearLayout>

@@ -9,7 +9,15 @@
         android:layout_height="wrap_content"
         android:text="@string/add_product"
         android:id="@+id/newpurch_b_addprod"
-        android:layout_gravity="center_horizontal|bottom"
+        android:layout_gravity="left|bottom"
+        android:layout_weight="0.79"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/end_spending"
+        android:id="@+id/newpurch_b_endspending"
+        android:layout_gravity="right|bottom"
         android:layout_weight="0.79"/>
 
     <ListView
@@ -17,5 +25,35 @@
         android:layout_height="240dp"
         android:id="@+id/newpurch_lv_products"
         android:layout_gravity="center_horizontal|top" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="196dp"
+        android:layout_gravity="center_horizontal|bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/total"
+            android:id="@+id/newpurch_tv_total"
+            android:layout_gravity="center"
+            android:layout_marginBottom="78dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#181717" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/newpurch_tv_totalprice"
+            android:layout_alignTop="@+id/newpurch_tv_total"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="30dp" />
+
+    </RelativeLayout>
+
 
 </FrameLayout>

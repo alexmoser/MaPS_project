@@ -38,4 +38,8 @@ public class Product {
     public ArrayList<String> getIngredients(){
         return ingredients;
     }
+
+    public void setName(String name){ this.name = name; }
+
+    public void setPrice(Float price){ this.price = price; }
 }

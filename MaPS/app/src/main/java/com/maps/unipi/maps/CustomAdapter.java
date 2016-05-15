@@ -25,11 +25,11 @@ public class CustomAdapter extends ArrayAdapter<Product>{
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.rowcustom, null);
-        TextView nome = (TextView)convertView.findViewById(R.id.textViewName);
-        TextView numero = (TextView)convertView.findViewById(R.id.textViewPrice);
+        TextView name = (TextView)convertView.findViewById(R.id.textViewName);
+        TextView price = (TextView)convertView.findViewById(R.id.textViewPrice);
         Product c = getItem(position);
-        nome.setText(c.getName());
-        numero.setText(Float.toString(c.getPrice()));
+        name.setText(c.getName());
+        price.setText(Float.toString(c.getPrice()) + "€");
         return convertView;
     }
 
