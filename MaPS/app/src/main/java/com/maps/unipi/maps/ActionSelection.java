@@ -59,6 +59,8 @@ public class ActionSelection extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_action_selection);
 
+        ScanProduct.goBack = false;
+
         // Create an adapter that when requested, will return a fragment representing an object in
         // the collection.
         //
@@ -78,6 +80,16 @@ public class ActionSelection extends FragmentActivity {
         mViewPager.setAdapter(myCollectionPagerAdapter);
     }
 
+    @Override
+    public void onBackPressed(){
+        //TODO mettere un messaggio di conferma
+        Intent main_activity = new Intent(this, MainActivity.class);
+        startActivity(main_activity);
+        //svuoto il carrello e i filtri
+        shoppingCart.clear();
+        filters.clear();
+        FiltersFragment.firstCreationView = true;//altrimenti i filtri non vengono caricati al successivo login
+    }
 
     /**
      * A {@link FragmentStatePagerAdapter} that returns a fragment
@@ -178,10 +190,11 @@ public class ActionSelection extends FragmentActivity {
 
                 final EditText filter = (EditText) rootView.findViewById(R.id.filters_et_filter);
                 final CharSequence  filter_name = filter.getText();
-                if(!filters.contains(filter_name.toString()) && filter_name.toString() != "") {//TODO controllare la seconda parte dell AND percche aggiunge il filtro anche se è vuoto (getText cosa restituisce se è vuota?)
+                if(!filters.contains(filter_name.toString()) && !filter_name.toString().isEmpty()) {
                     filters.add(filter_name.toString());
                     filtersList.setAdapter(adapter);
                 }
+                filter.setText(null);
                 //TODO trovare il modo di far comparire un messaggio nel caso in cui il filtro è gia presente
                 mViewPager.setCurrentItem(2);
             }
@@ -203,7 +216,7 @@ public class ActionSelection extends FragmentActivity {
             int numProducts = sharedPref.getInt("#products", 0);
             for(int key = 0; key < numProducts; key++){
                 product.setName(sharedPref.getString("n" + Integer.toString(key), "product"));//TODO aggiungere come ID anche il numero della carta cosi da poter salvare spese diverse in base alla carta usata
-                product.setPrice(sharedPref.getFloat("p" + Integer.toString(key), 0));
+                product.setPrice(sharedPref.getFloat("p" + Integer.toString(key), 0));          //TODO invece che aggiungerlo qua forse conviene creare un file nuovo per ogni carta (basta usare getSharedPreference e mettere nel nome del file l id della carta)
                 lastPurchase.add(product);
             }
             final TextView total = (TextView) rootView.findViewById(R.id.lastpurch_tv_totalprice);

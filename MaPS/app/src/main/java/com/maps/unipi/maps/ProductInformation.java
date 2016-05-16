@@ -1,6 +1,7 @@
 package com.maps.unipi.maps;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,6 @@ public class ProductInformation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_information);
-
         product = ScanProduct.productScanned;
 
         TextView prod_name = (TextView) findViewById(R.id.prodinfo_tv_prodname);
@@ -24,20 +24,21 @@ public class ProductInformation extends AppCompatActivity {
 
         prod_name.setText(product.getName());
         prod_price.setText(Float.toString(product.getPrice()) + "€");
-        for (String ingredient : product.getIngredients())
-            list_ingr.append(ingredient + "\n");
 
         boolean canBuy = true;
-        for(String filter : ActionSelection.filters)
-            for(String ingredient : product.getIngredients())
-                if(filter.equalsIgnoreCase(ingredient))
-                    canBuy = false;
 
-        //TODO invece che questo fare in modo di avere una X rossa in caso non si possa comprare oppure una spunta verde(magari due immagini)
+        for (String ingredient : product.getIngredients()) {
+            list_ingr.append(ingredient + "\n");
+            for(String filter : ActionSelection.filters) {
+                if (filter.equalsIgnoreCase(ingredient))
+                    canBuy = false;
+            }
+        }
+
         if(canBuy)
-            list_ingr.append("You can buy this product!");
+            prod_name.setTextColor(Color.GREEN);
         else
-            list_ingr.append("You cannot buy this product!");
+            prod_name.setTextColor(Color.RED);
 
     }
 

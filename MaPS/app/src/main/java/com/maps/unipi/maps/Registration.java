@@ -49,7 +49,7 @@ public class Registration extends AppCompatActivity{
         CharSequence pass = regPass.getText();
         CharSequence confpass = regConfpass.getText();
 
-        if(name.toString().equals("") || surname.toString().equals("") || card.toString().equals("") || pass.toString().equals("") || confpass.toString().equals("")){
+        if(name.toString().isEmpty() || surname.toString().isEmpty() || card.toString().isEmpty() || pass.toString().isEmpty() || confpass.toString().isEmpty()){
             Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
             return;
         }

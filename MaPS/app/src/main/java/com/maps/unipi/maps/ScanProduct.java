@@ -3,6 +3,7 @@ package com.maps.unipi.maps;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.firebase.client.DataSnapshot;
@@ -17,21 +18,33 @@ import java.util.ArrayList;
 
 public class ScanProduct extends AppCompatActivity {
 
-    //dichiarato static per lo stesso motivo dei filtri e il carrello ci accedo nella activity ProductInformation
+    //dichiarato static per lo stesso motivo dei filtri e il carrello, ci accedo nella activity ProductInformation
     static Product productScanned;
+    //serve per tornare all'action selection quando si clicca back dallo scanner o dalla activity product information
+    static boolean goBack = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
+    }
 
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setPrompt("Scan a product");
-        integrator.setBeepEnabled(true);
-        integrator.setCaptureActivity(CaptureActivityPortrait.class);
-        integrator.setOrientationLocked(false);
-        integrator.initiateScan();
-        //TODO trovare il modo dopo che parte lo scanner di tornare alla activity ActionSelection
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(!goBack) {
+            goBack = true;
+            IntentIntegrator integrator = new IntentIntegrator(this);
+            integrator.setPrompt("Scan a product");
+            integrator.setBeepEnabled(true);
+            integrator.setCaptureActivity(CaptureActivityPortrait.class);
+            integrator.setOrientationLocked(false);
+            integrator.initiateScan();
+        }
+        else{
+            Intent action_selection = new Intent(this, ActionSelection.class);
+            startActivity(action_selection);
+        }
     }
 
     /*

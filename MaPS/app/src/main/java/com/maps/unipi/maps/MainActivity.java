@@ -37,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
         logPass.setText(null);
     }
 
+    //in questo modo l'applicazione viene chiusa in ogni caso (senza se ad esempio premo back in action selection arrivo qua ma se premo di nuovo back si apre di nuovo action selection)
+    @Override
+    public void onBackPressed(){
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+    }
+
     public void onClickLogin(View v) {
         final Resources myRes = getResources();
         final Context ctx = getApplicationContext();
@@ -45,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         final CharSequence card = logCard.getText();
         final CharSequence pass = logPass.getText();
 
-        if(pass.toString().equals("") || card.toString().equals("")){
+        if(pass.toString().isEmpty() || card.toString().isEmpty()){
             Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
             return;
         }
