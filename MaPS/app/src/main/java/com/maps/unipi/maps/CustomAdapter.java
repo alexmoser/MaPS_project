@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<Product>{
+public class CustomAdapter extends ArrayAdapter<ShoppingCartElement>{
 
-    public CustomAdapter(Context context, int textViewResourceId, ArrayList<Product> objects) {
+    public CustomAdapter(Context context, int textViewResourceId, ArrayList<ShoppingCartElement> objects) {
         super(context, textViewResourceId, objects);
     }
 
@@ -27,9 +27,9 @@ public class CustomAdapter extends ArrayAdapter<Product>{
         convertView = inflater.inflate(R.layout.rowcustom, null);
         TextView name = (TextView)convertView.findViewById(R.id.textViewName);
         TextView price = (TextView)convertView.findViewById(R.id.textViewPrice);
-        Product c = getItem(position);
-        name.setText(c.getName());
-        price.setText(Float.toString(c.getPrice()) + "€");
+        ShoppingCartElement c = getItem(position);
+        name.setText(c.getProduct().getName() + " x" + c.getQuantity());
+        price.setText(Float.toString(c.getProduct().getPrice()) + "€");
         return convertView;
     }
 

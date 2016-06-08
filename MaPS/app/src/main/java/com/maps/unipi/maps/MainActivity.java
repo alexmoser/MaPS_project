@@ -18,6 +18,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends AppCompatActivity {
 
     static Firebase rootRef;
+    static String cardNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // Get a reference to our users
         Firebase ref = rootRef.child("users");
-        // Attach an listener to read the data at our users reference
+        // Attach a listener to read the data at our users reference
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         Utilities.showMessage(myRes.getText(R.string.success), ctx);
                         Intent action_selection = new Intent(MainActivity.this, ActionSelection.class);
                         startActivity(action_selection);
+                        cardNumber = user.getCard();
                         return;
                     }
                 }
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                                 Utilities.showMessage(myRes.getText(R.string.success), ctx);
                                 Intent action_selection = new Intent(MainActivity.this, ActionSelection.class);
                                 startActivity(action_selection);
+                                cardNumber = user.getCard();
                                 return;
                             }
                         }

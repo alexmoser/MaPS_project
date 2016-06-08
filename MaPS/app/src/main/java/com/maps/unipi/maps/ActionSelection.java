@@ -1,7 +1,9 @@
 package com.maps.unipi.maps;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -30,6 +32,8 @@ import com.firebase.client.ValueEventListener;
 import com.firebase.client.utilities.*;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,7 +56,7 @@ public class ActionSelection extends FragmentActivity {
     static ViewPager mViewPager;
     //ho definito i filtri e il carrello statici cosi non c'è bisogno di inviarli da una activity all'altra
     static ArrayList<String> filters = new ArrayList<>();
-    static ArrayList<Product> shoppingCart = new ArrayList<>();
+    static ArrayList<ShoppingCartElement> shoppingCart = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +73,7 @@ public class ActionSelection extends FragmentActivity {
         myCollectionPagerAdapter = new CollectionPagerAdapter(getSupportFragmentManager());
 
         // Set up action bar.
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getActionBar(); //vedere se si puo' eliminare
 
         // Specify that the Home button should show an "Up" caret, indicating that touching the
         // button will take the user one step up in the application's hierarchy.
@@ -82,13 +86,28 @@ public class ActionSelection extends FragmentActivity {
 
     @Override
     public void onBackPressed(){
-        //TODO mettere un messaggio di conferma
-        Intent main_activity = new Intent(this, MainActivity.class);
-        startActivity(main_activity);
-        //svuoto il carrello e i filtri
-        shoppingCart.clear();
-        filters.clear();
-        FiltersFragment.firstCreationView = true;//altrimenti i filtri non vengono caricati al successivo login
+        // logout dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.title_logout_dialog)
+                .setMessage(R.string.message_logout_dialog)
+                .setPositiveButton(R.string.confirm_logout_dialog, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked Confirm button
+                        Intent main_activity = new Intent(ActionSelection.this, MainActivity.class);
+                        startActivity(main_activity);
+                        //svuoto il carrello e i filtri
+                        shoppingCart.clear();
+                        filters.clear();
+                        FiltersFragment.firstCreationView = true;//altrimenti i filtri non vengono caricati al successivo login
+                    }
+                })
+                .setNegativeButton(R.string.cancel_logout_dialog, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked Cancel button
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /**
@@ -160,7 +179,7 @@ public class ActionSelection extends FragmentActivity {
             add.setOnClickListener(addFilter);
             if(firstCreationView) {
                 //carico i filtri salvati nelle shared preference
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPref = getActivity().getSharedPreferences(MainActivity.cardNumber, Context.MODE_PRIVATE);
                 int numFilters = sharedPref.getInt("#filters", 0);
                 for (int key = 0; key < numFilters; key++)
                     filters.add(sharedPref.getString("f" + Integer.toString(key), "filter"));
@@ -175,10 +194,25 @@ public class ActionSelection extends FragmentActivity {
                 public void onItemClick(AdapterView<?> adapterView, final View component, int pos, long id){
                     // recupero il nome del filtro memorizzato nella riga tramite l'ArrayAdapter
                     final String filter = (String) adapterView.getItemAtPosition(pos);
-                    //TODO trovare il modo di far comparire un messaggio di conferma cancellazione
-                    filters.remove(filter);
-                    //è come aggiornare la lista..la collego infatti con il nuovo adapter
-                    filtersList.setAdapter(adapter);
+                    // confirm deletion dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(R.string.title_delete_item_dialog)
+                            .setMessage(R.string.message_delete_item_dialog)
+                            .setPositiveButton(R.string.confirm_delete_item_dialog, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked Yes button
+                                    filters.remove(filter);
+                                    //è come aggiornare la lista..la collego infatti con il nuovo adapter
+                                    filtersList.setAdapter(adapter);
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel_delete_item_dialog, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked No button
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             });
             firstCreationView = false;
@@ -194,8 +228,11 @@ public class ActionSelection extends FragmentActivity {
                     filters.add(filter_name.toString());
                     filtersList.setAdapter(adapter);
                 }
+                else {
+                    //filter already existent
+                    Utilities.showMessage(getResources().getText(R.string.filter_existent), getContext());
+                }
                 filter.setText(null);
-                //TODO trovare il modo di far comparire un messaggio nel caso in cui il filtro è gia presente
                 mViewPager.setCurrentItem(2);
             }
         };
@@ -209,15 +246,16 @@ public class ActionSelection extends FragmentActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView;
             rootView = inflater.inflate(R.layout.last_purchase, container, false);
-            ArrayList<Product> lastPurchase = new ArrayList<>();
+            ArrayList<ShoppingCartElement> lastPurchase = new ArrayList<>();
             Product product = new Product();
             //carico i prodotti salvati nelle shared preference
-            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(MainActivity.cardNumber, Context.MODE_PRIVATE);
             int numProducts = sharedPref.getInt("#products", 0);
             for(int key = 0; key < numProducts; key++){
-                product.setName(sharedPref.getString("n" + Integer.toString(key), "product"));//TODO aggiungere come ID anche il numero della carta cosi da poter salvare spese diverse in base alla carta usata
-                product.setPrice(sharedPref.getFloat("p" + Integer.toString(key), 0));          //TODO invece che aggiungerlo qua forse conviene creare un file nuovo per ogni carta (basta usare getSharedPreference e mettere nel nome del file l id della carta)
-                lastPurchase.add(product);
+                product.setName(sharedPref.getString("n" + Integer.toString(key), "product"));
+                int quantity = sharedPref.getInt("q" + Integer.toString(key), 0);
+                product.setPrice(sharedPref.getFloat("p" + Integer.toString(key), 0));
+                lastPurchase.add(new ShoppingCartElement(product, quantity));
             }
             final TextView total = (TextView) rootView.findViewById(R.id.lastpurch_tv_totalprice);
             //Calcolo il prezzo totale e lo mostro in una text view
@@ -259,13 +297,31 @@ public class ActionSelection extends FragmentActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, final View component, int pos, long id){
                     // recupero il prodotto memorizzato nella riga tramite l'ArrayAdapter
-                    final Product product = (Product) adapterView.getItemAtPosition(pos);
-                    //TODO trovare il modo di far comparire un messaggio di conferma cancellazione
-                    shoppingCart.remove(product);
-                    productsList.setAdapter(adapter);
-                    //Aggiorno il prezo totale
-                    float updateTotalPrice = Utilities.computeTotal(shoppingCart);
-                    total.setText(Float.toString(updateTotalPrice) + "€");
+                    final ShoppingCartElement selectedElement = (ShoppingCartElement) adapterView.getItemAtPosition(pos);
+                    // confirm deletion dialog
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(R.string.title_delete_item_dialog)
+                            .setMessage(R.string.message_delete_item_dialog)
+                            .setPositiveButton(R.string.confirm_delete_item_dialog, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked Yes button
+                                    ShoppingCartElement element = shoppingCart.get(shoppingCart.indexOf(selectedElement));
+                                    element.decreaseQuantity();
+                                    if (element.getQuantity() == 0)
+                                        shoppingCart.remove(selectedElement);
+                                    productsList.setAdapter(adapter);
+                                    //Aggiorno il prezzo totale
+                                    float updateTotalPrice = Utilities.computeTotal(shoppingCart);
+                                    total.setText(Float.toString(updateTotalPrice) + "€");
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel_delete_item_dialog, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked No button
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             });
             return rootView;
@@ -283,16 +339,17 @@ public class ActionSelection extends FragmentActivity {
             public void onClick(View v) {
                 //TODO gestire la fine della spesa (se si deve fare altro)
                 //salvo i dati dell'ultima spesa nelle shared preference
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPref = getActivity().getSharedPreferences(MainActivity.cardNumber, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 //rimuovo la vecchia spesa e vecchi filtri
                 editor.clear();
-                editor.commit();//TODO capire se serve oppure basta quello dopo
+                //editor.commit();//TODO capire se serve oppure basta quello dopo
                 //aggiungo nuova spesa e nuovi filtri
                 int key = 0;
-                for(Product product : shoppingCart){
-                    editor.putString("n" + Integer.toString(key), product.getName());
-                    editor.putFloat("p" + Integer.toString(key++), product.getPrice());
+                for(ShoppingCartElement element : shoppingCart){
+                    editor.putString("n" + Integer.toString(key), element.getProduct().getName());
+                    editor.putInt("q" + Integer.toString(key), element.getQuantity());
+                    editor.putFloat("p" + Integer.toString(key++), element.getProduct().getPrice());
                 }
                 editor.putInt("#products", key);
                 key = 0;

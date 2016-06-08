@@ -19,10 +19,10 @@ public class Utilities {
         toast.show();
     }
 
-    public static float computeTotal(ArrayList<Product> shoppingCart){
+    public static float computeTotal(ArrayList<ShoppingCartElement> shoppingCart){
         float total = 0;
-        for(Product product : shoppingCart){
-            total += product.getPrice();
+        for(ShoppingCartElement element : shoppingCart){
+            total += (element.getProduct().getPrice()*element.getQuantity());
         }
         return total;
     }

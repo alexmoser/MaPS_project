@@ -66,6 +66,7 @@ public class Registration extends AppCompatActivity{
         //Insert user in the DB
         User user = new User (name.toString(), surname.toString(), card.toString(), pass.toString());
         ref.push().setValue(user);
+        MainActivity.cardNumber = user.getCard();
 
         Utilities.showMessage(myRes.getText(R.string.success), ctx);
         //User is automatically logged

@@ -47,9 +47,20 @@ public class ProductInformation extends AppCompatActivity {
         startActivity(filters);
     }
 
-    public void onClickAddProduct(View v){
+    public void onClickAddProduct(View v) {
         Intent action_selection = new Intent(this, ActionSelection.class);
-        ActionSelection.shoppingCart.add(product);
+        //check if product already in the shopping cart
+        boolean elementFound = false;
+        for(ShoppingCartElement element : ActionSelection.shoppingCart) {
+            if(element.equals(new ShoppingCartElement(product, 1))) {
+                element.increaseQuantity();
+                elementFound = true;
+            }
+        }
+        if(!elementFound) {
+            ShoppingCartElement element = new ShoppingCartElement(product, 1);
+            ActionSelection.shoppingCart.add(element);
+        }
         startActivity(action_selection);
     }
 }
