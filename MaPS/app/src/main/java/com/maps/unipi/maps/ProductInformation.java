@@ -73,17 +73,6 @@ public class ProductInformation extends AppCompatActivity {
             ShoppingCartElement oldElement = ActionSelection.shoppingCart.get(ActionSelection.shoppingCart.indexOf(element));
             oldElement.increaseQuantity(element.getQuantity());
         }
-        /*boolean elementFound = false;
-        for(ShoppingCartElement element : ActionSelection.shoppingCart) {
-            if(element.equals(new ShoppingCartElement(product, 1))) {
-                element.increaseQuantity(1);
-                elementFound = true;
-            }
-        }
-        if(!elementFound) {
-            ShoppingCartElement element = new ShoppingCartElement(product, 1);
-            ActionSelection.shoppingCart.add(element);
-        }*/
         startActivity(action_selection);
     }
 }

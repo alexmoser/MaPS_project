@@ -43,4 +43,5 @@
     <string name="cancel_delete_item_dialog">No</string>
     <string name="filter_existent">Filter already existent!</string>
     <string name="quantity">Quantity</string>
+    <string name="ok">OK</string>
 </resources>

@@ -2,6 +2,7 @@ package com.maps.unipi.maps;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -298,30 +300,64 @@ public class ActionSelection extends FragmentActivity {
                 public void onItemClick(AdapterView<?> adapterView, final View component, int pos, long id){
                     // recupero il prodotto memorizzato nella riga tramite l'ArrayAdapter
                     final ShoppingCartElement selectedElement = (ShoppingCartElement) adapterView.getItemAtPosition(pos);
-                    // confirm deletion dialog
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle(R.string.title_delete_item_dialog)
-                            .setMessage(R.string.message_delete_item_dialog)
-                            .setPositiveButton(R.string.confirm_delete_item_dialog, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // User clicked Yes button
-                                    ShoppingCartElement element = shoppingCart.get(shoppingCart.indexOf(selectedElement));
-                                    element.decreaseQuantity(1);
-                                    if (element.getQuantity() == 0)
-                                        shoppingCart.remove(selectedElement);
-                                    productsList.setAdapter(adapter);
-                                    //Aggiorno il prezzo totale
-                                    float updateTotalPrice = Utilities.computeTotal(shoppingCart);
-                                    total.setText(Float.toString(updateTotalPrice) + "€");
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel_delete_item_dialog, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // User clicked No button
-                                }
-                            });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+
+                    final Dialog dialogQuantity = new Dialog(getActivity());
+                    Log.d("debug", "dialog with number picker created");
+                    dialogQuantity.setTitle(R.string.quantity);
+                    dialogQuantity.setContentView(R.layout.custom_dialog);
+                    Button btnOK = (Button) getActivity().findViewById(R.id.dialog_bt_ok);
+                    Button btnCancel = (Button) getActivity().findViewById(R.id.dialog_bt_cancel);
+                    final NumberPicker np = (NumberPicker) getActivity().findViewById(R.id.dialog_np);
+                    np.setMaxValue(selectedElement.getQuantity());
+                    np.setMinValue(1);
+                    np.setWrapSelectorWheel(true);
+                    final int quantity = selectedElement.getQuantity();
+                    Log.d("debug", "dialog with number picker settings defined");
+                    np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                        @Override
+                        public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                            //selectedElement.decreaseQuantity(newVal);
+                        }
+                    });
+                    btnOK.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v) {
+
+                            // confirm deletion dialog
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle(R.string.title_delete_item_dialog)
+                                    .setMessage(R.string.message_delete_item_dialog)
+                                    .setPositiveButton(R.string.confirm_delete_item_dialog, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // User clicked Yes button
+                                            ShoppingCartElement element = shoppingCart.get(shoppingCart.indexOf(selectedElement));
+                                            element.decreaseQuantity(np.getValue());
+                                            if (element.getQuantity() == 0)
+                                                shoppingCart.remove(selectedElement);
+                                            productsList.setAdapter(adapter);
+                                            //Aggiorno il prezzo totale
+                                            float updateTotalPrice = Utilities.computeTotal(shoppingCart);
+                                            total.setText(Float.toString(updateTotalPrice) + "€");
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.cancel_delete_item_dialog, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // User clicked No button
+                                        }
+                                    });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    });
+                    btnCancel.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v) {
+                            dialogQuantity.dismiss();
+                        }
+                    });
+                    dialogQuantity.show();
                 }
             });
             return rootView;
@@ -343,7 +379,6 @@ public class ActionSelection extends FragmentActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 //rimuovo la vecchia spesa e vecchi filtri
                 editor.clear();
-                //editor.commit();//TODO capire se serve oppure basta quello dopo
                 //aggiungo nuova spesa e nuovi filtri
                 int key = 0;
                 for(ShoppingCartElement element : shoppingCart){
