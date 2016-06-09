@@ -20,10 +20,10 @@ public class ProductInformation extends AppCompatActivity {
         setContentView(R.layout.activity_product_information);
         element = new ShoppingCartElement(ScanProduct.productScanned);
 
-        TextView prod_name = (TextView) findViewById(R.id.prodinfo_tv_prodname);
-        TextView list_ingr = (TextView) findViewById(R.id.prodinfo_tv_listingr);
-        TextView prod_price = (TextView) findViewById(R.id.prodinfo_tv_prodprice);
-        NumberPicker numberPicker = (NumberPicker) findViewById(R.id.prodinfo_np_quantity);
+        final TextView prod_name = (TextView) findViewById(R.id.prodinfo_tv_prodname);
+        final TextView list_ingr = (TextView) findViewById(R.id.prodinfo_tv_listingr);
+        final TextView prod_price = (TextView) findViewById(R.id.prodinfo_tv_prodprice);
+        final NumberPicker numberPicker = (NumberPicker) findViewById(R.id.prodinfo_np_quantity);
 
         prod_name.setText(element.getProduct().getName());
         prod_price.setText(Float.toString(element.getProduct().getPrice()) + "€");
@@ -37,6 +37,7 @@ public class ProductInformation extends AppCompatActivity {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 element.setQuantity(newVal);
+                prod_price.setText(Float.toString(element.getProduct().getPrice()*element.getQuantity()) + "€");
             }
         });
 
