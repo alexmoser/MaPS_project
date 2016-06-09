@@ -70,9 +70,9 @@ public class Registration extends AppCompatActivity{
 
         Utilities.showMessage(myRes.getText(R.string.success), ctx);
         //User is automatically logged
-        Intent action_selection = new Intent(this, ActionSelection.class);
-        startActivity(action_selection);
+        Intent welcome = new Intent(this, Welcome.class);
+        welcome.putExtra("name", user.getName());
+        welcome.putExtra("surname", user.getSurname());
+        startActivity(welcome);
     }
-
-
 }

@@ -302,17 +302,15 @@ public class ActionSelection extends FragmentActivity {
                     final ShoppingCartElement selectedElement = (ShoppingCartElement) adapterView.getItemAtPosition(pos);
 
                     final Dialog dialogQuantity = new Dialog(getActivity());
-                    Log.d("debug", "dialog with number picker created");
                     dialogQuantity.setTitle(R.string.quantity);
                     dialogQuantity.setContentView(R.layout.custom_dialog);
-                    Button btnOK = (Button) getActivity().findViewById(R.id.dialog_bt_ok);
-                    Button btnCancel = (Button) getActivity().findViewById(R.id.dialog_bt_cancel);
-                    final NumberPicker np = (NumberPicker) getActivity().findViewById(R.id.dialog_np);
+                    Button btnOK = (Button)dialogQuantity.findViewById(R.id.dialog_bt_ok);
+                    Button btnCancel = (Button)dialogQuantity.findViewById(R.id.dialog_bt_cancel);
+                    final NumberPicker np = (NumberPicker)dialogQuantity.findViewById(R.id.dialog_np);
                     np.setMaxValue(selectedElement.getQuantity());
                     np.setMinValue(1);
                     np.setWrapSelectorWheel(true);
                     final int quantity = selectedElement.getQuantity();
-                    Log.d("debug", "dialog with number picker settings defined");
                     np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                         @Override
                         public void onValueChange(NumberPicker picker, int oldVal, int newVal){
@@ -323,7 +321,6 @@ public class ActionSelection extends FragmentActivity {
                     {
                         @Override
                         public void onClick(View v) {
-
                             // confirm deletion dialog
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(R.string.title_delete_item_dialog)
@@ -339,6 +336,7 @@ public class ActionSelection extends FragmentActivity {
                                             //Aggiorno il prezzo totale
                                             float updateTotalPrice = Utilities.computeTotal(shoppingCart);
                                             total.setText(Float.toString(updateTotalPrice) + "€");
+                                            dialogQuantity.dismiss();
                                         }
                                     })
                                     .setNegativeButton(R.string.cancel_delete_item_dialog, new DialogInterface.OnClickListener() {

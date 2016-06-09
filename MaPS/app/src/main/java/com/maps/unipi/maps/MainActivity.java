@@ -70,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
                     User user = userSnapshot.getValue(User.class);
                     if(user.getCard().contentEquals(card.toString()) && user.getPassword().contentEquals(pass.toString())){
                         Utilities.showMessage(myRes.getText(R.string.success), ctx);
-                        Intent action_selection = new Intent(MainActivity.this, ActionSelection.class);
-                        startActivity(action_selection);
+                        Intent welcome = new Intent(MainActivity.this, Welcome.class);
+                        welcome.putExtra("name", user.getName());
+                        welcome.putExtra("surname", user.getSurname());
+                        startActivity(welcome);
                         cardNumber = user.getCard();
                         return;
                     }
@@ -120,8 +122,10 @@ public class MainActivity extends AppCompatActivity {
                             User user = userSnapshot.getValue(User.class);
                             if(user.getCard().contentEquals(re)){
                                 Utilities.showMessage(myRes.getText(R.string.success), ctx);
-                                Intent action_selection = new Intent(MainActivity.this, ActionSelection.class);
-                                startActivity(action_selection);
+                                Intent welcome = new Intent(MainActivity.this, Welcome.class);
+                                welcome.putExtra("name", user.getName());
+                                welcome.putExtra("surname", user.getSurname());
+                                startActivity(welcome);
                                 cardNumber = user.getCard();
                                 return;
                             }
