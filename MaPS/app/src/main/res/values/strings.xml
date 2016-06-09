@@ -10,7 +10,7 @@
     <string name="surname">Surname</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="done">Done</string>
-    <string name="passmiss">Password missmatch!</string>
+    <string name="passmiss">Password mismatch!</string>
     <string name="success">Success!</string>
     <string name="unsuccess">Data not valid!</string>
     <string name="exnotava">External storage not available!</string>
@@ -42,4 +42,5 @@
     <string name="confirm_delete_item_dialog">Yes</string>
     <string name="cancel_delete_item_dialog">No</string>
     <string name="filter_existent">Filter already existent!</string>
+    <string name="quantity">Quantity</string>
 </resources>

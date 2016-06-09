@@ -306,7 +306,7 @@ public class ActionSelection extends FragmentActivity {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // User clicked Yes button
                                     ShoppingCartElement element = shoppingCart.get(shoppingCart.indexOf(selectedElement));
-                                    element.decreaseQuantity();
+                                    element.decreaseQuantity(1);
                                     if (element.getQuantity() == 0)
                                         shoppingCart.remove(selectedElement);
                                     productsList.setAdapter(adapter);

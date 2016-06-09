@@ -83,4 +83,22 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/prodinfo_np_quantity"
+        android:layout_alignTop="@+id/prodinfo_tv_prodprice"
+        android:layout_alignLeft="@+id/prodinfo_b_next"
+        android:layout_alignStart="@+id/prodinfo_b_next" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/quantity"
+        android:id="@+id/prodinfo_tv_quantity"
+        android:layout_above="@+id/prodinfo_tv_prodprice"
+        android:layout_alignRight="@+id/prodinfo_np_quantity"
+        android:layout_alignEnd="@+id/prodinfo_np_quantity" />
+
 </RelativeLayout>
