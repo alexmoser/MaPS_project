@@ -249,7 +249,7 @@ public class ActionSelection extends FragmentActivity {
             total.setText(Float.toString(totalPrice) + "€");
             //collego la lista di prodotti all'adaptor
             ListView productsList = (ListView) rootView.findViewById(R.id.lastpurch_lv_products);
-            final CustomAdapterLastPurchase adapter = new CustomAdapterLastPurchase(getActivity(), R.layout.rowcustom, lastPurchase);
+            final CustomAdapterLastPurchase adapter = new CustomAdapterLastPurchase(getActivity(), R.layout.rowcustomLastPurchase, lastPurchase);
             productsList.setAdapter(adapter);
             return rootView;
         }
@@ -276,7 +276,7 @@ public class ActionSelection extends FragmentActivity {
             total.setText(Float.toString(totalPrice) + "€");
             //collego la lista di prodotti all'adaptor
             productsList = (ListView) rootView.findViewById(R.id.newpurch_lv_products);
-            adapter = new CustomAdapterNewPurchase(getActivity(), R.layout.rowcustom, shoppingCart);
+            adapter = new CustomAdapterNewPurchase(getActivity(), R.layout.rowcustomNewPurchase, shoppingCart);
             productsList.setAdapter(adapter);
             return rootView;
         }

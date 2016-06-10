@@ -5,11 +5,10 @@ package com.maps.unipi.maps;
  */
 
 //questa classe serve per la lista dei prodotti nella schermata New Purchase, visto che voglio mostrare Nome e prezzo non basta l'adapter usato
-//per i filtri ma bisogna definirne uno customzizzato legato ad un layout che ho definito nel file rowcustom.xml
+//per i filtri ma bisogna definirne uno customzizzato legato ad un layout che ho definito nel file rowcustomNewPurchaseNewPurchase.xml
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.rowcustom, null);
+        convertView = inflater.inflate(R.layout.rowcustomNewPurchase, null);
         final ShoppingCartElement selectedElement = elementList.get(position);
         final TextView total = (TextView) ((Activity)ctx).findViewById(R.id.newpurch_tv_totalprice);
         final TextView name = (TextView)convertView.findViewById(R.id.textViewName);
