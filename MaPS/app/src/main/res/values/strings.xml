@@ -47,4 +47,6 @@
     <string name="start_shopping">Start shopping</string>
     <string name="welcome">Welcome</string>
     <string name="already_registered">Card already registered!</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="unsubscribe_success">Unsubscription successfull!</string>
 </resources>

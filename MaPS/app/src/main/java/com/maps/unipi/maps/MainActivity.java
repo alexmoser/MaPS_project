@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent welcome = new Intent(MainActivity.this, Welcome.class);
                         welcome.putExtra("name", user.getName());
                         welcome.putExtra("surname", user.getSurname());
+                        welcome.putExtra("card", user.getCard());
                         startActivity(welcome);
                         cardNumber = user.getCard();
                         return;
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent welcome = new Intent(MainActivity.this, Welcome.class);
                                 welcome.putExtra("name", user.getName());
                                 welcome.putExtra("surname", user.getSurname());
+                                welcome.putExtra("card", user.getCard());
                                 startActivity(welcome);
                                 cardNumber = user.getCard();
                                 return;

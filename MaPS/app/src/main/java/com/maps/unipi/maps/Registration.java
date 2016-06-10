@@ -99,6 +99,7 @@ public class Registration extends AppCompatActivity{
                 Intent welcome = new Intent(Registration.this, Welcome.class);
                 welcome.putExtra("name", user.getName());
                 welcome.putExtra("surname", user.getSurname());
+                welcome.putExtra("card", user.getCard());
                 startActivity(welcome);
             }
             @Override

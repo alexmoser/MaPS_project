@@ -39,8 +39,19 @@
         android:layout_height="wrap_content"
         android:text="@string/start_shopping"
         android:id="@+id/welcome_bt_start"
+        android:onClick="onClickStartShopping"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="onClickStartShopping"/>
+        android:layout_marginBottom="61dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/unsubscribe"
+        android:id="@+id/welcome_bt_unsubscribe"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/welcome_bt_start"
+        android:layout_alignStart="@+id/welcome_bt_start"
+        android:onClick="onClickUnsubscribe"/>
 
 </RelativeLayout>
