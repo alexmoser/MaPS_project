@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import com.firebase.client.DataSnapshot;
@@ -13,6 +14,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -68,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d("debug", "There are " + snapshot.getChildrenCount() + " users");
                 for (DataSnapshot userSnapshot : snapshot.getChildren()){
                     User user = userSnapshot.getValue(User.class);
-                    if(user.getCard().contentEquals(card.toString()) && user.getPassword().contentEquals(pass.toString())){
+                    boolean passOK = BCrypt.checkpw(pass.toString(), user.getPassword());
+                    if(user.getCard().contentEquals(card.toString()) && passOK){
                         Utilities.showMessage(myRes.getText(R.string.success), ctx);
                         Intent welcome = new Intent(MainActivity.this, Welcome.class);
                         welcome.putExtra("name", user.getName());
@@ -112,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         if (scanResult != null) {
             final String re = scanResult.getContents();
             if(re != null){
+                Log.d("debug1", re);
                 // Get a reference to our users
                 Firebase ref = rootRef.child("users");
                 // Attach an listener to read the data at our users reference

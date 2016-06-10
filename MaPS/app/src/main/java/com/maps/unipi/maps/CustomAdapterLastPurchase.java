@@ -24,7 +24,7 @@ public class CustomAdapterLastPurchase extends ArrayAdapter<ShoppingCartElement>
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.rowcustom, null);
+        convertView = inflater.inflate(R.layout.rowcustom_last_purchase, null);
         TextView name = (TextView)convertView.findViewById(R.id.textViewName);
         TextView price = (TextView)convertView.findViewById(R.id.textViewPrice);
         ShoppingCartElement c = getItem(position);
