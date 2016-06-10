@@ -2,12 +2,10 @@ package com.maps.unipi.maps;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,20 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
-
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-import com.firebase.client.utilities.*;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import java.util.ArrayList;
 
@@ -265,7 +249,7 @@ public class ActionSelection extends FragmentActivity {
             total.setText(Float.toString(totalPrice) + "€");
             //collego la lista di prodotti all'adaptor
             ListView productsList = (ListView) rootView.findViewById(R.id.lastpurch_lv_products);
-            final CustomAdapter adapter = new CustomAdapter(getActivity(), R.layout.rowcustom, lastPurchase);
+            final CustomAdapterLastPurchase adapter = new CustomAdapterLastPurchase(getActivity(), R.layout.rowcustom, lastPurchase);
             productsList.setAdapter(adapter);
             return rootView;
         }
@@ -277,7 +261,7 @@ public class ActionSelection extends FragmentActivity {
         View rootView;
         ListView productsList;
         TextView total;
-        CustomAdapter adapter;
+        CustomAdapterNewPurchase adapter;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -292,72 +276,8 @@ public class ActionSelection extends FragmentActivity {
             total.setText(Float.toString(totalPrice) + "€");
             //collego la lista di prodotti all'adaptor
             productsList = (ListView) rootView.findViewById(R.id.newpurch_lv_products);
-            adapter = new CustomAdapter(getActivity(), R.layout.rowcustom, shoppingCart);
+            adapter = new CustomAdapterNewPurchase(getActivity(), R.layout.rowcustom, shoppingCart);
             productsList.setAdapter(adapter);
-            //imposto un listener sul click di un elemento della lista
-            productsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, final View component, int pos, long id){
-                    // recupero il prodotto memorizzato nella riga tramite l'ArrayAdapter
-                    final ShoppingCartElement selectedElement = (ShoppingCartElement) adapterView.getItemAtPosition(pos);
-
-                    final Dialog dialogQuantity = new Dialog(getActivity());
-                    dialogQuantity.setTitle(R.string.quantity);
-                    dialogQuantity.setContentView(R.layout.custom_dialog);
-                    Button btnOK = (Button)dialogQuantity.findViewById(R.id.dialog_bt_ok);
-                    Button btnCancel = (Button)dialogQuantity.findViewById(R.id.dialog_bt_cancel);
-                    final NumberPicker np = (NumberPicker)dialogQuantity.findViewById(R.id.dialog_np);
-                    np.setMaxValue(selectedElement.getQuantity());
-                    np.setMinValue(1);
-                    np.setWrapSelectorWheel(true);
-                    final int quantity = selectedElement.getQuantity();
-                    np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                        @Override
-                        public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                            //selectedElement.decreaseQuantity(newVal);
-                        }
-                    });
-                    btnOK.setOnClickListener(new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View v) {
-                            // confirm deletion dialog
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle(R.string.title_delete_item_dialog)
-                                    .setMessage(R.string.message_delete_item_dialog)
-                                    .setPositiveButton(R.string.confirm_delete_item_dialog, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            // User clicked Yes button
-                                            ShoppingCartElement element = shoppingCart.get(shoppingCart.indexOf(selectedElement));
-                                            element.decreaseQuantity(np.getValue());
-                                            if (element.getQuantity() == 0)
-                                                shoppingCart.remove(selectedElement);
-                                            productsList.setAdapter(adapter);
-                                            //Aggiorno il prezzo totale
-                                            float updateTotalPrice = Utilities.computeTotal(shoppingCart);
-                                            total.setText(Float.toString(updateTotalPrice) + "€");
-                                            dialogQuantity.dismiss();
-                                        }
-                                    })
-                                    .setNegativeButton(R.string.cancel_delete_item_dialog, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            // User clicked No button
-                                        }
-                                    });
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        }
-                    });
-                    btnCancel.setOnClickListener(new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View v) {
-                            dialogQuantity.dismiss();
-                        }
-                    });
-                    dialogQuantity.show();
-                }
-            });
             return rootView;
         }
 
