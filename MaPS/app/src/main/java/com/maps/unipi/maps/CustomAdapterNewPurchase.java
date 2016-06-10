@@ -33,7 +33,7 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.rowcustomNewPurchase, null);
+        convertView = inflater.inflate(R.layout.rowcustom_new_purchase, null);
         final ShoppingCartElement selectedElement = elementList.get(position);
         final TextView total = (TextView) ((Activity)ctx).findViewById(R.id.newpurch_tv_totalprice);
         final TextView name = (TextView)convertView.findViewById(R.id.textViewName);
