@@ -49,4 +49,7 @@
     <string name="already_registered">Card already registered!</string>
     <string name="unsubscribe">Unsubscribe</string>
     <string name="unsubscribe_success">Unsubscription successfull!</string>
+    <string name="pay">Pay</string>
+    <string name="tot_price">Tot price :</string>
+    <string name="tot_products">Tot products :</string>
 </resources>

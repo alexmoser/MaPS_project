@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         if (scanResult != null) {
             final String re = scanResult.getContents();
             if(re != null){
-                Log.d("debug1", re);
                 // Get a reference to our users
                 Firebase ref = rootRef.child("users");
                 // Attach an listener to read the data at our users reference

@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -291,30 +292,8 @@ public class ActionSelection extends FragmentActivity {
 
         View.OnClickListener endSpending = new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO gestire la fine della spesa (se si deve fare altro)
-                //salvo i dati dell'ultima spesa nelle shared preference
-                SharedPreferences sharedPref = getActivity().getSharedPreferences(MainActivity.cardNumber, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                //rimuovo la vecchia spesa e vecchi filtri
-                editor.clear();
-                //aggiungo nuova spesa e nuovi filtri
-                int key = 0;
-                for(ShoppingCartElement element : shoppingCart){
-                    editor.putString("n" + Integer.toString(key), element.getProduct().getName());
-                    editor.putInt("q" + Integer.toString(key), element.getQuantity());
-                    editor.putFloat("p" + Integer.toString(key++), element.getProduct().getPrice());
-                }
-                editor.putInt("#products", key);
-                key = 0;
-                for(String filter : filters)
-                    editor.putString("f" + Integer.toString(key++), filter);
-                editor.putInt("#filters", key);
-                editor.commit();
-                //elimino il carrello e aggiorno la lista
-                shoppingCart.clear();
-                productsList.setAdapter(adapter);
-                //Aggiorno il prezzo totale
-                total.setText(Float.toString(0) + "€");
+                Intent payment = new Intent(getActivity(), Payment.class);
+                startActivity(payment);
                 mViewPager.setCurrentItem(0);
             }
         };
