@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 public class Payment extends AppCompatActivity {
 
@@ -38,7 +39,7 @@ public class Payment extends AppCompatActivity {
             count += element.getQuantity();
         }
         productsNum.setText(Integer.toString(count));
-        price.setText(Float.toString(Utilities.computeTotal(ActionSelection.shoppingCart)));
+        price.setText(Float.toString(Utilities.computeTotal(ActionSelection.shoppingCart)) + "€");
 
         //NFC
         PackageManager pm = this.getPackageManager();
@@ -101,32 +102,47 @@ public class Payment extends AppCompatActivity {
         else {
             // NFC and Android Beam both are enabled
 
+            if(canWriteOnExternalStorage()) {
+                Log.d("debug1", "it is writable");
+            }
+            else
+                Log.d("debug1", "not writable");
+
             //create file to send
-            File fileDirectory = getApplicationContext().getFilesDir();
             String fileName = "ticket.txt";
-            FileOutputStream outputStream;
+            File directory = Environment.getExternalStorageDirectory();
+            Log.d("debug1", "directory path: " + directory.getAbsolutePath());
+            File fileDirectory = new File(directory.getAbsolutePath() + "/MaPS");
+            fileDirectory.mkdirs();
+            File fileToTransfer = new File(fileDirectory, fileName);
 
             try {
-                outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
-                outputStream.write(getTicket().getBytes());
+                FileOutputStream outputStream = new FileOutputStream(fileToTransfer, false);
+                OutputStreamWriter sw = new OutputStreamWriter(outputStream);
+                sw.write(getTicket());
+                sw.flush();
+                sw.close();
                 outputStream.close();
             }
-            catch(Exception e){
+            catch(IOException e){
                 //Error while creating file
                 e.printStackTrace();
             }
 
-            File fileToTransfer = new File(fileDirectory, fileName);
             fileToTransfer.setReadable(true, false);
 
             nfcAdapter.setBeamPushUris(
                     new Uri[]{Uri.fromFile(fileToTransfer)}, this);
 
-            //fileToTransfer.delete();
+            fileToTransfer.deleteOnExit();
         }
 
         //elimino il carrello
         ActionSelection.shoppingCart.clear();
+
+        //TODO send to new activity after successfull beaming
+        //Intent paymentSuccessfull = new Intent(this, ActionSelection.class);
+        //startActivity(paymentSuccessfull);
     }
 
     private String getTicket(){
@@ -141,5 +157,16 @@ public class Payment extends AppCompatActivity {
             ticket += "TOT.\t" + Utilities.computeTotal(ActionSelection.shoppingCart);
 
         return ticket;
+    }
+
+    public static boolean canWriteOnExternalStorage() {
+        // get the state of your external storage
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            // if storage is mounted return true
+            Log.d("sTag", "Yes, can write to external storage.");
+            return true;
+        }
+        return false;
     }
 }
