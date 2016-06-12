@@ -1,7 +1,9 @@
 package com.maps.unipi.maps;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.nfc.NfcAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,4 +28,5 @@ public class Utilities {
         }
         return total;
     }
+
 }

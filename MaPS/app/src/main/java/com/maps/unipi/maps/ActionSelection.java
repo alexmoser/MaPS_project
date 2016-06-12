@@ -292,6 +292,10 @@ public class ActionSelection extends FragmentActivity {
 
         View.OnClickListener endSpending = new View.OnClickListener() {
             public void onClick(View v) {
+                if(shoppingCart.isEmpty()) {
+                    Utilities.showMessage("Shopping cart is empty!", getContext());
+                    return;
+                }
                 Intent payment = new Intent(getActivity(), Payment.class);
                 startActivity(payment);
                 mViewPager.setCurrentItem(0);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,97 +8,100 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.maps.unipi.maps.MainActivity"
+    android:background="@drawable/main_background"
     android:id="@+id/sign_in">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/sign_in"
-        android:id="@+id/main_tv_signin"
-        android:layout_marginTop="80dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+    <!--
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+    -->
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/main_iv_icon"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_launch_no_circle" />
+
+    <RelativeLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/card_number"
-        android:id="@+id/main_tv_card"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/main_tv_signin"
-        android:layout_toStartOf="@+id/main_tv_signin" />
+        android:layout_marginTop="50dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/main_et_card"
+            android:hint="@string/card_number"
+            android:padding="10dp"
+            android:background="@drawable/et_top"
+            android:drawableLeft="@drawable/ic_card"/>
+
+        <ImageButton android:id="@+id/main_bt_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/main_et_card"
+            android:layout_alignBottom="@+id/main_et_card"
+            android:layout_alignRight="@+id/main_et_card"
+            android:background="@android:drawable/ic_menu_camera"
+            android:onClick="onClickScanCard"/>
+
+    </RelativeLayout>
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/main_et_card"
-        android:layout_below="@+id/main_tv_card"
-        android:layout_alignStart="@+id/main_tv_card" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/password"
-        android:id="@+id/main_tv_pass"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/main_tv_card" />
-
-    <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/main_et_pass"
-        android:layout_below="@+id/main_tv_pass"
-        android:layout_alignStart="@+id/main_tv_pass" />
+        android:padding="10dp"
+        android:hint="@string/password"
+        android:background="@drawable/et_bottom"
+        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+        android:id="@+id/main_et_pass"/>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login"
         android:id="@+id/main_b_login"
-        android:layout_below="@+id/main_et_pass"
-        android:layout_toEndOf="@+id/main_tv_card"
-        android:layout_marginTop="15dp"
-        android:layout_alignParentStart="false"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClickLogin"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="4dp"
+        android:text="@string/login"
+        android:onClick="onClickLogin"
+        android:backgroundTint="@color/accent_maps"
+        android:textColor="@android:color/white"
+        android:enabled="true"
+        android:background="@color/accent_maps" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/main_tv_join"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/or"
-        android:id="@+id/main_tv_or"
-        android:layout_below="@+id/main_b_login"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp" />
+        android:text="@string/join"
+        android:padding="10dp"
+        android:layout_margin="4dp"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceMedium"/>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/registration"
-        android:id="@+id/main_b_join"
-        android:layout_below="@+id/main_tv_or"
-        android:layout_marginTop="15dp"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClickJoin"/>
+    <!--   <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/or"
+           android:id="@+id/main_tv_or"
+           android:layout_marginTop="15dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BC"
-        android:id="@+id/main_b_barcode"
-        android:layout_alignTop="@+id/main_tv_card"
-        android:layout_alignRight="@+id/main_et_card"
-        android:onClick="onClickScanCard" />
+       <Button
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/registration"
+           android:id="@+id/main_b_join"
+           android:onClick="onClickJoin" /> -->
 
-</RelativeLayout>
+</LinearLayout>

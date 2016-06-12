@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_maps">#8bb4c3</color>
+    <color name="accent_material_light">#3b8298</color>
+    <color name="primary_maps_dark">#3b8298</color>
+</resources>

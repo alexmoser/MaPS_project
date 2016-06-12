@@ -47,19 +47,6 @@ public class ScanProduct extends AppCompatActivity {
         }
     }
 
-    /*
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setPrompt("Scan a product");
-        integrator.setBeepEnabled(true);
-        integrator.setCaptureActivity(CaptureActivityPortrait.class);
-        integrator.setOrientationLocked(false);
-        integrator.initiateScan();
-    }*/
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         final Resources myRes = getResources();

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Environment;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,10 @@ public class Payment extends AppCompatActivity {
 
         final TextView productsNum = (TextView) findViewById(R.id.payment_tv_prod);
         final TextView price = (TextView) findViewById(R.id.payment_tv_price);
+        final Button btnPay = (Button) findViewById(R.id.payment_bt_pay);
+
+        btnPay.setClickable(true);
+        btnPay.setEnabled(true);
 
         int count = 0;
         for(ShoppingCartElement element : ActionSelection.shoppingCart){
@@ -62,6 +68,12 @@ public class Payment extends AppCompatActivity {
     }
 
     public void onClickPay(View v){
+
+        Button btnPay = (Button)v;
+        btnPay.setEnabled(false);
+        btnPay.setClickable(false);
+
+        (Toast.makeText(getApplicationContext(), "Please place the phone on the NFC reader to complete the payment", Toast.LENGTH_LONG)).show();
 
         //salvo i dati dell'ultima spesa nelle shared preference
         SharedPreferences sharedPref = getSharedPreferences(MainActivity.cardNumber, Context.MODE_PRIVATE);
@@ -102,11 +114,10 @@ public class Payment extends AppCompatActivity {
         else {
             // NFC and Android Beam both are enabled
 
-            if(canWriteOnExternalStorage()) {
-                Log.d("debug1", "it is writable");
+            if(!canWriteOnExternalStorage()) {
+                Utilities.showMessage("Cannot create ticket file!", getApplicationContext());
+                return;
             }
-            else
-                Log.d("debug1", "not writable");
 
             //create file to send
             String fileName = "ticket.txt";
@@ -131,10 +142,9 @@ public class Payment extends AppCompatActivity {
 
             fileToTransfer.setReadable(true, false);
 
-            nfcAdapter.setBeamPushUris(
-                    new Uri[]{Uri.fromFile(fileToTransfer)}, this);
+            nfcAdapter.setBeamPushUris(new Uri[]{Uri.fromFile(fileToTransfer)}, this);
 
-            fileToTransfer.deleteOnExit();
+            Log.d("debug1", "message sent!");
         }
 
         //elimino il carrello
