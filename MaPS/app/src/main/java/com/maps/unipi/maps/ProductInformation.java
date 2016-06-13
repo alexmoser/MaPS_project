@@ -2,13 +2,11 @@ package com.maps.unipi.maps;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import java.util.ArrayList;
 
 public class ProductInformation extends AppCompatActivity {
 
@@ -18,7 +16,7 @@ public class ProductInformation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_information);
-        element = new ShoppingCartElement(ScanProduct.productScanned);
+        element = new ShoppingCartElement(ScanProductActivity.productScanned);
 
         final TextView prod_name = (TextView) findViewById(R.id.prodinfo_tv_prodname);
         final TextView list_ingr = (TextView) findViewById(R.id.prodinfo_tv_listingr);
@@ -45,7 +43,7 @@ public class ProductInformation extends AppCompatActivity {
 
         for (String ingredient : element.getProduct().getIngredients()) {
             list_ingr.append(ingredient + "\n");
-            for(String filter : ActionSelection.filters) {
+            for(String filter : ActionSelectionFragmentActivity.filters) {
                 if (filter.equalsIgnoreCase(ingredient))
                     canBuy = false;
             }
@@ -59,18 +57,18 @@ public class ProductInformation extends AppCompatActivity {
     }
 
     public void onClickNextScan(View v){
-        Intent filters = new Intent(this, ScanProduct.class);
+        Intent filters = new Intent(this, ScanProductActivity.class);
         startActivity(filters);
     }
 
     public void onClickAddProduct(View v) {
-        Intent action_selection = new Intent(this, ActionSelection.class);
+        Intent action_selection = new Intent(this, ActionSelectionFragmentActivity.class);
         //check if product already in the shopping cart
-        if(!ActionSelection.shoppingCart.contains(element)){ //product not in shopping cart
-            ActionSelection.shoppingCart.add(element);
+        if(!ActionSelectionFragmentActivity.shoppingCart.contains(element)){ //product not in shopping cart
+            ActionSelectionFragmentActivity.shoppingCart.add(element);
         }
         else { //product already in shopping cart
-            ShoppingCartElement oldElement = ActionSelection.shoppingCart.get(ActionSelection.shoppingCart.indexOf(element));
+            ShoppingCartElement oldElement = ActionSelectionFragmentActivity.shoppingCart.get(ActionSelectionFragmentActivity.shoppingCart.indexOf(element));
             oldElement.increaseQuantity(element.getQuantity());
         }
         startActivity(action_selection);

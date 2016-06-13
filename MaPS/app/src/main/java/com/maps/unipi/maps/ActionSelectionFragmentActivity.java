@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class ActionSelection extends FragmentActivity {
+public class ActionSelectionFragmentActivity extends FragmentActivity {
     /**
      * The {@link PagerAdapter} that will provide fragments representing
      * each object in a collection. We use a {@link FragmentStatePagerAdapter}
@@ -50,7 +49,7 @@ public class ActionSelection extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_action_selection);
 
-        ScanProduct.goBack = false;
+        ScanProductActivity.goBack = false;
 
         // Create an adapter that when requested, will return a fragment representing an object in
         // the collection.
@@ -80,7 +79,7 @@ public class ActionSelection extends FragmentActivity {
                 .setPositiveButton(R.string.confirm_logout_dialog, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked Confirm button
-                        Intent main_activity = new Intent(ActionSelection.this, MainActivity.class);
+                        Intent main_activity = new Intent(ActionSelectionFragmentActivity.this, MainActivity.class);
                         startActivity(main_activity);
                         //svuoto il carrello e i filtri
                         shoppingCart.clear();
@@ -284,7 +283,7 @@ public class ActionSelection extends FragmentActivity {
 
         View.OnClickListener addProduct = new View.OnClickListener() {
             public void onClick(View v) {
-                Intent scan_product = new Intent(getActivity(), ScanProduct.class);
+                Intent scan_product = new Intent(getActivity(), ScanProductActivity.class);
                 startActivity(scan_product);
                 mViewPager.setCurrentItem(0);
             }
@@ -296,7 +295,7 @@ public class ActionSelection extends FragmentActivity {
                     Utilities.showErrorDialog(getActivity(), "Shopping cart is empty!");
                     return;
                 }
-                Intent payment = new Intent(getActivity(), Payment.class);
+                Intent payment = new Intent(getActivity(), PaymentActivity.class);
                 startActivity(payment);
                 mViewPager.setCurrentItem(0);
             }

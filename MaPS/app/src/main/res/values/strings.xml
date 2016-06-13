@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MaPS</string>
+    <string name="app_name"><i>FastCart</i></string>
     <string name="sign_in">Sign in</string>
     <string name="card_number">Card Number</string>
     <string name="password">Password</string>
@@ -47,7 +47,7 @@
     <string name="start_shopping">Start shopping</string>
     <string name="welcome">Welcome</string>
     <string name="already_registered">Card already registered!</string>
-    <string name="unsubscribe">Unsubscribe</string>
+    <string name="unsubscribe">Click here to <u>Unsubscribe</u></string>
     <string name="unsubscribe_success">Unsubscription successful!</string>
     <string name="pay">Pay</string>
     <string name="tot_price">Tot price :</string>

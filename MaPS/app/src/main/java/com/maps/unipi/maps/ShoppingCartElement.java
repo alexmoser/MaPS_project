@@ -1,5 +1,7 @@
 package com.maps.unipi.maps;
 
+import android.util.Log;
+
 /**
  * Created by alex on 08/06/16.
  */

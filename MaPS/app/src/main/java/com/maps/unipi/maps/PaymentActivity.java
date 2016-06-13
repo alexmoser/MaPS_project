@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Environment;
@@ -16,15 +15,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-public class Payment extends AppCompatActivity {
+public class PaymentActivity extends AppCompatActivity {
 
     private NfcAdapter nfcAdapter;
 
@@ -41,11 +38,11 @@ public class Payment extends AppCompatActivity {
         btnPay.setEnabled(true);
 
         int count = 0;
-        for(ShoppingCartElement element : ActionSelection.shoppingCart){
+        for(ShoppingCartElement element : ActionSelectionFragmentActivity.shoppingCart){
             count += element.getQuantity();
         }
         productsNum.setText(Integer.toString(count));
-        price.setText(Float.toString(Utilities.computeTotal(ActionSelection.shoppingCart)) + "€");
+        price.setText(Float.toString(Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart)) + "€");
 
         //NFC
         PackageManager pm = this.getPackageManager();
@@ -63,7 +60,7 @@ public class Payment extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        Intent action_selection = new Intent(this, ActionSelection.class);
+        Intent action_selection = new Intent(this, ActionSelectionFragmentActivity.class);
         startActivity(action_selection);
     }
 
@@ -82,14 +79,14 @@ public class Payment extends AppCompatActivity {
         editor.clear();
         //aggiungo nuova spesa e nuovi filtri
         int key = 0;
-        for(ShoppingCartElement element : ActionSelection.shoppingCart){
+        for(ShoppingCartElement element : ActionSelectionFragmentActivity.shoppingCart){
             editor.putString("n" + Integer.toString(key), element.getProduct().getName());
             editor.putInt("q" + Integer.toString(key), element.getQuantity());
             editor.putFloat("p" + Integer.toString(key++), element.getProduct().getPrice());
         }
         editor.putInt("#products", key);
         key = 0;
-        for(String filter : ActionSelection.filters)
+        for(String filter : ActionSelectionFragmentActivity.filters)
             editor.putString("f" + Integer.toString(key++), filter);
         editor.putInt("#filters", key);
         editor.commit();
@@ -148,10 +145,10 @@ public class Payment extends AppCompatActivity {
         }
 
         //elimino il carrello
-        ActionSelection.shoppingCart.clear();
+        ActionSelectionFragmentActivity.shoppingCart.clear();
 
         //TODO send to new activity after successfull beaming
-        //Intent paymentSuccessfull = new Intent(this, ActionSelection.class);
+        //Intent paymentSuccessfull = new Intent(this, ActionSelectionFragmentActivity.class);
         //startActivity(paymentSuccessfull);
     }
 
@@ -159,12 +156,12 @@ public class Payment extends AppCompatActivity {
 
         String ticket = "";
 
-        for(ShoppingCartElement element : ActionSelection.shoppingCart){
+        for(ShoppingCartElement element : ActionSelectionFragmentActivity.shoppingCart){
             ticket += element.getProduct().getName() + ",";
             ticket += element.getQuantity() + ",";
             ticket += element.getProduct().getPrice()*element.getQuantity() + ";\n";
         }
-            ticket += "TOT.\t" + Utilities.computeTotal(ActionSelection.shoppingCart);
+            ticket += "TOT.\t" + Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart);
 
         return ticket;
     }

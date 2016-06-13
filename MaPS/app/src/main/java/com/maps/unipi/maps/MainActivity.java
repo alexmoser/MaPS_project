@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import com.firebase.client.DataSnapshot;
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     User user = userSnapshot.getValue(User.class);
                     boolean passOK = BCrypt.checkpw(pass.toString(), user.getPassword());
                     if(user.getCard().contentEquals(card.toString()) && passOK){
-                        Intent welcome = new Intent(MainActivity.this, Welcome.class);
+                        Intent welcome = new Intent(MainActivity.this, WelcomeActivity.class);
                         welcome.putExtra("name", user.getName());
                         welcome.putExtra("surname", user.getSurname());
                         welcome.putExtra("card", user.getCard());
@@ -98,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickJoin(View v){
-        Intent registration_form = new Intent(this, Registration.class);
+        Intent registration_form = new Intent(this, RegistrationActivity.class);
         startActivity(registration_form);
     }
 
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         for (DataSnapshot userSnapshot : snapshot.getChildren()){
                             User user = userSnapshot.getValue(User.class);
                             if(user.getCard().contentEquals(re)){
-                                Intent welcome = new Intent(MainActivity.this, Welcome.class);
+                                Intent welcome = new Intent(MainActivity.this, WelcomeActivity.class);
                                 welcome.putExtra("name", user.getName());
                                 welcome.putExtra("surname", user.getSurname());
                                 welcome.putExtra("card", user.getCard());

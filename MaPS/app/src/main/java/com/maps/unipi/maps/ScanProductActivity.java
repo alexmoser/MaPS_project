@@ -3,7 +3,6 @@ package com.maps.unipi.maps;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.firebase.client.DataSnapshot;
@@ -13,10 +12,8 @@ import com.firebase.client.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.util.ArrayList;
 
-
-public class ScanProduct extends AppCompatActivity {
+public class ScanProductActivity extends AppCompatActivity {
 
     //dichiarato static per lo stesso motivo dei filtri e il carrello, ci accedo nella activity ProductInformation
     static Product productScanned;
@@ -42,7 +39,7 @@ public class ScanProduct extends AppCompatActivity {
             integrator.initiateScan();
         }
         else{
-            Intent action_selection = new Intent(this, ActionSelection.class);
+            Intent action_selection = new Intent(this, ActionSelectionFragmentActivity.class);
             startActivity(action_selection);
         }
     }
@@ -65,12 +62,12 @@ public class ScanProduct extends AppCompatActivity {
                         for (DataSnapshot prodSnapshot : snapshot.getChildren()){
                             productScanned = prodSnapshot.getValue(Product.class);
                             if(productScanned.getBarcode().equals(re)){
-                                Intent product_info = new Intent(ScanProduct.this, ProductInformation.class);
+                                Intent product_info = new Intent(ScanProductActivity.this, ProductInformation.class);
                                 startActivity(product_info);
                                 return;
                             }
                         }
-                        Utilities.showErrorDialog(ScanProduct.this, myRes.getText(R.string.prodnotfound).toString());
+                        Utilities.showMessage(myRes.getText(R.string.prodnotfound), ctx);
                     }
                     public void onCancelled(FirebaseError e){
                         System.out.println("The read failed: " + e.getMessage());

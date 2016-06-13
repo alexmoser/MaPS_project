@@ -12,12 +12,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.journeyapps.barcodescanner.Util;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 
-public class Registration extends AppCompatActivity{
+public class RegistrationActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +82,7 @@ public class Registration extends AppCompatActivity{
                 for (DataSnapshot userSnapshot : snapshot.getChildren()){
                     User user = userSnapshot.getValue(User.class);
                     if(user.getCard().equals(card.toString())){
-                        Utilities.showErrorDialog(Registration.this, myRes.getText(R.string.already_registered).toString());
+                        Utilities.showErrorDialog(RegistrationActivity.this, myRes.getText(R.string.already_registered).toString());
                         regCard.setText(null);
                         regCard.requestFocus();
                         return;
@@ -95,7 +94,7 @@ public class Registration extends AppCompatActivity{
                 MainActivity.cardNumber = user.getCard();
 
                 //User is automatically logged
-                Intent welcome = new Intent(Registration.this, Welcome.class);
+                Intent welcome = new Intent(RegistrationActivity.this, WelcomeActivity.class);
                 welcome.putExtra("name", user.getName());
                 welcome.putExtra("surname", user.getSurname());
                 welcome.putExtra("card", user.getCard());

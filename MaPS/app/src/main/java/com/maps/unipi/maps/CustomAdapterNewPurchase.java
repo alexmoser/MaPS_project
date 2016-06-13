@@ -65,15 +65,15 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
                 {
                     @Override
                     public void onClick(View v) {
-                        ShoppingCartElement element = ActionSelection.shoppingCart.get(ActionSelection.shoppingCart.indexOf(selectedElement));
+                        ShoppingCartElement element = ActionSelectionFragmentActivity.shoppingCart.get(ActionSelectionFragmentActivity.shoppingCart.indexOf(selectedElement));
                         element.decreaseQuantity(np.getValue());
                         if (element.getQuantity() == 0)
-                            ActionSelection.shoppingCart.remove(selectedElement);
+                            ActionSelectionFragmentActivity.shoppingCart.remove(selectedElement);
 
                         name.setText(element.getProduct().getName() + " x" + element.getQuantity());
                         price.setText(Float.toString(element.getProduct().getPrice()) + "€");
 
-                        float totalPrice = Utilities.computeTotal(ActionSelection.shoppingCart);
+                        float totalPrice = Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart);
                         total.setText(Float.toString(totalPrice) + "€");
                         dialogQuantity.dismiss();
                     }

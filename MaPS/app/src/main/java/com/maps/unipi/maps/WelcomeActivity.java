@@ -3,18 +3,15 @@ package com.maps.unipi.maps;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.zxing.integration.android.IntentIntegrator;
 
-public class Welcome extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     private String card;
 
@@ -25,9 +22,11 @@ public class Welcome extends AppCompatActivity {
 
         final TextView name = (TextView) findViewById(R.id.welcome_tv_name);
         final TextView surname = (TextView) findViewById(R.id.welcome_tv_surname);
+        final TextView textViewBarcode = (TextView) findViewById(R.id.welcome_tv_barcode);
         card = getIntent().getExtras().getString("card");
         name.setText(getIntent().getExtras().getString("name"));
         surname.setText(getIntent().getExtras().getString("surname"));
+        textViewBarcode.setText(card);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class Welcome extends AppCompatActivity {
     }
 
     public void onClickStartShopping(View v){
-        Intent action_selection = new Intent(this, ActionSelection.class);
+        Intent action_selection = new Intent(this, ActionSelectionFragmentActivity.class);
         startActivity(action_selection);
     }
 
@@ -55,7 +54,7 @@ public class Welcome extends AppCompatActivity {
                     if((user.getCard()).equals(card)){
                         (ref.child(userSnapshot.getKey())).removeValue();
                         Utilities.showMessage(getResources().getText(R.string.unsubscribe_success), getApplicationContext());
-                        Intent mainActivity = new Intent(Welcome.this, MainActivity.class);
+                        Intent mainActivity = new Intent(WelcomeActivity.this, MainActivity.class);
                         startActivity(mainActivity);
                         return;
                     }

@@ -26,14 +26,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Registration"
+            android:name=".RegistrationActivity"
             android:label="@string/registration_name"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ActionSelection"
+            android:name=".ActionSelectionFragmentActivity"
             android:label="@string/action_name" />
         <activity
-            android:name=".ScanProduct"
+            android:name=".ScanProductActivity"
             android:label="Products Scan" />
         <activity
             android:name=".ProductInformation"
@@ -44,8 +44,8 @@
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Welcome" />
-        <activity android:name=".Payment"></activity>
+        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".PaymentActivity"></activity>
     </application>
 
 </manifest>

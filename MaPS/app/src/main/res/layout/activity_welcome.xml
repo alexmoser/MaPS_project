@@ -7,51 +7,79 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.maps.unipi.maps.Welcome">
+    tools:context=".WelcomeActivity"
+    android:background="@drawable/welcome_background">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/welcome"
-        android:id="@+id/welcome_tv_welcome"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <RelativeLayout
+        android:id="@+id/welcome_internal_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/welcome_tv_name"
-        android:layout_below="@+id/welcome_tv_welcome"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="77dp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/welcome_iv_card"
+            android:src="@drawable/ic_card_image_white"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/welcome_tv_surname"
-        android:layout_alignTop="@+id/welcome_tv_name"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/welcome_tv_name"
+            android:text="xxxxxxx"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="150dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/welcome_tv_surname"
+            android:text="xxxxxxx"
+            android:layout_below="@+id/welcome_tv_name"
+            android:layout_marginTop="20dp"
+            android:layout_alignLeft="@+id/welcome_tv_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/welcome_tv_barcode"
+            android:text="xxxxxxx"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="55dp"
+            android:layout_marginBottom="17dp"/>
+
+    </RelativeLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/start_shopping"
         android:id="@+id/welcome_bt_start"
         android:onClick="onClickStartShopping"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/welcome_internal_layout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="61dp" />
+        android:backgroundTint="@color/accent_maps"
+        android:textColor="@android:color/white"
+        android:enabled="true"
+        android:background="@color/accent_maps"
+        android:layout_marginTop="30dp"/>
 
-    <Button
+    <TextView
+        android:id="@+id/welcome_tv_unsubscribe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/unsubscribe"
-        android:id="@+id/welcome_bt_unsubscribe"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:linksClickable="true"
+        android:onClick="onClickUnsubscribe"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/welcome_bt_start"
-        android:layout_alignStart="@+id/welcome_bt_start"
-        android:onClick="onClickUnsubscribe"/>
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
