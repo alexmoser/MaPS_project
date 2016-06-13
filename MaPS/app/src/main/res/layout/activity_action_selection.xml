@@ -13,7 +13,7 @@ titles for adjacent pages.
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:layout_gravity="top"
-    android:background="#2A52BE"
+    android:background="@color/primary_maps"
     android:textColor="#fff"
     android:paddingTop="4dp"
     android:paddingBottom="10dp" />

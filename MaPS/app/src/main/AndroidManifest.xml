@@ -27,7 +27,8 @@
         </activity>
         <activity
             android:name=".Registration"
-            android:label="@string/registration_name" />
+            android:label="@string/registration_name"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ActionSelection"
             android:label="@string/action_name" />

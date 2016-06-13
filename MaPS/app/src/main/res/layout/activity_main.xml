@@ -10,7 +10,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.maps.unipi.maps.MainActivity"
-    android:background="@drawable/main_background"
+    android:background="@drawable/main_background1"
     android:id="@+id/sign_in">
 
     <!--
@@ -20,7 +20,6 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary">
     </android.support.v7.widget.Toolbar>
-    -->
 
     <ImageView
         android:layout_width="200dp"
@@ -28,10 +27,11 @@
         android:id="@+id/main_iv_icon"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_launch_no_circle" />
+    -->
 
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="100dp">
 
         <EditText
             android:layout_width="match_parent"
@@ -48,9 +48,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/main_et_card"
+            android:layout_marginTop="1dp"
             android:layout_alignBottom="@+id/main_et_card"
+            android:layout_marginBottom="1dp"
             android:layout_alignRight="@+id/main_et_card"
-            android:background="@android:drawable/ic_menu_camera"
+            android:layout_marginRight="4dp"
+            android:paddingRight="5dp"
+            android:src="@drawable/ic_camera"
+            android:background="#FFFFFF"
             android:onClick="onClickScanCard"/>
 
     </RelativeLayout>
@@ -63,7 +68,7 @@
         android:padding="10dp"
         android:hint="@string/password"
         android:background="@drawable/et_bottom"
-        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+        android:drawableLeft="@drawable/ic_lock"
         android:id="@+id/main_et_pass"/>
 
     <Button
@@ -81,27 +86,16 @@
 
     <TextView
         android:id="@+id/main_tv_join"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/join"
         android:padding="10dp"
         android:layout_margin="4dp"
         android:textAlignment="center"
-        android:textAppearance="?android:textAppearanceMedium"/>
-
-    <!--   <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/or"
-           android:id="@+id/main_tv_or"
-           android:layout_marginTop="15dp" />
-
-       <Button
-           style="?android:attr/buttonStyleSmall"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/registration"
-           android:id="@+id/main_b_join"
-           android:onClick="onClickJoin" /> -->
+        android:textColor="@android:color/black"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:linksClickable="true"
+        android:onClick="onClickJoin"/>
 
 </LinearLayout>
