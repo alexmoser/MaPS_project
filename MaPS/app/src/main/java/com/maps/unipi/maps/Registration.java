@@ -57,12 +57,12 @@ public class Registration extends AppCompatActivity{
         final CharSequence confpass = regConfpass.getText();
 
         if(name.toString().isEmpty() || surname.toString().isEmpty() || card.toString().isEmpty() || pass.toString().isEmpty() || confpass.toString().isEmpty()){
-            Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
+            Utilities.showErrorDialog(this, myRes.getText(R.string.unsuccess).toString());
             return;
         }
 
         if(!pass.toString().contentEquals(confpass.toString())){
-            Utilities.showMessage(myRes.getText(R.string.passmiss), ctx);
+            Utilities.showErrorDialog(this, myRes.getText(R.string.passmiss).toString());
             regPass.setText(null);
             regConfpass.setText(null);
             regPass.requestFocus();
@@ -83,7 +83,7 @@ public class Registration extends AppCompatActivity{
                 for (DataSnapshot userSnapshot : snapshot.getChildren()){
                     User user = userSnapshot.getValue(User.class);
                     if(user.getCard().equals(card.toString())){
-                        Utilities.showMessage(myRes.getText(R.string.already_registered), ctx);
+                        Utilities.showErrorDialog(Registration.this, myRes.getText(R.string.already_registered).toString());
                         regCard.setText(null);
                         regCard.requestFocus();
                         return;
@@ -94,7 +94,6 @@ public class Registration extends AppCompatActivity{
                 ref.push().setValue(user);
                 MainActivity.cardNumber = user.getCard();
 
-                Utilities.showMessage(myRes.getText(R.string.success), ctx);
                 //User is automatically logged
                 Intent welcome = new Intent(Registration.this, Welcome.class);
                 welcome.putExtra("name", user.getName());

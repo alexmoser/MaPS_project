@@ -70,7 +70,7 @@ public class ScanProduct extends AppCompatActivity {
                                 return;
                             }
                         }
-                        Utilities.showMessage(myRes.getText(R.string.prodnotfound), ctx);
+                        Utilities.showErrorDialog(ScanProduct.this, myRes.getText(R.string.prodnotfound).toString());
                     }
                     public void onCancelled(FirebaseError e){
                         System.out.println("The read failed: " + e.getMessage());
