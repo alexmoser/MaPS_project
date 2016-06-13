@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         final CharSequence pass = logPass.getText();
 
         if(pass.toString().isEmpty() || card.toString().isEmpty()){
-            Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
+            Utilities.showErrorDialog(this, myRes.getText(R.string.unsuccess).toString());
             return;
         }
         // Get a reference to our users
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                     User user = userSnapshot.getValue(User.class);
                     boolean passOK = BCrypt.checkpw(pass.toString(), user.getPassword());
                     if(user.getCard().contentEquals(card.toString()) && passOK){
-                        Utilities.showMessage(myRes.getText(R.string.success), ctx);
                         Intent welcome = new Intent(MainActivity.this, Welcome.class);
                         welcome.putExtra("name", user.getName());
                         welcome.putExtra("surname", user.getSurname());
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                 }
-                Utilities.showMessage(myRes.getText(R.string.unsuccess), ctx);
+                Utilities.showErrorDialog(MainActivity.this, myRes.getText(R.string.unsuccess).toString());
                 logCard.setText(null);
                 logPass.setText(null);
             }
@@ -130,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
                         for (DataSnapshot userSnapshot : snapshot.getChildren()){
                             User user = userSnapshot.getValue(User.class);
                             if(user.getCard().contentEquals(re)){
-                                Utilities.showMessage(myRes.getText(R.string.success), ctx);
                                 Intent welcome = new Intent(MainActivity.this, Welcome.class);
                                 welcome.putExtra("name", user.getName());
                                 welcome.putExtra("surname", user.getSurname());
@@ -140,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                                 return;
                             }
                         }
-                        Utilities.showMessage(myRes.getText(R.string.noregcard), ctx);
+                        Utilities.showErrorDialog(MainActivity.this, myRes.getText(R.string.noregcard).toString());
                     }
                     @Override
                     public void onCancelled(FirebaseError e){

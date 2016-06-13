@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
+import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Utilities {
 
-    private static final int duration = Toast.LENGTH_SHORT;
+    private static final int duration = Toast.LENGTH_LONG;
 
     public static void showMessage (CharSequence msg, Context ctx){
 
@@ -21,6 +22,19 @@ public class Utilities {
         toast.show();
     }
 
+    public static void showErrorDialog(Activity activity, String msg){
+        //default alert dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(msg)
+                .setTitle("Error!")
+                .setPositiveButton(android.R.string.ok, null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public static void showConfirmDialog(){
+
+    }
     public static float computeTotal(ArrayList<ShoppingCartElement> shoppingCart){
         float total = 0;
         for(ShoppingCartElement element : shoppingCart){

@@ -52,12 +52,12 @@ public class Payment extends AppCompatActivity {
         // Check whether NFC is available on device
         if (!pm.hasSystemFeature(PackageManager.FEATURE_NFC)) {
             // NFC is not available on the device.
-            Utilities.showMessage("The device does not has NFC hardware!", getApplicationContext());
+            Utilities.showErrorDialog(this, "The device does not has NFC hardware!");
         }
         // Check whether device is running Android 4.1 or higher
         else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             // Android Beam feature is not supported.
-            Utilities.showMessage("Android Beam is not supported!", getApplicationContext());
+            Utilities.showErrorDialog(this, "Android Beam is not supported!");
         }
     }
 
@@ -73,7 +73,7 @@ public class Payment extends AppCompatActivity {
         btnPay.setEnabled(false);
         btnPay.setClickable(false);
 
-        (Toast.makeText(getApplicationContext(), "Please place the phone on the NFC reader to complete the payment", Toast.LENGTH_LONG)).show();
+        Utilities.showMessage("Please place the phone on the NFC reader to complete the payment", getApplicationContext());
 
         //salvo i dati dell'ultima spesa nelle shared preference
         SharedPreferences sharedPref = getSharedPreferences(MainActivity.cardNumber, Context.MODE_PRIVATE);
@@ -101,21 +101,21 @@ public class Payment extends AppCompatActivity {
         if(!nfcAdapter.isEnabled()){
             // NFC is disabled, show the settings UI
             // to enable NFC
-            Utilities.showMessage("Please enable NFC!", getApplicationContext());
+            Utilities.showErrorDialog(this, "Please enable NFC!");
             startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
         }
         // Check whether Android Beam feature is enabled on device
         else if(!nfcAdapter.isNdefPushEnabled()) {
             // Android Beam is disabled, show the settings UI
             // to enable Android Beam
-            Utilities.showMessage("Please enable Android Beam!", getApplicationContext());
+            Utilities.showErrorDialog(this, "Please enable Android Beam!");
             startActivity(new Intent(Settings.ACTION_NFCSHARING_SETTINGS));
         }
         else {
             // NFC and Android Beam both are enabled
 
             if(!canWriteOnExternalStorage()) {
-                Utilities.showMessage("Cannot create ticket file!", getApplicationContext());
+                Utilities.showErrorDialog(this, "Cannot create ticket file!");
                 return;
             }
 

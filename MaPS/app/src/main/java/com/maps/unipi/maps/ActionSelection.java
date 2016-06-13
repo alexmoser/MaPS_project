@@ -217,7 +217,7 @@ public class ActionSelection extends FragmentActivity {
                 }
                 else {
                     //filter already existent
-                    Utilities.showMessage(getResources().getText(R.string.filter_existent), getContext());
+                    Utilities.showErrorDialog(getActivity(), getResources().getText(R.string.filter_existent).toString());
                 }
                 filter.setText(null);
                 mViewPager.setCurrentItem(2);
@@ -293,7 +293,7 @@ public class ActionSelection extends FragmentActivity {
         View.OnClickListener endSpending = new View.OnClickListener() {
             public void onClick(View v) {
                 if(shoppingCart.isEmpty()) {
-                    Utilities.showMessage("Shopping cart is empty!", getContext());
+                    Utilities.showErrorDialog(getActivity(), "Shopping cart is empty!");
                     return;
                 }
                 Intent payment = new Intent(getActivity(), Payment.class);

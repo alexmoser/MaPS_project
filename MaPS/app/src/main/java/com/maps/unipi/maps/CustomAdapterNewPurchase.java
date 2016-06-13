@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
         final TextView total = (TextView) ((Activity)ctx).findViewById(R.id.newpurch_tv_totalprice);
         final TextView name = (TextView)convertView.findViewById(R.id.textViewName);
         final TextView price = (TextView)convertView.findViewById(R.id.textViewPrice);
-        Button remove = (Button)convertView.findViewById(R.id.buttonRemove);
+        ImageButton remove = (ImageButton)convertView.findViewById(R.id.buttonRemove);
         ShoppingCartElement c = getItem(position);
         name.setText(c.getProduct().getName() + " x" + c.getQuantity());
         price.setText(Float.toString(c.getProduct().getPrice()) + "€");
