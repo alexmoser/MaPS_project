@@ -2,9 +2,11 @@ package com.maps.unipi.maps;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ public class ProductInformation extends AppCompatActivity {
         final TextView list_ingr = (TextView) findViewById(R.id.prodinfo_tv_listingr);
         final TextView prod_price = (TextView) findViewById(R.id.prodinfo_tv_prodprice);
         final NumberPicker numberPicker = (NumberPicker) findViewById(R.id.prodinfo_np_quantity);
+        final ImageView img = (ImageView) findViewById(R.id.prodinfo_iv_img);
 
         prod_name.setText(element.getProduct().getName());
         prod_price.setText(Float.toString(element.getProduct().getPrice()) + "€");

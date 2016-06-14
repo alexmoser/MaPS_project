@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "184476355660",
+    "firebase_url": "https://project-8777103889904424829.firebaseio.com",
+    "project_id": "project-8777103889904424829",
+    "storage_bucket": "project-8777103889904424829.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184476355660:android:ba4067f1ce6d4005",
+        "android_client_info": {
+          "package_name": "com.maps.unipi.maps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184476355660-bhijnldlnm6qrneh66gi9tl57465k2re.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWQ_1YlTV30aLso0s6Qq-UahulWxw5LTg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

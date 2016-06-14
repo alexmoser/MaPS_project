@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogo(R.drawable.ic_launch_no_circle);*/
         Firebase.setAndroidContext(this);
         //Get a reference to the DB
-        rootRef = new Firebase("https://vivid-inferno-9901.firebaseio.com");
+        rootRef = new Firebase("https://project-8777103889904424829.firebaseio.com");
     }
 
     @Override

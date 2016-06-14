@@ -101,4 +101,12 @@
         android:layout_alignRight="@+id/prodinfo_np_quantity"
         android:layout_alignEnd="@+id/prodinfo_np_quantity" />
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/prodinfo_iv_img"
+        android:layout_below="@+id/prodinfo_np_quantity"
+        android:layout_alignRight="@+id/prodinfo_b_addprod"
+        android:layout_alignEnd="@+id/prodinfo_b_addprod" />
+
 </RelativeLayout>
