@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"><i>FastCart</i></string>
+    <string name="app_name"><i>FlashCart</i></string>
     <string name="sign_in">Sign in</string>
     <string name="card_number">Card Number</string>
     <string name="password">Password</string>
