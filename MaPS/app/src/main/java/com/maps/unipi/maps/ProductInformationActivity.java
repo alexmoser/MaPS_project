@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-public class ProductInformation extends AppCompatActivity {
+import com.squareup.picasso.Picasso;
+
+public class ProductInformationActivity extends AppCompatActivity {
 
     ShoppingCartElement element;
 
@@ -29,6 +31,12 @@ public class ProductInformation extends AppCompatActivity {
         prod_name.setText(element.getProduct().getName());
         prod_price.setText(Float.toString(element.getProduct().getPrice()) + "€");
 
+        Picasso.with(this)
+                .load(element.getProduct().getUrl())
+                .error(R.drawable.ic_image_not_found)
+                .resize(250, 250)
+                .into(img);
+
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(99);
         //restart when reaching the end
@@ -38,7 +46,7 @@ public class ProductInformation extends AppCompatActivity {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 element.setQuantity(newVal);
-                prod_price.setText(Float.toString(element.getProduct().getPrice()*element.getQuantity()) + "€");
+                prod_price.setText(Utilities.roundTwoDecimal(element.getProduct().getPrice()*element.getQuantity()) + "€");
             }
         });
 

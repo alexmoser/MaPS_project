@@ -15,7 +15,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class ScanProductActivity extends AppCompatActivity {
 
-    //dichiarato static per lo stesso motivo dei filtri e il carrello, ci accedo nella activity ProductInformation
+    //dichiarato static per lo stesso motivo dei filtri e il carrello, ci accedo nella activity ProductInformationActivity
     static Product productScanned;
     //serve per tornare all'action selection quando si clicca back dallo scanner o dalla activity product information
     static boolean goBack = false;
@@ -62,7 +62,7 @@ public class ScanProductActivity extends AppCompatActivity {
                         for (DataSnapshot prodSnapshot : snapshot.getChildren()){
                             productScanned = prodSnapshot.getValue(Product.class);
                             if(productScanned.getBarcode().equals(re)){
-                                Intent product_info = new Intent(ScanProductActivity.this, ProductInformation.class);
+                                Intent product_info = new Intent(ScanProductActivity.this, ProductInformationActivity.class);
                                 startActivity(product_info);
                                 return;
                             }

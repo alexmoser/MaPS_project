@@ -43,4 +43,8 @@ public class Utilities {
         return total;
     }
 
+    public static String roundTwoDecimal(float number) {
+        return Double.toString(Math.round(number*100)/100.0d);
+    }
+
 }

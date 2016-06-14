@@ -42,7 +42,7 @@ public class PaymentActivity extends AppCompatActivity {
             count += element.getQuantity();
         }
         productsNum.setText(Integer.toString(count));
-        price.setText(Float.toString(Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart)) + "€");
+        price.setText(Utilities.roundTwoDecimal(Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart)) + "€");
 
         //NFC
         PackageManager pm = this.getPackageManager();
@@ -159,9 +159,9 @@ public class PaymentActivity extends AppCompatActivity {
         for(ShoppingCartElement element : ActionSelectionFragmentActivity.shoppingCart){
             ticket += element.getProduct().getName() + ",";
             ticket += element.getQuantity() + ",";
-            ticket += element.getProduct().getPrice()*element.getQuantity() + ";\n";
+            ticket += Utilities.roundTwoDecimal(element.getProduct().getPrice()*element.getQuantity()) + ";\n";
         }
-            ticket += "TOT.\t" + Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart);
+            ticket += "TOT.\t" + Utilities.roundTwoDecimal(Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart));
 
         return ticket;
     }

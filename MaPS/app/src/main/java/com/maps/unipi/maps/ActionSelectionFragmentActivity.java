@@ -246,7 +246,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
             final TextView total = (TextView) rootView.findViewById(R.id.lastpurch_tv_totalprice);
             //Calcolo il prezzo totale e lo mostro in una text view
             float totalPrice = Utilities.computeTotal(lastPurchase);
-            total.setText(Float.toString(totalPrice) + "€");
+            total.setText(Utilities.roundTwoDecimal(totalPrice) + "€");
             //collego la lista di prodotti all'adaptor
             ListView productsList = (ListView) rootView.findViewById(R.id.lastpurch_lv_products);
             final CustomAdapterLastPurchase adapter = new CustomAdapterLastPurchase(getActivity(), R.layout.rowcustom_last_purchase, lastPurchase);
@@ -273,7 +273,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
             total = (TextView) rootView.findViewById(R.id.newpurch_tv_totalprice);
             //Calcolo il prezzo totale e lo mostro in una text view
             float totalPrice = Utilities.computeTotal(shoppingCart);
-            total.setText(Float.toString(totalPrice) + "€");
+            total.setText(Utilities.roundTwoDecimal(totalPrice) + "€");
             //collego la lista di prodotti all'adaptor
             productsList = (ListView) rootView.findViewById(R.id.newpurch_lv_products);
             adapter = new CustomAdapterNewPurchase(getActivity(), R.layout.rowcustom_new_purchase, shoppingCart);

@@ -29,9 +29,9 @@
             android:id="@+id/welcome_tv_name"
             android:text="xxxxxxx"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:layout_marginTop="30dp"
-            android:layout_marginRight="150dp"/>
+            android:layout_marginLeft="160dp"/>
 
         <TextView
             android:layout_width="wrap_content"
