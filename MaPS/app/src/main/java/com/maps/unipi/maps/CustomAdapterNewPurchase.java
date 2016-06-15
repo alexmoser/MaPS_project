@@ -56,6 +56,8 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
             @Override
             public void onClick(View v){
                 final Dialog dialogQuantity = new Dialog(ctx);
+                NumberPicker np = (NumberPicker) ((Activity)ctx).findViewById(R.id.dialog_np);
+                np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
                 dialogQuantity.setTitle(R.string.quantity);
                 dialogQuantity.setContentView(R.layout.custom_dialog);
                 Button btnOK = (Button) dialogQuantity.findViewById(R.id.dialog_bt_ok);
