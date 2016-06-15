@@ -40,16 +40,16 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
         final TextView total = (TextView) ((Activity)ctx).findViewById(R.id.newpurch_tv_totalprice);
         final TextView name = (TextView)convertView.findViewById(R.id.textViewName);
         final TextView price = (TextView)convertView.findViewById(R.id.textViewPrice);
-        ImageButton remove = (ImageButton)convertView.findViewById(R.id.buttonRemove);
-        ShoppingCartElement c = getItem(position);
+        final ImageButton remove = (ImageButton)convertView.findViewById(R.id.buttonRemove);
+        final ShoppingCartElement c = getItem(position);
         name.setText(c.getProduct().getName() + " x" + c.getQuantity());
         price.setText(Float.toString(c.getProduct().getPrice()) + "€");
         name.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent productInfo_activity = new Intent(getContext(), ProductInformationActivity.class);
+                productInfo_activity.putExtra("barcode", c.getProduct().getBarcode());
                 getContext().startActivity(productInfo_activity);
-                // TODO add parameter with name of the product to show
             }
         });
         remove.setOnClickListener(new View.OnClickListener(){

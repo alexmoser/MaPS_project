@@ -55,7 +55,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProductInformationActivity"></activity>
+        <activity
+            android:name=".ProductInformationActivity"
+            android:label="Product Information" ></activity>
     </application>
 
 </manifest>

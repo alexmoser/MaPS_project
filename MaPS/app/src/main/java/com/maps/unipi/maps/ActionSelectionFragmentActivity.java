@@ -209,9 +209,10 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
             public void onClick(View v) {
 
                 final EditText filter = (EditText) rootView.findViewById(R.id.filters_et_filter);
-                final CharSequence  filter_name = filter.getText();
-                if(!filters.contains(filter_name.toString()) && !filter_name.toString().isEmpty()) {
-                    filters.add(filter_name.toString());
+                String  filter_name = filter.getText().toString().toLowerCase();
+                filter_name = filter_name.trim();
+                if(!filters.contains(filter_name) && !filter_name.isEmpty()) {
+                    filters.add(filter_name);
                     filtersList.setAdapter(adapter);
                 }
                 else {

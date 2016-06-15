@@ -2,9 +2,14 @@ package com.maps.unipi.maps;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
@@ -53,20 +58,28 @@ public class ProductInformationAddActivity extends AppCompatActivity {
         });
 
         boolean canBuy = true;
-
+        boolean badIngr = false;
         for (String ingredient : element.getProduct().getIngredients()) {
-            list_ingr.append(ingredient + "\n");
             for(String filter : ActionSelectionFragmentActivity.filters) {
-                if (filter.equalsIgnoreCase(ingredient))
+                if (ingredient.contains(filter)) {
                     canBuy = false;
+                    badIngr = true;
+                }
             }
+            if(badIngr) {
+                list_ingr.append(Html.fromHtml("<b>" + ingredient + "<b>"));
+                badIngr = false;
+            }
+            else {
+                list_ingr.append(ingredient);
+            }
+            if(element.getProduct().getIngredients().indexOf(ingredient) != (element.getProduct().getIngredients().size() - 1))
+                list_ingr.append(", ");
         }
-
         if(canBuy)
             prod_name.setTextColor(Color.GREEN);
         else
             prod_name.setTextColor(Color.RED);
-
     }
 
     public void onClickNextScan(View v){
