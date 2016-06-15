@@ -20,9 +20,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:label="@string/app_name">
-        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/registration_name"
@@ -34,7 +34,7 @@
             android:name=".ScanProductActivity"
             android:label="Products Scan" />
         <activity
-            android:name=".ProductInformationActivity"
+            android:name=".ProductInformationAddActivity"
             android:label="Product Information" />
         <activity
             android:name=".CaptureActivityPortrait"
@@ -42,18 +42,20 @@
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".WelcomeActivity"
-            android:label="Welcome">
-        </activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:label="Welcome"></activity>
         <activity android:name=".PaymentActivity" />
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".ProductInformationActivity"></activity>
     </application>
 
 </manifest>

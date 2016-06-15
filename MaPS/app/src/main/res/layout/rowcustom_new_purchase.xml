@@ -2,13 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="NAME"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"/>
 
@@ -16,7 +18,8 @@
         android:id="@+id/textViewPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="COST"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#C0C0C0"
         android:layout_alignLeft="@+id/textViewName"
         android:layout_below="@+id/textViewName"/>
@@ -25,9 +28,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_delete"
-        android:background="#FFFFFF"
+        android:background="?android:attr/windowBackground"
         android:id="@+id/buttonRemove"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center"
         android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

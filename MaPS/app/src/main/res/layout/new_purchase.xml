@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:weightSum="1">
+    android:layout_height="fill_parent">
 
-    <Button
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_product"
-        android:id="@+id/newpurch_b_addprod"
-        android:layout_gravity="left|bottom"
-        android:layout_weight="0.79"/>
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:id="@+id/btn_lay"
+        android:weightSum="1">
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="@string/end_spending"
-        android:id="@+id/newpurch_b_endspending"
-        android:layout_gravity="right|bottom"
-        android:layout_weight="0.79"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_product"
+            android:id="@+id/newpurch_b_addprod"
+            android:layout_weight="0.5"
+            android:layout_gravity="left|bottom"
+            android:textColor="@android:color/white"
+            android:enabled="true"
+            android:background="@color/accent_maps"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/end_spending"
+            android:id="@+id/newpurch_b_endspending"
+            android:layout_weight="0.5"
+            android:textColor="@android:color/white"
+            android:enabled="true"
+            android:background="@color/accent_maps"/>
+
+    </LinearLayout>
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="240dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/newpurch_lv_products"
-        android:layout_gravity="center_horizontal|top" />
+        android:layout_gravity="top"
+        android:layout_marginBottom="80dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="196dp"
-        android:layout_gravity="center_horizontal|bottom">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="50dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,21 +53,18 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/total"
             android:id="@+id/newpurch_tv_total"
-            android:layout_gravity="center"
-            android:layout_marginBottom="78dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="#181717" />
+            android:layout_toLeftOf="@+id/newpurch_tv_totalprice"
+            android:textColor="#181717"
+            android:layout_marginRight="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/newpurch_tv_totalprice"
-            android:layout_alignTop="@+id/newpurch_tv_total"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="30dp" />
+            android:layout_marginRight="10dp"
+            android:text="xxxxxxx"/>
 
     </RelativeLayout>
 

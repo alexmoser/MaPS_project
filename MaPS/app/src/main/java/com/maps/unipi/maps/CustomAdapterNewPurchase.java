@@ -9,6 +9,7 @@ package com.maps.unipi.maps;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,15 +44,23 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
         ShoppingCartElement c = getItem(position);
         name.setText(c.getProduct().getName() + " x" + c.getQuantity());
         price.setText(Float.toString(c.getProduct().getPrice()) + "€");
+        name.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent productInfo_activity = new Intent(getContext(), ProductInformationActivity.class);
+                getContext().startActivity(productInfo_activity);
+                // TODO add parameter with name of the product to show
+            }
+        });
         remove.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 final Dialog dialogQuantity = new Dialog(ctx);
                 dialogQuantity.setTitle(R.string.quantity);
                 dialogQuantity.setContentView(R.layout.custom_dialog);
-                Button btnOK = (Button)dialogQuantity.findViewById(R.id.dialog_bt_ok);
-                Button btnCancel = (Button)dialogQuantity.findViewById(R.id.dialog_bt_cancel);
-                final NumberPicker np = (NumberPicker)dialogQuantity.findViewById(R.id.dialog_np);
+                Button btnOK = (Button) dialogQuantity.findViewById(R.id.dialog_bt_ok);
+                Button btnCancel = (Button) dialogQuantity.findViewById(R.id.dialog_bt_cancel);
+                final NumberPicker np = (NumberPicker) dialogQuantity.findViewById(R.id.dialog_np);
                 np.setMaxValue(selectedElement.getQuantity());
                 np.setMinValue(1);
                 np.setWrapSelectorWheel(false);
