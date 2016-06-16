@@ -30,7 +30,7 @@
         android:layout_alignBottom="@+id/dialog_bt_ok"
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/dialog_np"
-        android:text="@string/cancel_logout_dialog" />
+        android:text="@string/dialog_cancel" />
 
 
 </LinearLayout>

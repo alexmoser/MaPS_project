@@ -24,7 +24,7 @@
             android:id="@+id/prodinfo_b_addprod"
             android:onClick="onClickAddProduct"
             android:layout_weight="0.5"
-            android:layout_gravity="left|bottom"
+            android:layout_gravity="bottom|right"
             android:textColor="@android:color/white"
             android:enabled="true"
             android:background="@color/accent_maps">
@@ -41,7 +41,7 @@
             android:textColor="@android:color/white"
             android:enabled="true"
             android:background="@color/accent_maps"
-            android:layout_gravity="bottom|right"/>
+            android:layout_gravity="bottom|left"/>
 
     </LinearLayout>
 
@@ -87,13 +87,14 @@
         </RelativeLayout>
 
         <ImageView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/prodinfo_iv_img"
             android:background="@color/primary_maps"
             android:padding="2dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_weight="0.6"/>
+            android:layout_weight="0.6"
+            android:src="@drawable/img_loading"/>
 
     </LinearLayout>
 
@@ -157,7 +158,7 @@
                 android:maxLines="14"
                 android:scrollbars="vertical"
                 android:textAlignment="textStart"
-                android:paddingLeft="30dp"/>
+                android:paddingLeft="40dp" />
 
         </RelativeLayout>
 

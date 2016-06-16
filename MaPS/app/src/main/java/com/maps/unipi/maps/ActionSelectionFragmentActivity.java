@@ -76,7 +76,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_logout_dialog)
                 .setMessage(R.string.message_logout_dialog)
-                .setPositiveButton(R.string.confirm_logout_dialog, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dialog_logout, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked Confirm button
                         Intent main_activity = new Intent(ActionSelectionFragmentActivity.this, MainActivity.class);
@@ -87,7 +87,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
                         FiltersFragment.firstCreationView = true;//altrimenti i filtri non vengono caricati al successivo login
                     }
                 })
-                .setNegativeButton(R.string.cancel_logout_dialog, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked Cancel button
                     }
@@ -184,7 +184,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(R.string.title_delete_item_dialog)
                             .setMessage(R.string.message_delete_item_dialog)
-                            .setPositiveButton(R.string.confirm_delete_item_dialog, new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // User clicked Yes button
                                     filters.remove(filter);
@@ -192,7 +192,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
                                     filtersList.setAdapter(adapter);
                                 }
                             })
-                            .setNegativeButton(R.string.cancel_delete_item_dialog, new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // User clicked No button
                                 }
