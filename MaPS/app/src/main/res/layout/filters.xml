@@ -17,7 +17,16 @@
         android:id="@+id/filters_b_addfilter"
         android:layout_below="@+id/filters_et_filter"
         android:layout_weight="0.79"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_gravity="left|bottom" />
+
+    <Button
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:text="@string/save_filter"
+        android:id="@+id/filters_b_savefilter"
+        android:layout_below="@+id/filters_et_filter"
+        android:layout_weight="0.79"
+        android:layout_gravity="right|bottom" />
 
     <ListView
         android:layout_width="wrap_content"

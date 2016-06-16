@@ -156,20 +156,25 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
         View rootView;
         ListView filtersList;
         ArrayAdapter<String> adapter;//serve per collegare la lista all'array string filters
+        SharedPreferences sharedPref;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             rootView = inflater.inflate(R.layout.filters, container, false);
             //imposto un listener sul bottone add filter
             final Button add = (Button) rootView.findViewById(R.id.filters_b_addfilter);
+            final Button save = (Button) rootView.findViewById(R.id.filters_b_savefilter);
+            sharedPref = getActivity().getSharedPreferences("f" + MainActivity.cardNumber, Context.MODE_PRIVATE);
             add.setOnClickListener(addFilter);
+            save.setOnClickListener(saveFilter);
+
             if(firstCreationView) {
                 //carico i filtri salvati nelle shared preference
-                SharedPreferences sharedPref = getActivity().getSharedPreferences(MainActivity.cardNumber, Context.MODE_PRIVATE);
                 int numFilters = sharedPref.getInt("#filters", 0);
                 for (int key = 0; key < numFilters; key++)
                     filters.add(sharedPref.getString("f" + Integer.toString(key), "filter"));
             }
+
             //collego la lista di filtri all'adaptor
             filtersList = (ListView) rootView.findViewById(R.id.filters_lv_fillist);
             adapter = new ArrayAdapter<> (getActivity(), android.R.layout.simple_list_item_1, filters);
@@ -223,6 +228,20 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
                 mViewPager.setCurrentItem(2);
             }
         };
+
+        View.OnClickListener saveFilter = new View.OnClickListener() {
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                //rimuovo vecchi filtri
+                editor.clear();
+                //aggiungo nuovi filtri
+                int key = 0;
+                for(String filter : ActionSelectionFragmentActivity.filters)
+                    editor.putString("f" + Integer.toString(key++), filter);
+                editor.putInt("#filters", key);
+                editor.commit();
+            }
+        };
     }
 
     public static class LastPurchaseFragment extends Fragment {
@@ -236,7 +255,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
             ArrayList<ShoppingCartElement> lastPurchase = new ArrayList<>();
             Product product = new Product();
             //carico i prodotti salvati nelle shared preference
-            SharedPreferences sharedPref = getActivity().getSharedPreferences(MainActivity.cardNumber, Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("p" + MainActivity.cardNumber, Context.MODE_PRIVATE);
             int numProducts = sharedPref.getInt("#products", 0);
             for(int key = 0; key < numProducts; key++){
                 product.setName(sharedPref.getString("n" + Integer.toString(key), "product"));

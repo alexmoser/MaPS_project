@@ -73,11 +73,11 @@ public class PaymentActivity extends AppCompatActivity {
         Utilities.showMessage("Please place the phone on the NFC reader to complete the payment", getApplicationContext());
 
         //salvo i dati dell'ultima spesa nelle shared preference
-        SharedPreferences sharedPref = getSharedPreferences(MainActivity.cardNumber, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("p" + MainActivity.cardNumber, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        //rimuovo la vecchia spesa e vecchi filtri
+        //rimuovo la vecchia spesa
         editor.clear();
-        //aggiungo nuova spesa e nuovi filtri
+        //aggiungo nuova spesa
         int key = 0;
         for(ShoppingCartElement element : ActionSelectionFragmentActivity.shoppingCart){
             editor.putString("n" + Integer.toString(key), element.getProduct().getName());
@@ -85,10 +85,6 @@ public class PaymentActivity extends AppCompatActivity {
             editor.putFloat("p" + Integer.toString(key++), element.getProduct().getPrice());
         }
         editor.putInt("#products", key);
-        key = 0;
-        for(String filter : ActionSelectionFragmentActivity.filters)
-            editor.putString("f" + Integer.toString(key++), filter);
-        editor.putInt("#filters", key);
         editor.commit();
 
         //Gestire pagamento con NFC
