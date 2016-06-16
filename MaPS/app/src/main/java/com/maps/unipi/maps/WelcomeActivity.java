@@ -1,5 +1,7 @@
 package com.maps.unipi.maps;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,29 +43,46 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void onClickUnsubscribe(View v){
-        //Get a reference to our users
-        final Firebase ref = MainActivity.rootRef.child("users");
-        // Attach a listener to read the data at our users reference
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                //delete a user
-                for (DataSnapshot userSnapshot : snapshot.getChildren()){
-                    //Log.d("debug1", card);
-                    User user = userSnapshot.getValue(User.class);
-                    if((user.getCard()).equals(card)){
-                        (ref.child(userSnapshot.getKey())).removeValue();
-                        Utilities.showMessage(getResources().getText(R.string.unsubscribe_success), getApplicationContext());
-                        Intent mainActivity = new Intent(WelcomeActivity.this, MainActivity.class);
-                        startActivity(mainActivity);
-                        return;
+        // confirm unsubscription dialog
+        final Boolean confirm = new Boolean(false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.title_unsubscribing)
+                .setMessage(R.string.message_unsubscribing)
+                .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked Yes button
+                        //Get a reference to our users
+                        final Firebase ref = MainActivity.rootRef.child("users");
+                        // Attach a listener to read the data at our users reference
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                //delete a user
+                                for (DataSnapshot userSnapshot : snapshot.getChildren()){
+                                    User user = userSnapshot.getValue(User.class);
+                                    if((user.getCard()).equals(card)){
+                                        (ref.child(userSnapshot.getKey())).removeValue();
+                                        Utilities.showMessage(getResources().getText(R.string.unsubscribe_success), getApplicationContext());
+                                        Intent mainActivity = new Intent(WelcomeActivity.this, MainActivity.class);
+                                        startActivity(mainActivity);
+                                        return;
+                                    }
+                                }
+                            }
+                            @Override
+                            public void onCancelled(FirebaseError e){
+                                System.out.println("The read failed: " + e.getMessage());
+                            }
+                        });
                     }
-                }
-            }
-            @Override
-            public void onCancelled(FirebaseError e){
-                System.out.println("The read failed: " + e.getMessage());
-            }
-        });
+                })
+                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked No button
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

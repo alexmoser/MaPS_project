@@ -54,4 +54,6 @@
     <string name="tot_products">Tot products :</string>
     <string name="join">or\n<u>Sign up</u></string>
     <string name="back">Back To Shopping</string>
+    <string name="title_unsubscribing">Confirm Unsubscribing</string>
+    <string name="message_unsubscribing">Are you sure you wanto to unsubscribe?</string>
 </resources>
