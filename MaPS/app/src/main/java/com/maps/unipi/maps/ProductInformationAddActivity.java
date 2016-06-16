@@ -36,7 +36,7 @@ public class ProductInformationAddActivity extends AppCompatActivity {
         prod_name.setText(element.getProduct().getName());
         prod_price.setText(Float.toString(element.getProduct().getPrice()) + "€");
         list_ingr.setMovementMethod(new ScrollingMovementMethod());
-
+        
         Picasso.with(this)
                 .load(element.getProduct().getUrl())
                 .error(R.drawable.ic_image_not_found)

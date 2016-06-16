@@ -57,4 +57,5 @@
     <string name="title_unsubscribing">Confirm Unsubscribing</string>
     <string name="message_unsubscribing">Are you sure you wanto to unsubscribe?</string>
     <string name="save_filter">Save filters</string>
+    <string name="new_filter">Write new Filter</string>
 </resources>

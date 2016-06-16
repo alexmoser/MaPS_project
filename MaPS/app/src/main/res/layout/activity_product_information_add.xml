@@ -87,14 +87,13 @@
         </RelativeLayout>
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/prodinfo_iv_img"
-            android:background="@color/primary_maps"
+            android:background="@drawable/img_border"
             android:padding="2dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_weight="0.6"
-            android:src="@drawable/img_loading"/>
+            android:layout_weight="0.6"/>
 
     </LinearLayout>
 
@@ -128,9 +127,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/prodinfo_np_quantity"
                 android:layout_below="@+id/prodinfo_tv_quantity"
+                android:background="@drawable/number_picker_border"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="15dp"
-                android:outlineProvider="bounds" />
+                android:layout_marginTop="15dp" />
 
         </RelativeLayout>
 

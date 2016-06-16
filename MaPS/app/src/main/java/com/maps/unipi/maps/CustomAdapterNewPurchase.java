@@ -80,11 +80,12 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
                         if (element.getQuantity() == 0)
                             ActionSelectionFragmentActivity.shoppingCart.remove(selectedElement);
 
-                        name.setText(element.getProduct().getName() + " x" + element.getQuantity());
-                        price.setText(Float.toString(element.getProduct().getPrice()) + "€");
+
+                        ActionSelectionFragmentActivity.NewPurchaseFragment.adapter.notifyDataSetChanged();
 
                         float totalPrice = Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart);
                         total.setText(Float.toString(totalPrice) + "€");
+
                         dialogQuantity.dismiss();
                     }
                 });

@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <NumberPicker
         android:id="@+id/dialog_np"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
-        android:focusableInTouchMode="false" />
+        android:focusableInTouchMode="false"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/dialog_bt_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dialog_np"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="98dp"
-        android:layout_toRightOf="@+id/dialog_np"
-        android:text="@string/ok" />
+        android:layout_toRightOf="@+id/dialog_bt_cancel"
+        android:text="@string/ok"
+        android:textColor="@color/accent_maps"
+        android:background="@android:color/transparent" />
 
     <Button
         android:id="@+id/dialog_bt_cancel"
@@ -28,9 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/dialog_bt_ok"
         android:layout_alignBottom="@+id/dialog_bt_ok"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/dialog_np"
-        android:text="@string/dialog_cancel" />
+        android:text="@string/dialog_cancel"
+        android:textColor="@color/accent_maps"
+        android:background="@android:color/transparent" />
 
 
-</LinearLayout>
+</RelativeLayout>

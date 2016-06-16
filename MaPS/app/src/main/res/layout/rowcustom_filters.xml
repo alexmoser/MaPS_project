@@ -14,16 +14,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"/>
 
-    <TextView
-        android:id="@+id/textViewPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="COST"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#C0C0C0"
-        android:layout_alignLeft="@+id/textViewName"
-        android:layout_below="@+id/textViewName"/>
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

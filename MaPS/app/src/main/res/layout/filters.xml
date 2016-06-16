@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:weightSum="1">
+    android:layout_height="fill_parent">
 
-    <EditText
+    <Button
         android:layout_width="fill_parent"
-        android:layout_height="58dp"
-        android:id="@+id/filters_et_filter"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="182dp"
-        android:layout_height="wrap_content"
-        android:text="@string/add_filter"
-        android:id="@+id/filters_b_addfilter"
-        android:layout_below="@+id/filters_et_filter"
-        android:layout_weight="0.79"
-        android:layout_gravity="left|bottom" />
-
-    <Button
-        android:layout_width="182dp"
         android:layout_height="wrap_content"
         android:text="@string/save_filter"
         android:id="@+id/filters_b_savefilter"
-        android:layout_below="@+id/filters_et_filter"
-        android:layout_weight="0.79"
-        android:layout_gravity="right|bottom" />
+        android:textColor="@android:color/white"
+        android:enabled="true"
+        android:background="@color/accent_maps"
+        android:layout_gravity="bottom"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/filters_et_filter"
+            android:hint="@string/new_filter"
+            android:padding="10dp"
+            android:drawableLeft="@drawable/ic_filter"/>
+
+        <ImageButton android:id="@+id/filters_b_addfilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/filters_et_filter"
+            android:layout_marginTop="1dp"
+            android:layout_alignBottom="@+id/filters_et_filter"
+            android:layout_marginBottom="1dp"
+            android:layout_alignRight="@+id/filters_et_filter"
+            android:layout_marginRight="4dp"
+            android:paddingRight="5dp"
+            android:src="@android:drawable/ic_input_add"
+            android:background="@android:color/transparent"/>
+
+    </RelativeLayout>
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="290dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/filters_lv_fillist"
-        android:layout_below="@+id/filters_et_filter"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="70dp" />
+        android:layout_gravity="top"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"/>
 
 </FrameLayout>
 

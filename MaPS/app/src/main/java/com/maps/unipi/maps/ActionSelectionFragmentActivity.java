@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -155,14 +156,14 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
         static boolean firstCreationView = true;//serve perche altrimenti ogni volta che viene creato il frammento vengono aggiunti i filtri della shared preferece e quindi anche quelli che magari l'utente ha eliminato
         View rootView;
         ListView filtersList;
-        ArrayAdapter<String> adapter;//serve per collegare la lista all'array string filters
+        public static CustomAdapterFilters adapter;//serve per collegare la lista all'array string filters
         SharedPreferences sharedPref;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             rootView = inflater.inflate(R.layout.filters, container, false);
             //imposto un listener sul bottone add filter
-            final Button add = (Button) rootView.findViewById(R.id.filters_b_addfilter);
+            final ImageButton add = (ImageButton) rootView.findViewById(R.id.filters_b_addfilter);
             final Button save = (Button) rootView.findViewById(R.id.filters_b_savefilter);
             sharedPref = getActivity().getSharedPreferences("f" + MainActivity.cardNumber, Context.MODE_PRIVATE);
             add.setOnClickListener(addFilter);
@@ -177,35 +178,9 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
             //collego la lista di filtri all'adaptor
             filtersList = (ListView) rootView.findViewById(R.id.filters_lv_fillist);
-            adapter = new ArrayAdapter<> (getActivity(), android.R.layout.simple_list_item_1, filters);
+            adapter = new CustomAdapterFilters(getActivity(), R.layout.rowcustom_filters, filters);
             filtersList.setAdapter(adapter);
-            //imposto un listener sul click di un elemento della lista
-            filtersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, final View component, int pos, long id){
-                    // recupero il nome del filtro memorizzato nella riga tramite l'ArrayAdapter
-                    final String filter = (String) adapterView.getItemAtPosition(pos);
-                    // confirm deletion dialog
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle(R.string.title_delete_item_dialog)
-                            .setMessage(R.string.message_delete_item_dialog)
-                            .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // User clicked Yes button
-                                    filters.remove(filter);
-                                    //è come aggiornare la lista..la collego infatti con il nuovo adapter
-                                    filtersList.setAdapter(adapter);
-                                }
-                            })
-                            .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // User clicked No button
-                                }
-                            });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            });
+
             firstCreationView = false;
             return rootView;
         }
@@ -214,15 +189,19 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
             public void onClick(View v) {
 
                 final EditText filter = (EditText) rootView.findViewById(R.id.filters_et_filter);
-                String  filter_name = filter.getText().toString().toLowerCase();
+                String filter_name = filter.getText().toString().toLowerCase();
                 filter_name = filter_name.trim();
-                if(!filters.contains(filter_name) && !filter_name.isEmpty()) {
-                    filters.add(filter_name);
-                    filtersList.setAdapter(adapter);
+                if(filter_name.isEmpty()) {
+                    Utilities.showErrorDialog(getActivity(), getResources().getText(R.string.unsuccess).toString());
+                    return;
                 }
-                else {
+                if(filters.contains(filter_name)) {
                     //filter already existent
                     Utilities.showErrorDialog(getActivity(), getResources().getText(R.string.filter_existent).toString());
+                }
+                else {
+                    filters.add(filter_name);
+                    filtersList.setAdapter(adapter);
                 }
                 filter.setText(null);
                 mViewPager.setCurrentItem(2);
@@ -281,7 +260,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
         View rootView;
         ListView productsList;
         TextView total;
-        CustomAdapterNewPurchase adapter;
+        public static CustomAdapterNewPurchase adapter;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
