@@ -42,8 +42,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/lastpurch_tv_totalprice"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:text="xxxxxxx"/>
+            android:layout_marginRight="10dp"/>
 
     </RelativeLayout>
 

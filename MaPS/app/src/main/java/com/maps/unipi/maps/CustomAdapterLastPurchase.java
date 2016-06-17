@@ -29,7 +29,7 @@ public class CustomAdapterLastPurchase extends ArrayAdapter<ShoppingCartElement>
         TextView price = (TextView)convertView.findViewById(R.id.textViewPrice);
         ShoppingCartElement c = getItem(position);
         name.setText(c.getProduct().getName() + " x" + c.getQuantity());
-        price.setText(Float.toString(c.getProduct().getPrice()) + "€");
+        price.setText(Utilities.roundTwoDecimal(c.getProduct().getPrice()) + "€");
         return convertView;
     }
 

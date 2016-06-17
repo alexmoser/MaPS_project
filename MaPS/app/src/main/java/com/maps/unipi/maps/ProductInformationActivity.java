@@ -34,7 +34,7 @@ public class ProductInformationActivity extends AppCompatActivity {
         final ImageView img = (ImageView) findViewById(R.id.productinfo_iv_img);
 
         prod_name.setText(element.getProduct().getName());
-        prod_price.setText(Float.toString(element.getProduct().getPrice()) + "€");
+        prod_price.setText(Utilities.roundTwoDecimal(element.getProduct().getPrice()) + "€");
         list_ingr.setMovementMethod(new ScrollingMovementMethod());
 
         Picasso.with(this)

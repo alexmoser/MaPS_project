@@ -20,7 +20,8 @@
             android:layout_gravity="left|bottom"
             android:textColor="@android:color/white"
             android:enabled="true"
-            android:background="@color/accent_maps"/>
+            android:background="@color/accent_maps"
+            style="?android:borderlessButtonStyle"/>
 
         <Button
             android:layout_width="fill_parent"
@@ -30,7 +31,8 @@
             android:layout_weight="0.5"
             android:textColor="@android:color/white"
             android:enabled="true"
-            android:background="@color/accent_maps"/>
+            android:background="@color/accent_maps"
+            style="?android:borderlessButtonStyle"/>
 
     </LinearLayout>
 
@@ -63,8 +65,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/newpurch_tv_totalprice"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:text="xxxxxxx"/>
+            android:layout_marginRight="10dp"/>
 
     </RelativeLayout>
 

@@ -36,8 +36,10 @@
             android:layout_alignRight="@+id/filters_et_filter"
             android:layout_marginRight="4dp"
             android:paddingRight="5dp"
+            android:paddingLeft="1dp"
             android:src="@android:drawable/ic_input_add"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/add"/>
 
     </RelativeLayout>
 

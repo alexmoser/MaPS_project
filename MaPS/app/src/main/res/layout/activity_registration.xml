@@ -15,7 +15,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -113,7 +113,6 @@
                 android:layout_below="@+id/reg_et_confpass"
                 android:layout_centerHorizontal="true"
                 android:onClick="onClickDone"
-                android:backgroundTint="@color/accent_maps"
                 android:textColor="@android:color/white"
                 android:enabled="true"
                 android:background="@color/accent_maps"/>

@@ -40,7 +40,8 @@
             android:paddingRight="5dp"
             android:src="@drawable/ic_camera"
             android:background="#FFFFFF"
-            android:onClick="onClickScanCard"/>
+            android:onClick="onClickScanCard"
+            android:contentDescription="@string/scan"/>
 
     </RelativeLayout>
 
@@ -63,7 +64,6 @@
         android:layout_margin="4dp"
         android:text="@string/login"
         android:onClick="onClickLogin"
-        android:backgroundTint="@color/accent_maps"
         android:textColor="@android:color/white"
         android:enabled="true"
         android:background="@color/accent_maps" />

@@ -61,7 +61,7 @@ public class RegistrationActivity extends AppCompatActivity{
         }
 
         if(!pass.toString().contentEquals(confpass.toString())){
-            Utilities.showErrorDialog(this, myRes.getText(R.string.passmiss).toString());
+            Utilities.showErrorDialog(this, myRes.getText(R.string.passmis).toString());
             regPass.setText(null);
             regConfpass.setText(null);
             regPass.requestFocus();

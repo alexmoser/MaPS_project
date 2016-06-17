@@ -21,32 +21,32 @@
             android:id="@+id/welcome_iv_card"
             android:src="@drawable/ic_card_image_white"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/user_details"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/welcome_tv_name"
-            android:text="xxxxxxx"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="160dp"/>
+            android:layout_marginLeft="160dp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/welcome_tv_surname"
-            android:text="xxxxxxx"
             android:layout_below="@+id/welcome_tv_name"
             android:layout_marginTop="20dp"
-            android:layout_alignLeft="@+id/welcome_tv_name" />
+            android:layout_alignLeft="@+id/welcome_tv_name"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/welcome_tv_barcode"
-            android:text="xxxxxxx"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="55dp"
@@ -62,7 +62,6 @@
         android:onClick="onClickStartShopping"
         android:layout_below="@+id/welcome_internal_layout"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/accent_maps"
         android:textColor="@android:color/white"
         android:enabled="true"
         android:background="@color/accent_maps"

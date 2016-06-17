@@ -6,31 +6,31 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/textViewName"
+        android:id="@+id/row_newpurch_tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NAME"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/row_newpurch_bt_remove"/>
 
     <TextView
-        android:id="@+id/textViewPrice"
+        android:id="@+id/row_newpurch_tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="COST"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#C0C0C0"
-        android:layout_alignLeft="@+id/textViewName"
-        android:layout_below="@+id/textViewName"/>
+        android:layout_alignLeft="@+id/row_newpurch_tv_name"
+        android:layout_below="@+id/row_newpurch_tv_name"/>
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_delete"
         android:background="@android:color/transparent"
-        android:id="@+id/buttonRemove"
+        android:id="@+id/row_newpurch_bt_remove"
         android:layout_gravity="center"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/remove"/>
 
 </RelativeLayout>

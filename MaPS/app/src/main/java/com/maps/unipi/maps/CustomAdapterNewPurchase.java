@@ -35,15 +35,16 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.rowcustom_new_purchase, null);
+        if(convertView==null)
+            convertView = inflater.inflate(R.layout.rowcustom_new_purchase, null);
         final ShoppingCartElement selectedElement = elementList.get(position);
         final TextView total = (TextView) ((Activity)ctx).findViewById(R.id.newpurch_tv_totalprice);
-        final TextView name = (TextView)convertView.findViewById(R.id.textViewName);
-        final TextView price = (TextView)convertView.findViewById(R.id.textViewPrice);
-        final ImageButton remove = (ImageButton)convertView.findViewById(R.id.buttonRemove);
+        final TextView name = (TextView)convertView.findViewById(R.id.row_newpurch_tv_name);
+        final TextView price = (TextView)convertView.findViewById(R.id.row_newpurch_tv_price);
+        final ImageButton remove = (ImageButton)convertView.findViewById(R.id.row_newpurch_bt_remove);
         final ShoppingCartElement c = getItem(position);
         name.setText(c.getProduct().getName() + " x" + c.getQuantity());
-        price.setText(Float.toString(c.getProduct().getPrice()) + "€");
+        price.setText(Utilities.roundTwoDecimal(c.getProduct().getPrice()) + "€");
         name.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -80,11 +81,10 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
                         if (element.getQuantity() == 0)
                             ActionSelectionFragmentActivity.shoppingCart.remove(selectedElement);
 
-
                         ActionSelectionFragmentActivity.NewPurchaseFragment.adapter.notifyDataSetChanged();
 
                         float totalPrice = Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart);
-                        total.setText(Float.toString(totalPrice) + "€");
+                        total.setText(Utilities.roundTwoDecimal(totalPrice) + "€");
 
                         dialogQuantity.dismiss();
                     }

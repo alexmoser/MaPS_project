@@ -16,8 +16,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -192,7 +190,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
                 String filter_name = filter.getText().toString().toLowerCase();
                 filter_name = filter_name.trim();
                 if(filter_name.isEmpty()) {
-                    Utilities.showErrorDialog(getActivity(), getResources().getText(R.string.unsuccess).toString());
+                    Utilities.showErrorDialog(getActivity(), getResources().getText(R.string.empty).toString());
                     return;
                 }
                 if(filters.contains(filter_name)) {
@@ -219,6 +217,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
                     editor.putString("f" + Integer.toString(key++), filter);
                 editor.putInt("#filters", key);
                 editor.commit();
+                Utilities.showMessage(getResources().getText(R.string.filters_saved), getContext());
             }
         };
     }
@@ -268,7 +267,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
             final Button button1 = (Button) rootView.findViewById(R.id.newpurch_b_addprod);
             button1.setOnClickListener(addProduct);
             final Button button2 = (Button) rootView.findViewById(R.id.newpurch_b_endspending);
-            button2.setOnClickListener(endSpending);
+            button2.setOnClickListener(endShopping);
             total = (TextView) rootView.findViewById(R.id.newpurch_tv_totalprice);
             //Calcolo il prezzo totale e lo mostro in una text view
             float totalPrice = Utilities.computeTotal(shoppingCart);
@@ -288,10 +287,10 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
             }
         };
 
-        View.OnClickListener endSpending = new View.OnClickListener() {
+        View.OnClickListener endShopping = new View.OnClickListener() {
             public void onClick(View v) {
                 if(shoppingCart.isEmpty()) {
-                    Utilities.showErrorDialog(getActivity(), "Shopping cart is empty!");
+                    Utilities.showErrorDialog(getActivity(), getResources().getText(R.string.empty_cart));
                     return;
                 }
                 Intent payment = new Intent(getActivity(), PaymentActivity.class);

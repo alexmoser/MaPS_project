@@ -15,6 +15,7 @@ titles for adjacent pages.
     android:layout_gravity="top"
     android:background="@color/primary_maps"
     android:textColor="#fff"
+    style="@style/Base.TextAppearance.AppCompat.Medium"
     android:paddingTop="4dp"
     android:paddingBottom="10dp" />
 

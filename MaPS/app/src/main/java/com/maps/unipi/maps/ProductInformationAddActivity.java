@@ -1,5 +1,7 @@
 package com.maps.unipi.maps;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -19,7 +21,8 @@ import com.squareup.picasso.Picasso;
 
 public class ProductInformationAddActivity extends AppCompatActivity {
 
-    ShoppingCartElement element;
+    private ShoppingCartElement element;
+    private boolean canBuy = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class ProductInformationAddActivity extends AppCompatActivity {
         final ImageView img = (ImageView) findViewById(R.id.prodinfo_iv_img);
 
         prod_name.setText(element.getProduct().getName());
-        prod_price.setText(Float.toString(element.getProduct().getPrice()) + "€");
+        prod_price.setText(Utilities.roundTwoDecimal(element.getProduct().getPrice()) + "€");
         list_ingr.setMovementMethod(new ScrollingMovementMethod());
         
         Picasso.with(this)
@@ -57,7 +60,6 @@ public class ProductInformationAddActivity extends AppCompatActivity {
             }
         });
 
-        boolean canBuy = true;
         boolean badIngr = false;
         for (String ingredient : element.getProduct().getIngredients()) {
             for(String filter : ActionSelectionFragmentActivity.filters) {
@@ -88,15 +90,42 @@ public class ProductInformationAddActivity extends AppCompatActivity {
     }
 
     public void onClickAddProduct(View v) {
-        Intent action_selection = new Intent(this, ActionSelectionFragmentActivity.class);
-        //check if product already in the shopping cart
-        if(!ActionSelectionFragmentActivity.shoppingCart.contains(element)){ //product not in shopping cart
-            ActionSelectionFragmentActivity.shoppingCart.add(element);
+        if(!canBuy) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ProductInformationAddActivity.this);
+            builder.setTitle(R.string.title_add_product_dialog)
+                    .setMessage(R.string.message_add_product_dialog)
+                    .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked Yes button
+                            //check if product already in the shopping cart
+                            if (!ActionSelectionFragmentActivity.shoppingCart.contains(element)) { //product not in shopping cart
+                                ActionSelectionFragmentActivity.shoppingCart.add(element);
+                            } else { //product already in shopping cart
+                                ShoppingCartElement oldElement = ActionSelectionFragmentActivity.shoppingCart.get(ActionSelectionFragmentActivity.shoppingCart.indexOf(element));
+                                oldElement.increaseQuantity(element.getQuantity());
+                            }
+                            Intent action_selection = new Intent(ProductInformationAddActivity.this, ActionSelectionFragmentActivity.class);
+                            startActivity(action_selection);
+                        }
+                    })
+                    .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked No button
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
-        else { //product already in shopping cart
-            ShoppingCartElement oldElement = ActionSelectionFragmentActivity.shoppingCart.get(ActionSelectionFragmentActivity.shoppingCart.indexOf(element));
-            oldElement.increaseQuantity(element.getQuantity());
+        else {
+            //check if product already in the shopping cart
+            if (!ActionSelectionFragmentActivity.shoppingCart.contains(element)) { //product not in shopping cart
+                ActionSelectionFragmentActivity.shoppingCart.add(element);
+            } else { //product already in shopping cart
+                ShoppingCartElement oldElement = ActionSelectionFragmentActivity.shoppingCart.get(ActionSelectionFragmentActivity.shoppingCart.indexOf(element));
+                oldElement.increaseQuantity(element.getQuantity());
+            }
+            Intent action_selection = new Intent(this, ActionSelectionFragmentActivity.class);
+            startActivity(action_selection);
         }
-        startActivity(action_selection);
     }
 }
