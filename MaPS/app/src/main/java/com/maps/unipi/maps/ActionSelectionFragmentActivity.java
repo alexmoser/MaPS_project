@@ -1,6 +1,5 @@
 package com.maps.unipi.maps;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,9 +38,11 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
      * The {@link ViewPager} that will display the object collection.
      */
     static ViewPager mViewPager;
-    //ho definito i filtri e il carrello statici cosi non c'è bisogno di inviarli da una activity all'altra
-    static ArrayList<String> filters = new ArrayList<>();
-    static ArrayList<ShoppingCartElement> shoppingCart = new ArrayList<>();
+
+    /* Lists of filters and elements in the shopping cart
+    *  defined static in order to grant access from all the activities */
+    public static ArrayList<String> filters = new ArrayList<>();
+    public static ArrayList<ShoppingCartElement> shoppingCart = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +51,14 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
         ScanProductActivity.goBack = false;
 
-        // Create an adapter that when requested, will return a fragment representing an object in
-        // the collection.
-        //
-        // ViewPager and its adapters use support library fragments, so we must use
-        // getSupportFragmentManager.
+        /**
+         * Create an adapter that when requested, will return a fragment representing an object in
+         * the collection.
+         *
+         * ViewPager and its adapters use support library fragments, so we must use
+         * getSupportFragmentManager.
+         */
         myCollectionPagerAdapter = new CollectionPagerAdapter(getSupportFragmentManager());
-
-        // Set up action bar.
-        final ActionBar actionBar = getActionBar(); //vedere se si puo' eliminare
-
-        // Specify that the Home button should show an "Up" caret, indicating that touching the
-        // button will take the user one step up in the application's hierarchy.
-        //actionBar.setDisplayHomeAsUpEnabled(true); //se lo metto da errore
 
         // Set up the ViewPager, attaching the adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -71,7 +67,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed(){
-        // logout dialog
+        // Logout dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_logout_dialog)
                 .setMessage(R.string.message_logout_dialog)
@@ -80,10 +76,11 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
                         // User clicked Confirm button
                         Intent main_activity = new Intent(ActionSelectionFragmentActivity.this, MainActivity.class);
                         startActivity(main_activity);
-                        //svuoto il carrello e i filtri
+                        // Clear shopping cart and filter list
                         shoppingCart.clear();
                         filters.clear();
-                        FiltersFragment.firstCreationView = true;//altrimenti i filtri non vengono caricati al successivo login
+                        // In order to load the filters again at the next login
+                        FiltersFragment.firstCreationView = true;
                     }
                 })
                 .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -107,7 +104,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = null;
+            Fragment fragment;
             switch (i) {
                 case 0:
                     fragment = new NewPurchaseFragment();
@@ -119,13 +116,13 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
                     fragment = new FiltersFragment();
                     return fragment;
                 default:
-                    return fragment;
+                    return null;
             }
         }
 
         @Override
         public int getCount() {
-            //Return the number of fragment
+            // Returns the number of fragment
             return 3;
         }
 
@@ -151,30 +148,33 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
     public static class FiltersFragment extends Fragment {
 
         public static final String ARG_OBJECT = "object";
-        static boolean firstCreationView = true;//serve perche altrimenti ogni volta che viene creato il frammento vengono aggiunti i filtri della shared preferece e quindi anche quelli che magari l'utente ha eliminato
-        View rootView;
-        ListView filtersList;
-        public static CustomAdapterFilters adapter;//serve per collegare la lista all'array string filters
-        SharedPreferences sharedPref;
+        /* Used in order to prevent loading filters from shared preference every time
+         * the fragment is created */
+        private static boolean firstCreationView = true;
+        private SharedPreferences sharedPref;
+        private View rootView;
+        private ListView filtersList;
+        public static CustomAdapterFilters adapter;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             rootView = inflater.inflate(R.layout.filters, container, false);
-            //imposto un listener sul bottone add filter
-            final ImageButton add = (ImageButton) rootView.findViewById(R.id.filters_b_addfilter);
-            final Button save = (Button) rootView.findViewById(R.id.filters_b_savefilter);
+            final ImageButton btAdd = (ImageButton) rootView.findViewById(R.id.filters_b_addfilter);
+            final Button btSave = (Button) rootView.findViewById(R.id.filters_b_savefilter);
             sharedPref = getActivity().getSharedPreferences("f" + MainActivity.cardNumber, Context.MODE_PRIVATE);
-            add.setOnClickListener(addFilter);
-            save.setOnClickListener(saveFilter);
+
+            // Set Listeners on add and save buttons
+            btAdd.setOnClickListener(addFilter);
+            btSave.setOnClickListener(saveFilter);
 
             if(firstCreationView) {
-                //carico i filtri salvati nelle shared preference
+                // Load filters saved in the shared preference
                 int numFilters = sharedPref.getInt("#filters", 0);
                 for (int key = 0; key < numFilters; key++)
                     filters.add(sharedPref.getString("f" + Integer.toString(key), "filter"));
             }
 
-            //collego la lista di filtri all'adaptor
+            // Link filters list to the adapter
             filtersList = (ListView) rootView.findViewById(R.id.filters_lv_fillist);
             adapter = new CustomAdapterFilters(getActivity(), R.layout.rowcustom_filters, filters);
             filtersList.setAdapter(adapter);
@@ -186,32 +186,35 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
         View.OnClickListener addFilter = new View.OnClickListener() {
             public void onClick(View v) {
 
-                final EditText filter = (EditText) rootView.findViewById(R.id.filters_et_filter);
-                String filter_name = filter.getText().toString().toLowerCase();
-                filter_name = filter_name.trim();
-                if(filter_name.isEmpty()) {
-                    Utilities.showErrorDialog(getActivity(), getResources().getText(R.string.empty).toString());
+                final EditText etFilter = (EditText) rootView.findViewById(R.id.filters_et_filter);
+                /* Normalize filter by lower casing it and trimming blanks at the beginning and the end */
+                String filterName = etFilter.getText().toString().toLowerCase();
+                filterName = filterName.trim();
+                if(filterName.isEmpty()) {
+                    Utilities.showErrorDialog(getActivity(), getResources().getText(R.string.empty_field).toString());
                     return;
                 }
-                if(filters.contains(filter_name)) {
-                    //filter already existent
+                if(filters.contains(filterName)) {
+                    // Filter already existent
                     Utilities.showErrorDialog(getActivity(), getResources().getText(R.string.filter_existent).toString());
                 }
                 else {
-                    filters.add(filter_name);
+                    filters.add(filterName);
                     filtersList.setAdapter(adapter);
                 }
-                filter.setText(null);
+
+                etFilter.setText(null);
                 mViewPager.setCurrentItem(2);
             }
         };
 
         View.OnClickListener saveFilter = new View.OnClickListener() {
             public void onClick(View v) {
+                // Save filter list to the shared preference
                 SharedPreferences.Editor editor = sharedPref.edit();
-                //rimuovo vecchi filtri
+                // First remove all the stored filters
                 editor.clear();
-                //aggiungo nuovi filtri
+                // Add the active filters
                 int key = 0;
                 for(String filter : ActionSelectionFragmentActivity.filters)
                     editor.putString("f" + Integer.toString(key++), filter);
@@ -228,26 +231,29 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView;
-            rootView = inflater.inflate(R.layout.last_purchase, container, false);
+            View rootView = inflater.inflate(R.layout.last_purchase, container, false);
             ArrayList<ShoppingCartElement> lastPurchase = new ArrayList<>();
-            Product product = new Product();
-            //carico i prodotti salvati nelle shared preference
+            final CustomAdapterLastPurchase adapter;
+
+            // Load products stored in shared preference
             SharedPreferences sharedPref = getActivity().getSharedPreferences("p" + MainActivity.cardNumber, Context.MODE_PRIVATE);
             int numProducts = sharedPref.getInt("#products", 0);
             for(int key = 0; key < numProducts; key++){
+                Product product = new Product();
                 product.setName(sharedPref.getString("n" + Integer.toString(key), "product"));
                 int quantity = sharedPref.getInt("q" + Integer.toString(key), 0);
                 product.setPrice(sharedPref.getFloat("p" + Integer.toString(key), 0));
                 lastPurchase.add(new ShoppingCartElement(product, quantity));
             }
-            final TextView total = (TextView) rootView.findViewById(R.id.lastpurch_tv_totalprice);
-            //Calcolo il prezzo totale e lo mostro in una text view
+
+            // Compute and show total price
+            final TextView tvTotal = (TextView) rootView.findViewById(R.id.lastpurch_tv_totalprice);
             float totalPrice = Utilities.computeTotal(lastPurchase);
-            total.setText(Utilities.roundTwoDecimal(totalPrice) + "€");
-            //collego la lista di prodotti all'adaptor
+            tvTotal.setText(Utilities.roundTwoDecimal(totalPrice) + "€");
+
+            // Link products list to the adapter
             ListView productsList = (ListView) rootView.findViewById(R.id.lastpurch_lv_products);
-            final CustomAdapterLastPurchase adapter = new CustomAdapterLastPurchase(getActivity(), R.layout.rowcustom_last_purchase, lastPurchase);
+            adapter = new CustomAdapterLastPurchase(getActivity(), R.layout.rowcustom_last_purchase, lastPurchase);
             productsList.setAdapter(adapter);
             return rootView;
         }
@@ -258,21 +264,24 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
         public static final String ARG_OBJECT = "object";
         View rootView;
         ListView productsList;
-        TextView total;
         public static CustomAdapterNewPurchase adapter;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             rootView = inflater.inflate(R.layout.new_purchase, container, false);
-            final Button button1 = (Button) rootView.findViewById(R.id.newpurch_b_addprod);
-            button1.setOnClickListener(addProduct);
-            final Button button2 = (Button) rootView.findViewById(R.id.newpurch_b_endspending);
-            button2.setOnClickListener(endShopping);
-            total = (TextView) rootView.findViewById(R.id.newpurch_tv_totalprice);
-            //Calcolo il prezzo totale e lo mostro in una text view
+            final Button btAdd = (Button) rootView.findViewById(R.id.newpurch_b_addprod);
+            final Button btEnd = (Button) rootView.findViewById(R.id.newpurch_b_endspending);
+            final TextView tvTotal = (TextView) rootView.findViewById(R.id.newpurch_tv_totalprice);
+
+            // Set button Listeners
+            btAdd.setOnClickListener(addProduct);
+            btEnd.setOnClickListener(endShopping);
+
+            // Compute and show final price
             float totalPrice = Utilities.computeTotal(shoppingCart);
-            total.setText(Utilities.roundTwoDecimal(totalPrice) + "€");
-            //collego la lista di prodotti all'adaptor
+            tvTotal.setText(Utilities.roundTwoDecimal(totalPrice) + "€");
+
+            // Link products list to the adapter
             productsList = (ListView) rootView.findViewById(R.id.newpurch_lv_products);
             adapter = new CustomAdapterNewPurchase(getActivity(), R.layout.rowcustom_new_purchase, shoppingCart);
             productsList.setAdapter(adapter);

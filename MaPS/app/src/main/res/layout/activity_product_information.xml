@@ -19,9 +19,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="130dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginTop="25dp"
         android:orientation="horizontal"
         android:id="@+id/productinfo_img_lay"
         android:weightSum="1">
@@ -37,9 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/product_name"
                 android:id="@+id/productinfo_tv_name"
-                android:layout_marginTop="15dp"
                 android:paddingRight="6dp"
                 android:paddingLeft="0dp"
                 android:textAlignment="center"
@@ -49,7 +47,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/price"
                 android:id="@+id/productinfo_tv_price"
                 android:layout_below="@+id/productinfo_tv_name"
                 android:layout_marginTop="20dp"
@@ -77,7 +74,7 @@
         android:id="@+id/ing_rel_lay"
         android:layout_below="@+id/productinfo_img_lay"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="50dp">
 
         <TextView
             android:layout_width="match_parent"

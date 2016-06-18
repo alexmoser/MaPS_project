@@ -15,10 +15,11 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class ScanProductActivity extends AppCompatActivity {
 
-    //dichiarato static per lo stesso motivo dei filtri e il carrello, ci accedo nella activity ProductInformationAddActivity
-    static Product productScanned;
-    //serve per tornare all'action selection quando si clicca back dallo scanner o dalla activity product information
-    static boolean goBack = false;
+    // Needs to be declared public static because used also by ProductInformationAddActivity and ProductInformationActivity
+    public static Product productScanned;
+
+    // Needed to discriminate whether to go back to action selection or not (on back pressed from scanActivity and ProductInformation)
+    public static boolean goBack = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +52,18 @@ public class ScanProductActivity extends AppCompatActivity {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         if (scanResult != null) {
-            final String re = scanResult.getContents();
-            if(re != null) {
-                // Get a reference to our products
+            final String scannedValue = scanResult.getContents();
+            if(scannedValue != null) {
+                // Get a reference to the products in the DB
                 Firebase ref = MainActivity.rootRef.child("products");
-                // Attach an listener to read the data at our users reference
+                // Attach a listener to read the data from products reference
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
+                        // Search the DB to find the scanned product
                         for (DataSnapshot prodSnapshot : snapshot.getChildren()){
                             productScanned = prodSnapshot.getValue(Product.class);
-                            if(productScanned.getBarcode().equals(re)){
+                            if(productScanned.getBarcode().equals(scannedValue)){
                                 Intent product_info = new Intent(ScanProductActivity.this, ProductInformationAddActivity.class);
                                 startActivity(product_info);
                                 return;

@@ -1,51 +1,49 @@
 package com.maps.unipi.maps;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-
 public class MainActivity extends AppCompatActivity {
 
-    static Firebase rootRef;
-    static String cardNumber;
+    // DataBase reference
+    public static Firebase rootRef;
+    public static String cardNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setIcon(R.drawable.ic_launcher_no_circle);
         Firebase.setAndroidContext(this);
-        //Get a reference to the DB
+        // Get a reference to the DB
         rootRef = new Firebase("https://project-8777103889904424829.firebaseio.com");
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        EditText logCard = (EditText) findViewById(R.id.main_et_card);
-        EditText logPass = (EditText) findViewById(R.id.main_et_pass);
-        logCard.setText(null);
-        logPass.setText(null);
+        final EditText etCard = (EditText) findViewById(R.id.main_et_card);
+        final EditText etPassword = (EditText) findViewById(R.id.main_et_password);
+        etCard.setText(null);
+        etPassword.setText(null);
     }
 
-    //in questo modo l'applicazione viene chiusa in ogni caso (senza se ad esempio premo back in action selection arrivo qua ma se premo di nuovo back si apre di nuovo action selection)
     @Override
     public void onBackPressed(){
+        // Close the application when going back from MainActivity
         Intent a = new Intent(Intent.ACTION_MAIN);
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -54,39 +52,39 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickLogin(View v) {
         final Resources myRes = getResources();
-        final Context ctx = getApplicationContext();
-        final EditText logCard = (EditText) findViewById(R.id.main_et_card);
-        final EditText logPass = (EditText) findViewById(R.id.main_et_pass);
-        final CharSequence card = logCard.getText();
-        final CharSequence pass = logPass.getText();
+        final EditText etCard = (EditText) findViewById(R.id.main_et_card);
+        final EditText etPassword = (EditText) findViewById(R.id.main_et_password);
+        final CharSequence card = etCard.getText();
+        final CharSequence password = etPassword.getText();
 
-        if(pass.toString().isEmpty() || card.toString().isEmpty()){
+        if(password.toString().isEmpty() || card.toString().isEmpty()){
             Utilities.showErrorDialog(this, myRes.getText(R.string.unsuccess).toString());
             return;
         }
-        // Get a reference to our users
-        Firebase ref = rootRef.child("users");
-        // Attach a listener to read the data at our users reference
+        // Get a reference to the users in the DB
+        final Firebase ref = rootRef.child("users");
+        // Attach a listener to read the data from users reference
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                //Log.d("debug", "There are " + snapshot.getChildrenCount() + " users");
                 for (DataSnapshot userSnapshot : snapshot.getChildren()){
                     User user = userSnapshot.getValue(User.class);
-                    boolean passOK = BCrypt.checkpw(pass.toString(), user.getPassword());
+                    /* Check inserted data correctness */
+                    boolean passOK = BCrypt.checkpw(password.toString(), user.getPassword());
                     if(user.getCard().contentEquals(card.toString()) && passOK){
+                        cardNumber = user.getCard();
                         Intent welcome = new Intent(MainActivity.this, WelcomeActivity.class);
+                        /* Welcome activity parameters */
                         welcome.putExtra("name", user.getName());
                         welcome.putExtra("surname", user.getSurname());
                         welcome.putExtra("card", user.getCard());
                         startActivity(welcome);
-                        cardNumber = user.getCard();
                         return;
                     }
                 }
                 Utilities.showErrorDialog(MainActivity.this, myRes.getText(R.string.unsuccess).toString());
-                logCard.setText(null);
-                logPass.setText(null);
+                etCard.setText(null);
+                etPassword.setText(null);
             }
             @Override
             public void onCancelled(FirebaseError e){
@@ -112,31 +110,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        final Resources myRes = getResources();
-        final Context ctx = getApplicationContext();
 
         if (scanResult != null) {
-            final String re = scanResult.getContents();
-            if(re != null){
-                // Get a reference to our users
-                Firebase ref = rootRef.child("users");
-                // Attach an listener to read the data at our users reference
+            final String scannedValue = scanResult.getContents();
+            if(scannedValue != null){
+                // Get a reference to the users in the DB
+                final Firebase ref = rootRef.child("users");
+                // Attach a listener to read the data from users reference
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
+                        // Check if the scanned card is in the DB
                         for (DataSnapshot userSnapshot : snapshot.getChildren()){
                             User user = userSnapshot.getValue(User.class);
-                            if(user.getCard().contentEquals(re)){
+                            if(user.getCard().contentEquals(scannedValue)){
+                                cardNumber = user.getCard();
                                 Intent welcome = new Intent(MainActivity.this, WelcomeActivity.class);
                                 welcome.putExtra("name", user.getName());
                                 welcome.putExtra("surname", user.getSurname());
                                 welcome.putExtra("card", user.getCard());
                                 startActivity(welcome);
-                                cardNumber = user.getCard();
                                 return;
                             }
                         }
-                        Utilities.showErrorDialog(MainActivity.this, myRes.getText(R.string.noregcard).toString());
+                        Utilities.showErrorDialog(MainActivity.this, getResources().getText(R.string.noregcard).toString());
                     }
                     @Override
                     public void onCancelled(FirebaseError e){

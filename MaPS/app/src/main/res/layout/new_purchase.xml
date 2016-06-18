@@ -26,7 +26,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/end_spending"
+            android:text="@string/end_shopping"
             android:id="@+id/newpurch_b_endspending"
             android:layout_weight="0.5"
             android:textColor="@android:color/white"

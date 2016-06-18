@@ -1,9 +1,8 @@
 package com.maps.unipi.maps;
 
-import android.util.Log;
-
 /**
- * Created by alex on 08/06/16.
+ * Class that represents an element of the shopping cart. It is the combination of a Product with
+ * relative quantity
  */
 public class ShoppingCartElement {
     private Product product;
@@ -49,10 +48,12 @@ public class ShoppingCartElement {
 
     @Override
     public boolean equals(Object object) {
+        if(object == null)
+            return false;
+        if(!(object instanceof ShoppingCartElement))
+            return false;
         Product obj = ((ShoppingCartElement) object).getProduct();
-        if(obj.getBarcode().equals(product.getBarcode()))
-            return true;
-        return false;
+        return (obj.getBarcode().equals(product.getBarcode()));
     }
 
 }

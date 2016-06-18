@@ -3,7 +3,8 @@ package com.maps.unipi.maps;
 import java.util.ArrayList;
 
 /**
- * Created by leo on 11/05/16.
+ * Class that represents a Product as instance of the Firebase database, hence the attributes must
+ * correspond to the DB structure
  */
 public class Product {
 

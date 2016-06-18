@@ -3,57 +3,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PaymentActivity">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/pay"
         android:id="@+id/payment_bt_pay"
+        android:onClick="onClickPay"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClickPay"/>
+        android:textColor="@android:color/white"
+        android:enabled="true"
+        android:background="@color/accent_maps"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/tot_products"
         android:id="@+id/payment_tv_totProd"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="30dp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/tot_price"
         android:id="@+id/payment_tv_totPrice"
         android:layout_below="@+id/payment_tv_totProd"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="99dp" />
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/payment_tv_prod"
-        android:layout_alignTop="@+id/payment_tv_totProd"
-        android:layout_alignLeft="@+id/payment_tv_price"
-        android:layout_alignStart="@+id/payment_tv_price" />
+        android:layout_below="@id/payment_tv_totProd"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/payment_tv_price"
-        android:layout_alignTop="@+id/payment_tv_totPrice"
-        android:layout_toRightOf="@+id/payment_bt_pay"
-        android:layout_toEndOf="@+id/payment_bt_pay" />
+        android:layout_below="@+id/payment_tv_totPrice"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="15dp"/>
+
 </RelativeLayout>

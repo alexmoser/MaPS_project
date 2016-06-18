@@ -4,8 +4,10 @@ package com.maps.unipi.maps;
  * Created by leo on 14/05/16.
  */
 
-//questa classe serve per la lista dei prodotti nella schermata New Purchase, visto che voglio mostrare Nome e prezzo non basta l'adapter usato
-//per i filtri ma bisogna definirne uno customzizzato legato ad un layout che ho definito nel file rowcustom.xml
+/**
+ * This class defines a customized adapter for the LastPurchase fragment in ActionSelectionFragmentActivity
+ * It uses a custom layout defined in file rowcustom_last_purchase.xml
+ * */
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +26,13 @@ public class CustomAdapterLastPurchase extends ArrayAdapter<ShoppingCartElement>
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.rowcustom_last_purchase, null);
-        TextView name = (TextView)convertView.findViewById(R.id.textViewName);
-        TextView price = (TextView)convertView.findViewById(R.id.textViewPrice);
-        ShoppingCartElement c = getItem(position);
-        name.setText(c.getProduct().getName() + " x" + c.getQuantity());
-        price.setText(Utilities.roundTwoDecimal(c.getProduct().getPrice()) + "€");
+        if(convertView==null)
+            convertView = inflater.inflate(R.layout.rowcustom_last_purchase, null);
+        final TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
+        final TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
+        final ShoppingCartElement element = getItem(position);
+        tvName.setText(element.getProduct().getName() + " x" + element.getQuantity());
+        tvPrice.setText(Utilities.roundTwoDecimal(element.getProduct().getPrice()) + "€");
         return convertView;
     }
 

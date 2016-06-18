@@ -20,21 +20,27 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/registration_name"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ActionSelectionFragmentActivity"
-            android:label="@string/action_name" />
+            android:label="@string/action_name"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ScanProductActivity"
-            android:label="Products Scan" />
+            android:label="Products Scan"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ProductInformationAddActivity"
-            android:label="Product Information" />
+            android:label="Product Information"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CaptureActivityPortrait"
             android:screenOrientation="portrait"
@@ -43,14 +49,16 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".WelcomeActivity"
-            android:label="@string/welcome_name">
-        </activity>
+            android:label="@string/welcome_name"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".PaymentActivity"
-            android:label="@string/payment_name"/>
+            android:label="@string/payment_name"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,7 +67,8 @@
         </activity>
         <activity
             android:name=".ProductInformationActivity"
-            android:label="@string/product_info_name" >
+            android:label="@string/product_info_name"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

@@ -22,13 +22,14 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        final TextView name = (TextView) findViewById(R.id.welcome_tv_name);
-        final TextView surname = (TextView) findViewById(R.id.welcome_tv_surname);
-        final TextView textViewBarcode = (TextView) findViewById(R.id.welcome_tv_barcode);
+        final TextView tvName = (TextView) findViewById(R.id.welcome_tv_name);
+        final TextView tvSurname = (TextView) findViewById(R.id.welcome_tv_surname);
+        final TextView tvBarcode = (TextView) findViewById(R.id.welcome_tv_barcode);
+
+        tvName.setText(getIntent().getExtras().getString("name"));
+        tvSurname.setText(getIntent().getExtras().getString("surname"));
         card = getIntent().getExtras().getString("card");
-        name.setText(getIntent().getExtras().getString("name"));
-        surname.setText(getIntent().getExtras().getString("surname"));
-        textViewBarcode.setText(card);
+        tvBarcode.setText(card);
     }
 
     @Override
@@ -43,21 +44,20 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void onClickUnsubscribe(View v){
-        // confirm unsubscription dialog
-        final Boolean confirm = new Boolean(false);
+        // Confirm unsubscription dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.title_unsubscribing)
-                .setMessage(R.string.message_unsubscribing)
+        builder.setTitle(R.string.title_unsubscribe_dialog)
+                .setMessage(R.string.message_unsubscribe_dialog)
                 .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked Yes button
-                        //Get a reference to our users
+                        // Get a reference to the users in the DB
                         final Firebase ref = MainActivity.rootRef.child("users");
-                        // Attach a listener to read the data at our users reference
+                        // Attach a listener to read the data from users reference
                         ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot snapshot) {
-                                //delete a user
+                                // Remove user from DB
                                 for (DataSnapshot userSnapshot : snapshot.getChildren()){
                                     User user = userSnapshot.getValue(User.class);
                                     if((user.getCard()).equals(card)){
