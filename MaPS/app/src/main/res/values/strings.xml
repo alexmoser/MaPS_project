@@ -60,6 +60,7 @@
     <!-- errors -->
     <string name="empty_field">Empty field!</string>
     <string name="empty_fields">Empty fields!</string>
+    <string name="no_zero">If the code starts with \'0\', please remove it</string>
     <string name="empty_cart">Shopping cart is empty!</string>
     <string name="already_registered">Card already registered!</string>
     <string name="filter_existent">Filter already existent!</string>

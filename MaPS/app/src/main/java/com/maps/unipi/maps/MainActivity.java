@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     User user = userSnapshot.getValue(User.class);
                     /* Check inserted data correctness */
                     boolean passOK = BCrypt.checkpw(password.toString(), user.getPassword());
-                    if(user.getCard().contentEquals(card.toString()) && passOK){
+                    if(user.getCard().contentEquals(Utilities.removeInitialZero(card)) && passOK){
                         cardNumber = user.getCard();
                         Intent welcome = new Intent(MainActivity.this, WelcomeActivity.class);
                         /* Welcome activity parameters */

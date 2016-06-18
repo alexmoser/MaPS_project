@@ -76,4 +76,11 @@ public class Utilities {
         return String.format(Locale.getDefault(), "%.2f", number);
     }
 
+    public static String removeInitialZero(CharSequence text) {
+        String ret = text.toString();
+        if(text.charAt(0) == '0') {
+            ret = text.subSequence(1, text.length()).toString();
+        }
+        return ret;
+    }
 }
