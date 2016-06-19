@@ -1,4 +1,4 @@
-package com.maps.unipi.maps;
+package com.maps.unipi.flashcart;
 
 import android.content.Context;
 import android.content.Intent;

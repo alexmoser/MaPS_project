@@ -1,4 +1,4 @@
-package com.maps.unipi.maps;
+package com.maps.unipi.flashcart;
 
 /**
  * Class that represents an element of the shopping cart. It is the combination of a Product with

@@ -1,4 +1,4 @@
-package com.maps.unipi.maps;
+package com.maps.unipi.flashcart;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -124,10 +124,10 @@ public class MainActivity extends AppCompatActivity {
                         for (DataSnapshot userSnapshot : snapshot.getChildren()){
                             User user = userSnapshot.getValue(User.class);
                             /**
-                             * The barcode scanner might not recognize the first digit of the code
-                             * when it is a 0 and the barcode has the black and white bars inverted
+                             * The barcode scanner does not recognize the first digit of the code
+                             * when it is a 0 and the barcode follows a different standard (EAN-13)
                              * Check if both valid
-                             * TODO check if true for every char or only for 0
+                             * NB: scanner might still not work for different standards
                              * */
                             String cardDB = Utilities.removeInitialZero(user.getCard());
                             if(user.getCard().contentEquals(scannedValue) || cardDB.contentEquals(scannedValue)){

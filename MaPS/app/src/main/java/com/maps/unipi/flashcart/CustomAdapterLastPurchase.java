@@ -1,4 +1,4 @@
-package com.maps.unipi.maps;
+package com.maps.unipi.flashcart;
 
 /**
  * Created by leo on 14/05/16.

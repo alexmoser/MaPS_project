@@ -1,4 +1,4 @@
-package com.maps.unipi.maps;
+package com.maps.unipi.flashcart;
 
 /**
  * Class that represents a User as instance of the Firebase database, hence the attributes must

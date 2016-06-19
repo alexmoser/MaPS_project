@@ -1,4 +1,4 @@
-package com.maps.unipi.maps;
+package com.maps.unipi.flashcart;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
