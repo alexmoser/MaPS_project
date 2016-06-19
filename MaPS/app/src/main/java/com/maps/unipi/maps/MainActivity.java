@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     User user = userSnapshot.getValue(User.class);
                     /* Check inserted data correctness */
                     boolean passOK = BCrypt.checkpw(password.toString(), user.getPassword());
-                    if(user.getCard().contentEquals(Utilities.removeInitialZero(card)) && passOK){
+                    if(user.getCard().contentEquals(card) && passOK){
                         cardNumber = user.getCard();
                         Intent welcome = new Intent(MainActivity.this, WelcomeActivity.class);
                         /* Welcome activity parameters */
@@ -123,7 +123,14 @@ public class MainActivity extends AppCompatActivity {
                         // Check if the scanned card is in the DB
                         for (DataSnapshot userSnapshot : snapshot.getChildren()){
                             User user = userSnapshot.getValue(User.class);
-                            if(user.getCard().contentEquals(scannedValue)){
+                            /**
+                             * The barcode scanner might not recognize the first digit of the code
+                             * when it is a 0 and the barcode has the black and white bars inverted
+                             * Check if both valid
+                             * TODO check if true for every char or only for 0
+                             * */
+                            String cardDB = Utilities.removeInitialZero(user.getCard());
+                            if(user.getCard().contentEquals(scannedValue) || cardDB.contentEquals(scannedValue)){
                                 cardNumber = user.getCard();
                                 Intent welcome = new Intent(MainActivity.this, WelcomeActivity.class);
                                 welcome.putExtra("name", user.getName());

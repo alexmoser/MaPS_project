@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -16,7 +17,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class ScanProductActivity extends AppCompatActivity {
 
     // Needs to be declared public static because used also by ProductInformationAddActivity and ProductInformationActivity
-    public static Product productScanned;
+    public static Product productDB;
 
     // Needed to discriminate whether to go back to action selection or not (on back pressed from scanActivity and ProductInformation)
     public static boolean goBack = false;
@@ -62,8 +63,15 @@ public class ScanProductActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot snapshot) {
                         // Search the DB to find the scanned product
                         for (DataSnapshot prodSnapshot : snapshot.getChildren()){
-                            productScanned = prodSnapshot.getValue(Product.class);
-                            if(productScanned.getBarcode().equals(scannedValue)){
+                            productDB = prodSnapshot.getValue(Product.class);
+                            /**
+                             * The barcode scanner might not recognize the first digit of the code
+                             * when it is a 0 and the barcode has the black and white bars inverted
+                             * Check if both valid
+                             * TODO check if true for every char or only for 0
+                             * */
+                            String barcodeNoZero = Utilities.removeInitialZero(productDB.getBarcode());
+                            if(productDB.getBarcode().contentEquals(scannedValue) || barcodeNoZero.contentEquals(scannedValue)){
                                 Intent product_info = new Intent(ScanProductActivity.this, ProductInformationAddActivity.class);
                                 startActivity(product_info);
                                 return;

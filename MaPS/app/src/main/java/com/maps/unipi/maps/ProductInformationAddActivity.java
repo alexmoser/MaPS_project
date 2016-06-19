@@ -24,7 +24,7 @@ public class ProductInformationAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_information_add);
-        element = new ShoppingCartElement(ScanProductActivity.productScanned);
+        element = new ShoppingCartElement(ScanProductActivity.productDB);
 
         final TextView tvName = (TextView) findViewById(R.id.prodinfo_tv_name);
         final TextView tvIngredients = (TextView) findViewById(R.id.prodinfo_tv_listingr);

@@ -66,7 +66,7 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        // Encoding password (salt is 10 by default)
+        // Encode password (salt is 10 by default)
         final String passDigest = BCrypt.hashpw(password.toString(), BCrypt.gensalt());
 
         // Get a reference to the users in the DB
@@ -78,8 +78,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 // Check if card already registered
                 for (DataSnapshot userSnapshot : snapshot.getChildren()){
                     User user = userSnapshot.getValue(User.class);
-                    // Need to remove initial zero from the card number because the scanner does not recognize it
-                    if(user.getCard().equals(Utilities.removeInitialZero(card))){
+                    if(user.getCard().equals(card)){
                         Utilities.showErrorDialog(RegistrationActivity.this, myRes.getText(R.string.already_registered).toString());
                         etCard.setText(null);
                         etCard.requestFocus();
@@ -88,7 +87,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
 
                 // Insert user in the DB
-                User user = new User (name.toString(), surname.toString(), Utilities.removeInitialZero(card), passDigest);
+                User user = new User (name.toString(), surname.toString(), card.toString(), passDigest);
                 ref.push().setValue(user);
                 MainActivity.cardNumber = user.getCard();
 
