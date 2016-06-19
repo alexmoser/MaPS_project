@@ -25,9 +25,11 @@ public class CustomAdapterLastPurchase extends ArrayAdapter<ShoppingCartElement>
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(convertView==null)
+        if(convertView == null)
             convertView = inflater.inflate(R.layout.rowcustom_last_purchase, null);
+
         final TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
         final TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
         final ShoppingCartElement element = getItem(position);
@@ -35,5 +37,4 @@ public class CustomAdapterLastPurchase extends ArrayAdapter<ShoppingCartElement>
         tvPrice.setText(Utilities.roundTwoDecimal(element.getProduct().getPrice()) + "€");
         return convertView;
     }
-
 }

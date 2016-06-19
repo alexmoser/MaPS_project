@@ -39,6 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onClickDone(View v) {
+
         final Resources myRes = getResources();
 
         final EditText etName = (EditText) findViewById(R.id.reg_et_name);

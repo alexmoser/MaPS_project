@@ -46,6 +46,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_action_selection);
 
@@ -147,7 +148,6 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
     public static class FiltersFragment extends Fragment {
 
-        public static final String ARG_OBJECT = "object";
         /* Used in order to prevent loading filters from shared preference every time
          * the fragment is created */
         private static boolean firstCreationView = true;
@@ -158,6 +158,7 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
             rootView = inflater.inflate(R.layout.filters, container, false);
             final ImageButton btAdd = (ImageButton) rootView.findViewById(R.id.filters_b_addfilter);
             final Button btSave = (Button) rootView.findViewById(R.id.filters_b_savefilter);
@@ -227,10 +228,9 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
     public static class LastPurchaseFragment extends Fragment {
 
-        public static final String ARG_OBJECT = "object";
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.last_purchase, container, false);
             ArrayList<ShoppingCartElement> lastPurchase = new ArrayList<>();
             final CustomAdapterLastPurchase adapter;
@@ -261,13 +261,13 @@ public class ActionSelectionFragmentActivity extends FragmentActivity {
 
     public static class NewPurchaseFragment extends Fragment {
 
-        public static final String ARG_OBJECT = "object";
-        View rootView;
-        ListView productsList;
+        private View rootView;
+        private ListView productsList;
         public static CustomAdapterNewPurchase adapter;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
             rootView = inflater.inflate(R.layout.new_purchase, container, false);
             final Button btAdd = (Button) rootView.findViewById(R.id.newpurch_b_addprod);
             final Button btEnd = (Button) rootView.findViewById(R.id.newpurch_b_endspending);

@@ -5,6 +5,7 @@ package com.maps.unipi.flashcart;
  * relative quantity
  */
 public class ShoppingCartElement {
+
     private Product product;
     private int quantity;
 

@@ -34,11 +34,10 @@ public class ScanProductActivity extends AppCompatActivity {
         if(!goBack) {
             goBack = true;
             IntentIntegrator integrator = new IntentIntegrator(this);
-            integrator.setPrompt("Scan a product");
-            integrator.setBeepEnabled(true);
-            integrator.setCaptureActivity(CaptureActivityPortrait.class);
-            integrator.setOrientationLocked(false);
-            integrator.initiateScan();
+            integrator.setPrompt("Scan your card")
+                        .setBeepEnabled(true)
+                        .setCaptureActivity(CaptureActivityPortrait.class)
+                        .initiateScan();
         }
         else{
             Intent action_selection = new Intent(this, ActionSelectionFragmentActivity.class);
@@ -48,12 +47,15 @@ public class ScanProductActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
         final Resources myRes = getResources();
         final Context ctx = getApplicationContext();
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         if (scanResult != null) {
+
             final String scannedValue = scanResult.getContents();
+
             if(scannedValue != null) {
                 // Get a reference to the products in the DB
                 Firebase ref = MainActivity.rootRef.child("products");

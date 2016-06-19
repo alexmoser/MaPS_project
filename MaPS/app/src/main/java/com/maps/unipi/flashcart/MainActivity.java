@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickLogin(View v) {
+
         final Resources myRes = getResources();
         final EditText etCard = (EditText) findViewById(R.id.main_et_card);
         final EditText etPassword = (EditText) findViewById(R.id.main_et_password);
@@ -100,19 +101,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickScanCard(View v){
         IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setPrompt("Scan your card");
-        integrator.setBeepEnabled(true);
-        integrator.setCaptureActivity(CaptureActivityPortrait.class);
-        integrator.setOrientationLocked(false);
-        integrator.initiateScan();
+        integrator.setPrompt("Scan your card")
+                    .setBeepEnabled(true)
+                    .setCaptureActivity(CaptureActivityPortrait.class)
+                    .initiateScan();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         if (scanResult != null) {
+
             final String scannedValue = scanResult.getContents();
+
             if(scannedValue != null){
                 // Get a reference to the users in the DB
                 final Firebase ref = rootRef.child("users");

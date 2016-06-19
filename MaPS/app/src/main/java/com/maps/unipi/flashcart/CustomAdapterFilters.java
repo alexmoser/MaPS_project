@@ -20,6 +20,7 @@ import java.util.ArrayList;
  * It uses a custom layout defined in file rowcustom_filters.xml
  * */
 public class CustomAdapterFilters extends ArrayAdapter<String> {
+
     private Context ctx;
 
     public CustomAdapterFilters(Context context, int textViewResourceId, ArrayList<String> objects) {
@@ -29,9 +30,11 @@ public class CustomAdapterFilters extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(convertView==null)
+        if(convertView == null)
             convertView = inflater.inflate(R.layout.rowcustom_filters, null);
+
         final TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
         final ImageButton btRemove = (ImageButton) convertView.findViewById(R.id.buttonRemove);
         final String filter = getItem(position);
@@ -61,5 +64,4 @@ public class CustomAdapterFilters extends ArrayAdapter<String> {
         });
         return convertView;
     }
-
 }

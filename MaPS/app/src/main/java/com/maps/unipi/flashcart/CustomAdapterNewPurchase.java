@@ -25,20 +25,20 @@ import java.util.ArrayList;
 
 public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
 
-    private ArrayList<ShoppingCartElement> elementList = new ArrayList<>();
     private Context ctx;
 
     public CustomAdapterNewPurchase(Context context, int textViewResourceId, ArrayList<ShoppingCartElement> objects) {
         super(context, textViewResourceId, objects);
-        elementList = objects;
         ctx = context;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(convertView==null)
+        if(convertView == null)
             convertView = inflater.inflate(R.layout.rowcustom_new_purchase, null);
+
         final ShoppingCartElement selectedElement = getItem(position);
         final TextView tvTotal = (TextView) ((Activity)ctx).findViewById(R.id.newpurch_tv_totalprice);
         final TextView tvName = (TextView) convertView.findViewById(R.id.row_newpurch_tv_name);
@@ -60,11 +60,11 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
         btRemove.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                // Quantity custom dialog
+                // Quantity custom dialog with number picker
                 final Dialog dialogQuantity = new Dialog(ctx);
                 dialogQuantity.setContentView(R.layout.custom_dialog);
-                Button btnOK = (Button) dialogQuantity.findViewById(R.id.dialog_bt_ok);
-                Button btnCancel = (Button) dialogQuantity.findViewById(R.id.dialog_bt_cancel);
+                final Button btnOK = (Button) dialogQuantity.findViewById(R.id.dialog_bt_ok);
+                final Button btnCancel = (Button) dialogQuantity.findViewById(R.id.dialog_bt_cancel);
                 final NumberPicker np = (NumberPicker) dialogQuantity.findViewById(R.id.dialog_np);
                 np.setMaxValue(selectedElement.getQuantity());
                 np.setMinValue(1);
@@ -104,5 +104,4 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
         });
         return convertView;
     }
-
 }

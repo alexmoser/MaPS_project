@@ -74,7 +74,7 @@ public class ProductInformationAddActivity extends AppCompatActivity {
             else {
                 tvIngredients.append(ingredient);
             }
-            // Add ',' character to separate ingredients (unless it is the last one
+            // Add ',' character to separate ingredients (unless it is the last one)
             if(element.getProduct().getIngredients().indexOf(ingredient) != (element.getProduct().getIngredients().size() - 1))
                 tvIngredients.append(", ");
         }
