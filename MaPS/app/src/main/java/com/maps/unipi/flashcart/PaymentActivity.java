@@ -104,13 +104,13 @@ public class PaymentActivity extends AppCompatActivity {
         // Check whether NFC is enabled on device
         if(!nfcAdapter.isEnabled()){
             // NFC is disabled, show the settings UI to enable NFC
-            Utilities.showErrorDialog(this, getResources().getText(R.string.enable_NFC));
+            Utilities.showMessage(getResources().getText(R.string.enable_NFC), getApplicationContext());
             startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
         }
         // Check whether Android Beam feature is enabled on device
         else if(!nfcAdapter.isNdefPushEnabled()) {
             // Android Beam is disabled, show the settings UI to enable Android Beam
-            Utilities.showErrorDialog(this, getResources().getText(R.string.enable_android_beam));
+            Utilities.showMessage(getResources().getText(R.string.enable_android_beam), getApplicationContext());
             startActivity(new Intent(Settings.ACTION_NFCSHARING_SETTINGS));
         }
         else {
@@ -172,8 +172,8 @@ public class PaymentActivity extends AppCompatActivity {
         String ticket = "";
 
         for(ShoppingCartElement element : ActionSelectionFragmentActivity.shoppingCart){
-            ticket += element.getProduct().getName() + ",";
-            ticket += element.getQuantity() + ",";
+            ticket += element.getProduct().getName() + ";";
+            ticket += element.getQuantity() + ";";
             ticket += Utilities.roundTwoDecimal(element.getProduct().getPrice()*element.getQuantity()) + ";\n";
         }
             ticket += "TOT.\t" + Utilities.roundTwoDecimal(Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart));
@@ -193,5 +193,11 @@ public class PaymentActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        Utilities.showLongMessage(getResources().getText(R.string.place_to_NFC), getApplicationContext());
     }
 }

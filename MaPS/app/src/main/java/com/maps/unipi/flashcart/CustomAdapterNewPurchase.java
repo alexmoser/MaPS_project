@@ -1,10 +1,6 @@
 package com.maps.unipi.flashcart;
 
 /**
- * Created by leo on 14/05/16.
- */
-
-/**
  * This class defines a customized adapter for the NewPurchase fragment in ActionSelectionFragmentActivity
  * It uses a custom layout defined in file rowcustom_new_purchase.xml
  * */
@@ -65,6 +61,7 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
                 dialogQuantity.setContentView(R.layout.custom_dialog);
                 final Button btnOK = (Button) dialogQuantity.findViewById(R.id.dialog_bt_ok);
                 final Button btnCancel = (Button) dialogQuantity.findViewById(R.id.dialog_bt_cancel);
+                final Button btnRemoveAll = (Button) dialogQuantity.findViewById(R.id.dialog_bt_removeall);
                 final NumberPicker np = (NumberPicker) dialogQuantity.findViewById(R.id.dialog_np);
                 np.setMaxValue(selectedElement.getQuantity());
                 np.setMinValue(1);
@@ -96,6 +93,21 @@ public class CustomAdapterNewPurchase extends ArrayAdapter<ShoppingCartElement>{
                 {
                     @Override
                     public void onClick(View v) {
+                        dialogQuantity.dismiss();
+                    }
+                });
+                btnRemoveAll.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v) {
+                        ShoppingCartElement element = ActionSelectionFragmentActivity.shoppingCart.get(ActionSelectionFragmentActivity.shoppingCart.indexOf(selectedElement));
+                        ActionSelectionFragmentActivity.shoppingCart.remove(selectedElement);
+
+                        ActionSelectionFragmentActivity.NewPurchaseFragment.adapter.notifyDataSetChanged();
+
+                        float totalPrice = Utilities.computeTotal(ActionSelectionFragmentActivity.shoppingCart);
+                        tvTotal.setText(Utilities.roundTwoDecimal(totalPrice) + "€");
+
                         dialogQuantity.dismiss();
                     }
                 });

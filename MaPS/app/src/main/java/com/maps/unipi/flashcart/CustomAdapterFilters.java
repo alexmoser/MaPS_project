@@ -13,9 +13,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by alex on 16/06/16.
- */
-/**
  * This class defines a customized adapter for the Filters fragment in ActionSelectionFragmentActivity
  * It uses a custom layout defined in file rowcustom_filters.xml
  * */

@@ -102,6 +102,7 @@
         android:id="@+id/ing_lay"
         android:weightSum="1"
         android:layout_marginTop="50dp"
+        android:layout_above="@+id/btn_lay"
         android:baselineAligned="false">
 
         <RelativeLayout

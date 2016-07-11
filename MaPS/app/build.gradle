@@ -6,7 +6,11 @@ android {
     defaultConfig {
         applicationId "com.maps.unipi.maps"
         minSdkVersion 19
-        targetSdkVersion 24
+        /* target version is set to 21 because higher versions prevent the application from creating
+         * the file with the ticket. This is only a temporary issue since in a real scenario we would
+         * not need to create any file, but just send byte sequences to the nfc reader.
+         * */
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }

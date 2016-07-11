@@ -56,6 +56,7 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_removeall">Remove all</string>
 
     <!-- errors -->
     <string name="empty_field">Empty field!</string>

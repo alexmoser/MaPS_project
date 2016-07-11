@@ -1,10 +1,6 @@
 package com.maps.unipi.flashcart;
 
 /**
- * Created by leo on 14/05/16.
- */
-
-/**
  * This class defines a customized adapter for the LastPurchase fragment in ActionSelectionFragmentActivity
  * It uses a custom layout defined in file rowcustom_last_purchase.xml
  * */

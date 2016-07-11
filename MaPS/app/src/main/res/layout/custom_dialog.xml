@@ -53,4 +53,17 @@
         android:layout_toLeftOf="@id/dialog_bt_ok"
         android:textAlignment="textEnd"/>
 
+    <Button
+        android:id="@+id/dialog_bt_removeall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/dialog_bt_ok"
+        android:layout_alignBottom="@+id/dialog_bt_ok"
+        android:text="@string/dialog_removeall"
+        android:textColor="@color/accent_maps"
+        android:background="@android:color/transparent"
+        style="?android:borderlessButtonStyle"
+        android:layout_alignParentLeft="true"
+        android:textAlignment="textEnd"/>
+
 </RelativeLayout>
